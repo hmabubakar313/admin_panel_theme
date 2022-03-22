@@ -69,3 +69,10 @@ def logout_view(request):
     logout('login')
     return render(request, 'sash/html/login.html')
 
+
+def table(request):
+    return render(request, 'sash/html/tables.html')
+
+def insert(request):
+    return render(request, 'sash/html/insert.html')
+
