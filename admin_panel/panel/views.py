@@ -59,9 +59,9 @@ def login_user(request):
             return HttpResponse('login failed')
     else:
         return render(request, 'sash/html/login.html')
-
+@login_required(login_url='/login/')
 def form(request):
-    return render(request, 'sash/html/form-advanced.html')
+    return render(request, 'sash/html/form-elements.html')
         
 
 
@@ -69,10 +69,12 @@ def logout_view(request):
     logout('login')
     return render(request, 'sash/html/login.html')
 
-
+@login_required(login_url='/login/')
 def table(request):
     return render(request, 'sash/html/tables.html')
 
+
+@login_required(login_url='/login/')
 def insert(request):
     return render(request, 'sash/html/insert.html')
 
