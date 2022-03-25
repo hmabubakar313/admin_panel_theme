@@ -43,7 +43,7 @@ def createtask(request):
         serializer.save()
         print('get data from serializer: ',serializer.data)
         print(serializer.data)
-    return Response('Task Created')
+    return Response('task created')
 
 @api_view(['POST'])
 def updatetask(request,pk):
