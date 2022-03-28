@@ -604,18 +604,38 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row ml-4">
+                            <div class="col-xl-6 col-lg-12">
+                              <div class="card">
+                                  <div class="card-header">
+                                    <form id="form">
+                                        {% csrf_token %}
+                                        <input type="text" name="id" placeholder="id" id="id" class=" form-control mb-4" name="id">
+                                        <input type="text" class="form-control mb-4" name="completed" name="completed"  placeholder="Completed" id="completed">
+                                        <input type="text"  id="title"  class="form-control mb-4" name="title" placeholder="title">
+                                        <button  class="btn btn-primary" type="submit" id="fetchbtn" onclick = "popBtnHandler();" >submit</button>
+                                    </form>
+                                  </div>
+                              </div>
+                            </div>
+                        </div>
                         <!-- End Row -->
 
 
-                    
+                        
                     <!-- CONTAINER CLOSED -->
 
                 </div>
             </div>
+           
+                                       
+           
+            
+        
                 <!--app-content closed-->
-                <button class="btn btn-primary" id="popbtn">pop </button>
-            <button><a href="{% url 'insert' %}">input</a></button>
-        </div>
+               
+            
+    
 
         <!-- Sidebar-right -->
         <div class="sidebar sidebar-right sidebar-animate">
@@ -1163,6 +1183,7 @@
     <!-- CUSTOM JS -->
     <script src="{% static 'assets/js/custom.js' %}"></script>
     <script src="{% static 'assets/js/get_data.js' %}"></script>
+    {% comment %} <script src="{% static 'assets/js/insert.js' %}"></script> {% endcomment %}
 
 </body>
 

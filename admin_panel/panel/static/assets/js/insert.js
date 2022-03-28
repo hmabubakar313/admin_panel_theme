@@ -25,7 +25,7 @@ function handlesubmit(event) {
     }
     request.send(formdata)
     
-       
+    document.getElementById("form").reset();
     console.log('after post')
     
     
