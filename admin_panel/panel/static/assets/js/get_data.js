@@ -103,6 +103,7 @@ function delete_data(event,click_id)
     var xhr = new XMLHttpRequest()
     
     xhr.open('DELETE','http://127.0.0.1:8000/api/delete-task/'+click_id+'/')
+    xhr.open('GET','http://127.0.0.1:8000/api/task-list/',true) 
     // send csrf in header 
     csrftoken = getCookie('csrftoken')
     xhr.setRequestHeader('X-CSRFToken', csrftoken)
@@ -117,6 +118,23 @@ function delete_data(event,click_id)
     
        if (this.status===200)
        {
+        let obj = JSON.parse(this.responseText)
+           
+            
+        let body = document.getElementById('body')
+        str = ""
+        console.log(obj)
+        
+        for (key in obj)
+        {
+            str += `<tr>
+            <td id="id">${obj[key].id}</td> 
+            <td id="title">${obj[key].title}</td>  
+            <td id="completed">${obj[key].completed}</td>`
+            str += `<br>`
+        }
+        body.innerHTML = str
+
         //    popBtnHandler();
            console.log(this.status)
            console.log('form submitted successfully')
