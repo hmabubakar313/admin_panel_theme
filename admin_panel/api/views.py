@@ -45,10 +45,12 @@ def createtask(request):
         print(serializer.data)
     return Response('task created')
 
-@api_view(['POST'])
+@api_view(['PUT'])
 def updatetask(request,pk):
     task = Task.objects.get(id=pk)
-    serializer = TaskSerializer(instance=task,data=request.data)
+    # update task with same id
+    serializer = TaskSerializer(instance=task, data=request.data)
+   
 
     if serializer.is_valid():
         serializer.save()
