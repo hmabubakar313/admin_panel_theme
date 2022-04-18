@@ -3,19 +3,59 @@
 
 // const form = document.getElementById('form');
 // form.addEventListener('submit', handlesubmit);
+(function (event){
+    // var formdata = new FormData(event.target);
+    var xhr = new XMLHttpRequest();
+    console.log('inside self invoking function')
+    xhr.open('GET','http://127.0.0.1:8000/api/task-list/',true)
+    csrftoken = getCookie('csrftoken')
+    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+    xhr.onload = function ()
+    {
+        if (this.status===200)
+        {
+            console.log('inside slef onload')
+            let obj = JSON.parse(this.responseText)
+            let body = document.getElementById('body')
+            str = ""
+            obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
+            for (key in obj)
+            {
+                str += `<tr>
+                <td id="id">${obj[key].id}</td> 
+                <td id="title">${obj[key].title}</td>  
+                <td id="description">${obj[key].description}</td>
+                <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
+                <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)">Edit</a></td>`
+                str += `<br>`
+            }
+            body.innerHTML = str
+        }
+        else
+        {
+            console.log('Error')
+        }
+    }
+    xhr.send()
 
-// inserting data 
+}())
+
 
 function handlesubmit(event) {
     event.preventDefault();
     var formdata = new FormData(event.target);
     title = formdata.get('title')
     click_id = formdata.get('id')
-   
+    console.log("title : "+title)
+    console.log("click_id : "+click_id)
+    console.log("description : "+description)
     var request = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
    
     request.open("POST", 'http://127.0.0.1:8000/api/create-task/')
-    request.open("PUT",'http://127.0.0.1:8000/api/update-task/'+click_id+'/')
+    // xhr.open("PUT",'http://127.0.0.1:8000/api/update-task/'+click_id+'/')
+
+    
     csrftoken = getCookie('csrftoken')
     request.setRequestHeader('X-CSRFToken', csrftoken)
     request.onload = function ()
@@ -23,12 +63,26 @@ function handlesubmit(event) {
     
        if (this.status===200)
        {
+
            popBtnHandler();
            console.log(this.status)
-           alert('form submitted successfully')
+          
        }
     }
+    /* xhr.onload = function ()
+    {
+    
+       if (this.status===200)
+       {
+
+           popBtnHandler();
+           console.log(this.status)
+          
+       }
+    } */
+    alert('form submitted successfully')
     request.send(formdata)
+    // xhr.send(formdata)
     
     document.getElementById("form").reset();
    
@@ -45,6 +99,7 @@ function popBtnHandler()
       
         const xhr = new XMLHttpRequest()
         xhr.open('GET','http://127.0.0.1:8000/api/task-list/',true)
+        // xhr.open('PUT','http://127.0.0.1:8000/api/task-list/',true)
         
 
         xhr.onload = function ()
@@ -56,17 +111,20 @@ function popBtnHandler()
            
             
             let body = document.getElementById('body')
-            str = ""
-            obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
             
+            str = ""
+           
+            obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
+            console.log(("type : "+typeof(obj)))
+            console.log(obj)    
             for (key in obj)
             {
                 str += `<tr>
                 <td id="id">${obj[key].id}</td> 
                 <td id="title">${obj[key].title}</td>  
-                <td id="completed">${obj[key].completed}</td>
-                <td><button id="${obj[key].id}" class="btn  btn-primary" onclick ="delete_data(event,this.id)"><i class="fa-solid fa-pencil"></i></button></td>
-                <td><button id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)"><i class="fa-solid fa-square-pen"></i></button></td>`
+                <td id="description">${obj[key].description}</td>
+                <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
+                <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)">Edit</a></td>`
                 str += `<br>`
             }
             body.innerHTML = str
@@ -85,18 +143,21 @@ function delete_data(event,click_id)
 {
    
     event.preventDefault();
-  /*   console.log('button clicked');
+    console.log('delete button');
     console.log('click_id : '+click_id)
- */
+
+
     // alert(click_id)
    
     // var formdata = new FormData(event.target);
     // console.log(formdata)
    
     var xhr = new XMLHttpRequest()
+    var request = new XMLHttpRequest()
     
-    xhr.open('DELETE','http://127.0.0.1:8000/api/delete-task/'+click_id+'/')
-    xhr.open('GET','http://127.0.0.1:8000/api/task-list/',true) 
+    xhr.open("DELETE",'http://127.0.0.1:8000/api/delete-task/'+click_id+'/',true)
+
+    request.open('GET','http://127.0.0.1:8000/api/task-list/',true) 
     // send csrf in header 
     csrftoken = getCookie('csrftoken')
     xhr.setRequestHeader('X-CSRFToken', csrftoken)
@@ -106,27 +167,34 @@ function delete_data(event,click_id)
     xhr.onload = function ()
     {
         
-      
+      console.log('inside onload')
     
        if (this.status===200)
        {
         let obj = JSON.parse(this.responseText)
-           
-        
+        console.log('inside onload if')    
         let body = document.getElementById('body')
+
+        
         str = ""
+        // get obj id
+        console.log(typeof(obj))
+        // obj1 = JSON.parse(obj)
+        // console.log(typeof(obj1))
+        // console.log(obj[id])
         obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
-        console.log(obj)
+
         
         for (key in obj)
         {
             str += `<tr>
             <td id="id">${obj[key].id}</td> 
             <td id="title">${obj[key].title}</td>  
-            <td id="completed">${obj[key].completed}</td>
-            <td><button id="${obj[key].id}" class="btn  btn-primary" onclick ="delete_data(event,this.id)"><i class="fa-solid fa-pencil"></i></button></td>
-            <td><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)"><i class="fa-solid fa-square-pen"></i></button></td>`
+            <td id="description">${obj[key].description}</td>
+            <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
+            <td><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></td>`
             str += `<br>`
+            console.log('iside onlaod for')
         }
         body.innerHTML = str
 
@@ -137,6 +205,7 @@ function delete_data(event,click_id)
        }
     }
     xhr.send()
+    request.send()
 
 
 }
@@ -207,7 +276,8 @@ function update_data(event,click_id)
 
 
    
-   
-
-
-
+    function highest(...obj){ 
+        return obj.sort(function(a,b){ 
+          return b - a; 
+        }); 
+     }

@@ -56,9 +56,12 @@ def updatetask(request,pk):
         serializer.save()
     return Response(serializer.data)
 
-@api_view(['DELETE'])
+@api_view(['DELETE','GET'])
 def deletetask(request,pk):
     task = Task.objects.get(id=pk)
+    tasks=Task.objects.all()
+    
     task.delete()
-
-    return Response('deleted')
+    tasks=Task.objects.all()
+    serializer=TaskSerializer(tasks, many=True)
+    return Response(serializer.data)
