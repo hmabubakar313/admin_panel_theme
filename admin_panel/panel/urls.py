@@ -4,8 +4,10 @@ from django.urls import path
 from django.urls import include
 from .import views
 from django.conf.urls.static import static
+from . import views
 from django.conf import settings
 urlpatterns = [
+    path('', views.home, name='home'),
     path('dashboard/',views.index,name='dashboard'),
     path('signup/',views.signup,name='signup'),
     path('save/',views.save,name='save'),

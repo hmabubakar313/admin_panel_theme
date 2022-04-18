@@ -9,6 +9,11 @@ from django import forms
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
+
+
+def home(request,*args,**kwargs):
+    return render(request, 'sash/html/default.html')
+
 def index(request):
     return render(request, 'sash/html/index.html')
 

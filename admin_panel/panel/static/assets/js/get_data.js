@@ -1,10 +1,6 @@
-// let popbtn = document.getElementById('popbtn')
-// popbtn.addEventListener('click', popBtnHandler)
 
-// const form = document.getElementById('form');
-// form.addEventListener('submit', handlesubmit);
 (function (event){
-    // var formdata = new FormData(event.target);
+    
     var xhr = new XMLHttpRequest();
     console.log('inside self invoking function')
     xhr.open('GET','http://127.0.0.1:8000/api/task-list/',true)
@@ -44,20 +40,19 @@
 function handlesubmit(event) {
     event.preventDefault();
     var formdata = new FormData(event.target);
-    title = formdata.get('title')
+    
     click_id = formdata.get('id')
-    console.log("title : "+title)
-    console.log("click_id : "+click_id)
-    console.log("description : "+description)
+    console.log('click_id'+click_id)
     var request = new XMLHttpRequest();
     var xhr = new XMLHttpRequest();
    
     request.open("POST", 'http://127.0.0.1:8000/api/create-task/')
-    // xhr.open("PUT",'http://127.0.0.1:8000/api/update-task/'+click_id+'/')
+    request.open("PUT",'http://127.0.0.1:8000/api/update-task/'+click_id+'/')
 
     
     csrftoken = getCookie('csrftoken')
     request.setRequestHeader('X-CSRFToken', csrftoken)
+    // xhr.setRequestHeader('X-CSRFToken', csrftoken)
     request.onload = function ()
     {
     
@@ -69,12 +64,11 @@ function handlesubmit(event) {
           
        }
     }
-    /* xhr.onload = function ()
+  /*  xhr.onload = function ()
     {
     
        if (this.status===200)
        {
-
            popBtnHandler();
            console.log(this.status)
           
@@ -82,7 +76,7 @@ function handlesubmit(event) {
     } */
     alert('form submitted successfully')
     request.send(formdata)
-    // xhr.send(formdata)
+    //  xhr.send(formdata)
     
     document.getElementById("form").reset();
    
@@ -92,14 +86,14 @@ function handlesubmit(event) {
 
 const a = document.getElementById('form');
 a.addEventListener('submit', handlesubmit);
-// 
+
 function popBtnHandler()
 
     {
       
         const xhr = new XMLHttpRequest()
         xhr.open('GET','http://127.0.0.1:8000/api/task-list/',true)
-        // xhr.open('PUT','http://127.0.0.1:8000/api/task-list/',true)
+        
         
 
         xhr.onload = function ()
@@ -144,13 +138,10 @@ function delete_data(event,click_id)
    
     event.preventDefault();
     console.log('delete button');
-    console.log('click_id : '+click_id)
+  
 
 
-    // alert(click_id)
    
-    // var formdata = new FormData(event.target);
-    // console.log(formdata)
    
     var xhr = new XMLHttpRequest()
     var request = new XMLHttpRequest()
@@ -158,12 +149,12 @@ function delete_data(event,click_id)
     xhr.open("DELETE",'http://127.0.0.1:8000/api/delete-task/'+click_id+'/',true)
 
     request.open('GET','http://127.0.0.1:8000/api/task-list/',true) 
-    // send csrf in header 
+   
     csrftoken = getCookie('csrftoken')
     xhr.setRequestHeader('X-CSRFToken', csrftoken)
    
     
-    // console.log('after api')
+   
     xhr.onload = function ()
     {
         
@@ -177,11 +168,9 @@ function delete_data(event,click_id)
 
         
         str = ""
-        // get obj id
+       
         console.log(typeof(obj))
-        // obj1 = JSON.parse(obj)
-        // console.log(typeof(obj1))
-        // console.log(obj[id])
+        
         obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
 
         
@@ -194,14 +183,12 @@ function delete_data(event,click_id)
             <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
             <td><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></td>`
             str += `<br>`
-            console.log('iside onlaod for')
+           
         }
         body.innerHTML = str
 
-        //    popBtnHandler();
            console.log(this.status)
-          /*  console.log('form submitted successfully')
-           alert('form submitted successfully') */
+         
        }
     }
     xhr.send()
@@ -235,7 +222,7 @@ function update_data(event,click_id)
     var xhr = new XMLHttpRequest()
     console.log('inside update')
    
-    
+   
    
     console.log('after put')
     xhr.open('GET','http://127.0.0.1:8000/api/task-list/')
@@ -253,31 +240,27 @@ function update_data(event,click_id)
             console.log(obj)
             for (x in obj)
             {
+                
                 console.log('printing obj id ')
                 // console.log(obj[x].id)
                 if (obj[x].id == click_id)
                 {
+                    console.log('inside if'+click_id)
+                    console.log('inside if obj id '+obj[x].id)
                     console.log('helloasdasdawewad')
                     console.log(obj[x].id)
                     document.getElementById('id').value = obj[x].id
+                    console.log("id : "+obj[x].id)
                     document.getElementById('title').value = obj[x].title
-                    document.getElementById('completed').value = obj[x].completed
+                    document.getElementById('description').value = obj[x].description
+                    
                 }
                 
             }
-            // console.log(obj.)
-        
         }
     }
+    
     xhr.send()
       document.getElementById("form").reset();
     console.log('after sednig request of GET')
     }
-
-
-   
-    function highest(...obj){ 
-        return obj.sort(function(a,b){ 
-          return b - a; 
-        }); 
-     }
