@@ -1,6 +1,6 @@
 from rest_framework import serializers
 # from rest_framework import Student
-from api.models import Task
+from api.models import Task,Student
 
 
 
@@ -8,5 +8,9 @@ from api.models import Task
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        """ fields = ('id', 'first_name', 'last_name', 'email') """
+        fields = '__all__'
+
+class StudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
         fields = '__all__'

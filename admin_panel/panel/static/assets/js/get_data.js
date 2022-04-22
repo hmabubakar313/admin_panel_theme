@@ -22,7 +22,7 @@
                 <td id="title">${obj[key].title}</td>  
                 <td id="description">${obj[key].description}</td>
                 <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
-                <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)">Edit</a></td>`
+                <td><a href="#card" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)">Edit</a></td>`
                 str += `<br>`
             }
             body.innerHTML = str
@@ -33,6 +33,7 @@
         }
     }
     xhr.send()
+    document.getElementById("form").reset();
 
 }())
 
@@ -44,7 +45,7 @@ function handlesubmit(event) {
     click_id = formdata.get('id')
     console.log('click_id'+click_id)
     var request = new XMLHttpRequest();
-    var xhr = new XMLHttpRequest();
+    
    
     request.open("POST", 'http://127.0.0.1:8000/api/create-task/')
     request.open("PUT",'http://127.0.0.1:8000/api/update-task/'+click_id+'/')
@@ -52,7 +53,7 @@ function handlesubmit(event) {
     
     csrftoken = getCookie('csrftoken')
     request.setRequestHeader('X-CSRFToken', csrftoken)
-    // xhr.setRequestHeader('X-CSRFToken', csrftoken)
+   
     request.onload = function ()
     {
     
@@ -64,19 +65,10 @@ function handlesubmit(event) {
           
        }
     }
-  /*  xhr.onload = function ()
-    {
-    
-       if (this.status===200)
-       {
-           popBtnHandler();
-           console.log(this.status)
-          
-       }
-    } */
+ 
     alert('form submitted successfully')
     request.send(formdata)
-    //  xhr.send(formdata)
+   
     
     document.getElementById("form").reset();
    
@@ -118,7 +110,7 @@ function popBtnHandler()
                 <td id="title">${obj[key].title}</td>  
                 <td id="description">${obj[key].description}</td>
                 <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
-                <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)">Edit</a></td>`
+                <td><a href="#card" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)">Edit</a></td>`
                 str += `<br>`
             }
             body.innerHTML = str
@@ -137,11 +129,7 @@ function delete_data(event,click_id)
 {
    
     event.preventDefault();
-    console.log('delete button');
-  
-
-
-   
+ 
    
     var xhr = new XMLHttpRequest()
     var request = new XMLHttpRequest()
@@ -181,7 +169,7 @@ function delete_data(event,click_id)
             <td id="title">${obj[key].title}</td>  
             <td id="description">${obj[key].description}</td>
             <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
-            <td><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></td>`
+            <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
             str += `<br>`
            
         }
@@ -220,13 +208,8 @@ function update_data(event,click_id)
 {
     event.preventDefault();
     var xhr = new XMLHttpRequest()
-    console.log('inside update')
-   
-   
-   
-    console.log('after put')
+
     xhr.open('GET','http://127.0.0.1:8000/api/task-list/')
-    console.log('after get')
     csrftoken = getCookie('csrftoken')
     xhr.setRequestHeader('X-CSRFToken', csrftoken)
     xhr.onload = function ()
@@ -245,14 +228,231 @@ function update_data(event,click_id)
                 // console.log(obj[x].id)
                 if (obj[x].id == click_id)
                 {
-                    console.log('inside if'+click_id)
-                    console.log('inside if obj id '+obj[x].id)
-                    console.log('helloasdasdawewad')
-                    console.log(obj[x].id)
+                   
+                   
+                  
                     document.getElementById('id').value = obj[x].id
-                    console.log("id : "+obj[x].id)
                     document.getElementById('title').value = obj[x].title
                     document.getElementById('description').value = obj[x].description
+                    
+                }
+                
+            }
+        }
+    }
+    
+    xhr.send()
+      document.getElementById("form").reset();
+    console.log('after sednig request of GET')
+    }
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// working for student api
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// ===========================================================
+
+
+// function that will work on when the submit button clicked 
+
+function handlesubmit(event) {
+    event.preventDefault();
+    var formdata = new FormData(event.target);
+    first_name = formdata.get('first_name');
+    last_name = formdata.get('last_name');
+    email =formdata.get('email');
+    console.log(first_name);
+    console.log(last_name);
+    console.log(email);
+    click_id = formdata.get('id')
+    /* console.log('click_id'+click_id) */
+    var request = new XMLHttpRequest();
+    
+    
+    request.open("POST", 'http://127.0.0.1:8000/api/create-student/')
+   /*  request.open("PUT",'http://127.0.0.1:8000/api/update-student/'+click_id+'/') */
+
+    
+    csrftoken = getCookie('csrftoken')
+    request.setRequestHeader('X-CSRFToken', csrftoken)
+   
+    request.onload = function ()
+    {
+    
+       if (this.status===200)
+       {
+
+           popbtnstudent();
+           console.log(this.status)
+          
+       }
+    }
+ 
+    alert('form submitted successfully')
+    request.send(formdata)
+   
+    
+    document.getElementById("form").reset();
+   
+    
+    
+}
+
+const b = document.getElementById('form');
+b.addEventListener('submit', handlesubmit);
+
+// poping data on tha page using onclick function 
+
+function popbtnstudent()
+
+    {
+      
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET','http://127.0.0.1:8000/api/student-list/',true)
+        
+        
+
+        xhr.onload = function ()
+        {
+          
+            console.log('inside on load of get')
+            if (this.status===200)
+            {
+            let obj = JSON.parse(this.responseText)
+           
+            
+            let body = document.getElementById('body')
+            
+            str = ""
+           
+            obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
+            console.log(("type : "+typeof(obj)))
+            console.log(obj)    
+            for (key in obj)
+            {
+                str += `<tr>
+                <td id="id">${obj[key].id}</td> 
+                <td id="first_name">${obj[key].first_name}</td>  
+                <td id="last_name">${obj[key].last_name}</td>
+                <td id="email">${obj[key].email}</td>
+                <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_student(event,this.id)">Delete</button></td>
+                <td><a href="#card" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_student_data(event,this.id)">Edit</a></td>`
+                str += `<br>`
+            }
+            body.innerHTML = str
+            
+            }
+            else
+            {
+                console.log('Error')
+            }
+        }
+        xhr.send()
+        
+    }
+
+//  delete data function
+
+function delete_data_student(event,click_id) 
+{
+   
+    event.preventDefault();
+ 
+   
+    var xhr = new XMLHttpRequest()
+    var request = new XMLHttpRequest()
+    console.log('inside del button')
+    console.log(click_id)
+    xhr.open("DELETE",'http://127.0.0.1:8000/api/delete-student/'+click_id+'/',true)
+
+    request.open('GET','http://127.0.0.1:8000/api/student-list/',true) 
+   
+    csrftoken = getCookie('csrftoken')
+    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+   
+    
+   
+    xhr.onload = function ()
+    {
+        
+      console.log('inside onload')
+    
+       if (this.status===200)
+       {
+        let obj = JSON.parse(this.responseText)
+        console.log('inside onload if')    
+        let body = document.getElementById('body')
+
+        
+        str = ""
+        
+        obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
+
+        
+        for (key in obj)
+        {
+            str += `<tr>
+            <td id="id">${obj[key].id}</td> 
+            <td id="first_name">${obj[key].first_name}</td>  
+            <td id="last_name">${obj[key].last_name}</td>
+            <td id="email">${obj[key].email}</td>
+            <td><button id="${obj[key].id}" class="btn  btn-danger" onclick =" delete_data_student(event,this.id)">Delete</button></td>
+            <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_student_data(event,this.id)">Edit</button></a></td>`
+            str += `<br>`
+           
+        }
+        body.innerHTML = str
+
+           console.log(this.status)
+         
+       }
+    }
+    xhr.send()
+    request.send()
+
+
+}
+
+
+const form_student = document.getElementById('form');
+form_student.addEventListener('submit', delete_data_student);
+
+
+//  editing student data
+function update_student_data(event,click_id) 
+{
+    event.preventDefault();
+    var xhr = new XMLHttpRequest()
+
+    xhr.open('GET','http://127.0.0.1:8000/api/student-list/')
+    csrftoken = getCookie('csrftoken')
+    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+    xhr.onload = function ()
+    {
+        console.log('inside on load of get')
+        if (this.status===200)
+        {
+            console.log('inside if')
+            let obj = JSON.parse(this.responseText)
+            // clicked id of object id
+            console.log(obj)
+            for (x in obj)
+            {
+                
+                console.log('printing obj id ')
+                // console.log(obj[x].id)
+                if (obj[x].id == click_id)
+                {
+                   
+                   
+                  
+                    document.getElementById('id').value = obj[x].id
+                    document.getElementById('first_name').value = obj[x].first_name
+                    document.getElementById('last_name').value = obj[x].last_name
+                    document.getElementById('email').value = obj[x].email
                     
                 }
                 

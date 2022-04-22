@@ -76,10 +76,14 @@ def logout_view(request):
 
 # @login_required(login_url='/login/')
 def table(request):
-    return render(request, 'sash/html/tables.html')
+    return render(request, 'sash/html/form_tables.html')
 
 
 # @login_required(login_url='/login/')
 def insert(request):
     return render(request, 'sash/html/insert.html')
+
+
+def student(request):
+    return render(request, 'sash/html/form_student.html')
 

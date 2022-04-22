@@ -29,4 +29,10 @@ urlpatterns = [
     path('create-task/',views.createtask,name='create-task'),
     path('update-task/<str:pk>/',views.updatetask,name='update-task'),
     path('delete-task/<str:pk>/',views.deletetask,name='delete-task'),
+    path('studentapiOverview',views.studentapiOverview,name='studentapiOverview'),
+    path('student-list/',views.student_list,name='student-list'),
+    path('student-detail/<str:pk>/',views.student_detail,name='student-detail'),
+    path('create-student/',views.create_student,name='create-student'),
+    path('update-student/<str:pk>/',views.update_student,name='update-student'),
+    path('delete-student/<str:pk>/',views.delete_student,name='delete-student'),
 ]
