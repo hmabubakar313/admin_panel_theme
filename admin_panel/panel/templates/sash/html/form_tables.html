@@ -3,14 +3,15 @@
 
 <div class="card-body">
   
-<form  id="form">
+<form  id="form_task">
   {% csrf_token %}
   <div class="row">
-    <input type="hidden" name="id" placeholder="id" id="id" class="form-control mb-4" name="id">
-      
+    
+    <input type="hidden" name="id" placeholder="id" id="id" class="form-control mb-4" name="id" >
+
     <div class="col-lg-5">
    
-      <input type="text" name="title" placeholder="title" id="title" class="form-control mb-4" name="title">
+      <input type="text" name="title" placeholder="title" id="title" class="form-control mb-4" name="title" >
   </div>
   <div class="col-lg-5">
    
@@ -18,17 +19,9 @@
   </div>
   <div class="col-lg-2">
    
-    <button  class="btn btn-primary" type="submit" id="fetchbtn" onclick = "popbtnstudent();" >submit</button>
-</div>
-  <!-- <div class="col-lg-4"> -->
-   
-      
-  <!-- </div> -->
- 
-      
-  
+    <button  class="btn btn-primary" type="submit" id="fetchbtn" onclick = "popBtnHandler();" >submit</button>
   </div>
- 
+</div>
 </form>
 </div>
 {% endblock %}

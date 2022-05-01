@@ -1,10 +1,9 @@
 {% extends './base.html' %}
-
 {% block content %}
 
 <div class="card-body">
   
-<form  id="form">
+<form  id="form_student">
   {% csrf_token %}
   <div class="row">
     <input type="hidden" name="id" placeholder="id" id="id" class="form-control mb-4" name="id">
