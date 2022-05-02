@@ -1,7 +1,7 @@
 (function (event){
     
     var xhr = new XMLHttpRequest();
-    console.log('inside self invoking function')
+    console.log('inside self invoking function of task')
     xhr.open('GET','http://127.0.0.1:8000/api/task-list/',true)
     csrftoken = getCookie('csrftoken')
     xhr.setRequestHeader('X-CSRFToken', csrftoken)
@@ -259,214 +259,262 @@ function update_data(event,click_id)
 
 
 // function that will work on when the submit button clicked 
+id =0;
+(function (event){
+    
+    var xhr = new XMLHttpRequest();
+    console.log('inside self invoking function of student')
+    xhr.open('GET','http://127.0.0.1:8000/api/student-list/',true)
+    csrftoken = getCookie('csrftoken')
+    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+    xhr.onload = function ()
+    {
+        if (this.status===200)
+        {
+            
+            let obj = JSON.parse(this.responseText)
+            let body = document.getElementById('body')
+            str = ""
+            obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
+            for (key in obj)
+            {
+                str += `<tr>
+                <td id="first_name">${obj[key].first_name}</td> 
+                <td id="last_name">${obj[key].last_name}</td>  
+                <td id="email">${obj[key].email}</td>
+                <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_student(event,this.id)">Delete</button></td>
+                <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_student_data(event,this.id)">Edit</a></td>`
+                str += `<br>`
+            }
+            body.innerHTML = str
+        }
+        else
+        {
+            console.log('Error')
+        }
+    }
+    document?.getElementById('form_student').reset()
+    xhr.send()
 
-// function handlesubmit(event) {
-//     event.preventDefault();
-//     var formdata = new FormData(event.target);
-//     first_name = formdata.get('first_name');
-//     last_name = formdata.get('last_name');
-//     email =formdata.get('email');
-//     console.log(first_name);
-//     console.log(last_name);
-//     console.log(email);
-//     click_id = formdata.get('id')
-//     /* console.log('click_id'+click_id) */
-//     var request = new XMLHttpRequest();
+}())
+
+
+function handlesubmit(event) {
+    event.preventDefault();
+    var formdata = new FormData(event.target);
+    first_name = formdata.get('first_name');
+    last_name = formdata.get('last_name');
+    email =formdata.get('email');
+    console.log(first_name);
+    console.log(last_name);
+    console.log(email);
+    id = formdata.get('id')
+    /* console.log('click_id'+click_id) */
+    var request = new XMLHttpRequest();
     
-//     console.log('inside handle submit button =======')
+    console.log('inside handle submit button =======')
     
     
-//     request.open("POST", 'http://127.0.0.1:8000/api/create-student/')
-//     request.open("PUT",'http://127.0.0.1:8000/api/update-student/'+click_id+'/')
+    if (id ==0)
+    {
+        console.log('inside if of post')
+        request.open("POST", 'http://127.0.0.1:8000/api/create-student/')
+    }
+    else if (id ==formdata.get('id'))
+    {
+        console.log('inside if of put')
+         request.open("PUT",'http://127.0.0.1:8000/api/update-student/'+id+'/') 
+    }
 
     
-//     csrftoken = getCookie('csrftoken')
-//     request.setRequestHeader('X-CSRFToken', csrftoken)
+    csrftoken = getCookie('csrftoken')
+    request.setRequestHeader('X-CSRFToken', csrftoken)
    
-//     request.onload = function ()
-//     {
-//     console.log('insde onload of handle submit button =======')
-//        if (this.status===200)
-//        {
-//             console.log('inside if of handle submit button =======')
-//            popbtnstudent();
-//            console.log(this.status)
+    request.onload = function ()
+    {
+    console.log('insde onload of handle submit button =======')
+       if (this.status===200)
+       {
+            console.log('inside if of handle submit button =======')
+           popbtnstudent();
+           console.log(this.status)
           
-//        }
-//     }
+       }
+    }
  
     
-//     console.log('sending data from handle submit button =======')
-//     alert('form submitted successfully')
-//     request.send(formdata)
+    console.log('sending data from handle submit button =======')
+    alert('form submitted successfully')
+    request.send(formdata)
   
     
-//     document.getElementById("form_student").reset();
+    document?.getElementById("form_student").reset();
    
     
     
-// }
+}
 
-// const b = document.getElementById('form_student');
-// b.addEventListener('submit', handlesubmit);
+const b = document?.getElementById('form_student');
+b?.addEventListener('submit', handlesubmit);
 
-// // poping data on tha page using onclick function 
+// poping data on tha page using onclick function 
 
-// function popbtnstudent()
+function popbtnstudent()
 
-//     {
+    {
       
-//         var xhr = new XMLHttpRequest()
-//         xhr.open('GET','http://127.0.0.1:8000/api/student-list/',true)
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET','http://127.0.0.1:8000/api/student-list/',true)
         
         
 
-//         xhr.onload = function ()
-//         {
+        xhr.onload = function ()
+        {
           
-//             console.log('inside on load of get')
-//             if (this.status===200)
-//             {
-//             let obj = JSON.parse(this.responseText)
+            console.log('inside on load of get')
+            if (this.status===200)
+            {
+            let obj = JSON.parse(this.responseText)
            
             
-//             let body = document.getElementById('body')
+            let body = document.getElementById('body')
             
-//             str = ""
+            str = ""
            
-//             obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
-//             console.log(("type : "+typeof(obj)))
-//             console.log(obj)    
-//             for (key in obj)
-//             {
-//                 str += `<tr>
-//                 <td id="id">${obj[key].id}</td> 
-//                 <td id="first_name">${obj[key].first_name}</td>  
-//                 <td id="last_name">${obj[key].last_name}</td>
-//                 <td id="email">${obj[key].email}</td>
-//                 <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_student(event,this.id)">Delete</button></td>
-//                 <td><a href="#card" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_student_data(event,this.id)">Edit</a></td>`
-//                 str += `<br>`
-//             }
-//             body.innerHTML = str
+            obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
+            console.log(("type : "+typeof(obj)))
+            console.log(obj)    
+            for (key in obj)
+            {
+                str += `<tr>
+                <td id="id">${obj[key].id}</td> 
+                <td id="first_name">${obj[key].first_name}</td>  
+                <td id="last_name">${obj[key].last_name}</td>
+                <td id="email">${obj[key].email}</td>
+                <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_student(event,this.id)">Delete</button></td>
+                <td><a href="#card" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_student_data(event,this.id)">Edit</a></td>`
+                str += `<br>`
+            }
+            body.innerHTML = str
             
-//             }
-//             else
-//             {
-//                 console.log('Error')
-//             }
-//         }
-//         xhr.send()
+            }
+            else
+            {
+                console.log('Error')
+            }
+          }
+        xhr.send()
         
-//     }
+    }
 
-// //  delete data function
+//   delete data function
 
-// function delete_data_student(event,click_id) 
-// {
-   
-//     event.preventDefault();
+function delete_data_student(event,click_id) 
+{
+    console.log('inside delete data function')
+    event.preventDefault();
  
    
-//     var xhr = new XMLHttpRequest()
-//     var request = new XMLHttpRequest()
-//     console.log('inside del button')
-//     console.log(click_id)
-//     xhr.open("DELETE",'http://127.0.0.1:8000/api/delete-student/'+click_id+'/',true)
+    var xhr = new XMLHttpRequest()
+    var request = new XMLHttpRequest()
+    console.log('inside del button')
+    console.log(click_id)
+    xhr.open("DELETE",'http://127.0.0.1:8000/api/delete-student/'+click_id+'/',true)
+    console.log('after del request')
 
-//     request.open('GET','http://127.0.0.1:8000/api/student-list/',true) 
+    request.open('GET','http://127.0.0.1:8000/api/student-list/',true) 
    
-//     csrftoken = getCookie('csrftoken')
-//     xhr.setRequestHeader('X-CSRFToken', csrftoken)
+    csrftoken = getCookie('csrftoken')
+    xhr.setRequestHeader('X-CSRFToken', csrftoken)
    
     
    
-//     xhr.onload = function ()
-//     {
+    xhr.onload = function ()
+    {
         
-//       console.log('inside onload')
+      console.log('inside onload')
     
-//        if (this.status===200)
-//        {
-//         let obj = JSON.parse(this.responseText)
-//         console.log('inside onload if')    
-//         let body = document.getElementById('body')
+       if (this.status===200)
+       {
+        let obj = JSON.parse(this.responseText)
+        console.log('inside onload if')    
+        let body = document.getElementById('body')
 
         
-//         str = ""
+        str = ""
         
-//         obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
+        obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
 
         
-//         for (key in obj)
-//         {
-//             str += `<tr>
-//             <td id="id">${obj[key].id}</td> 
-//             <td id="first_name">${obj[key].first_name}</td>  
-//             <td id="last_name">${obj[key].last_name}</td>
-//             <td id="email">${obj[key].email}</td>
-//             <td><button id="${obj[key].id}" class="btn  btn-danger" onclick =" delete_data_student(event,this.id)">Delete</button></td>
-//             <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_student_data(event,this.id)">Edit</button></a></td>`
-//             str += `<br>`
+        for (key in obj)
+        {
+            str += `<tr>
+            <td id="id">${obj[key].id}</td> 
+            <td id="first_name">${obj[key].first_name}</td>  
+            <td id="last_name">${obj[key].last_name}</td>
+            <td id="email">${obj[key].email}</td>
+            <td><button id="${obj[key].id}" class="btn  btn-danger" onclick =" delete_data_student(event,this.id)">Delete</button></td>
+            <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_student_data(event,this.id)">Edit</button></a></td>`
+            str += `<br>`
            
-//         }
-//         body.innerHTML = str
+        }
+        body.innerHTML = str
 
-//            console.log(this.status)
+           console.log(this.status)
          
-//        }
-//     }
-//     xhr.send()
-//     request.send()
+       }
+    }
+    xhr.send()
+    request.send()
 
 
-// }
+}
 
 
-// const form_student = document.getElementById('form_student');
-// form_student.addEventListener('submit', delete_data_student);
+const form_student = document?.getElementById('form_student');
+form_student?.addEventListener('submit', delete_data_student);
 
 
-// //  editing student data
-// function update_student_data(event,click_id) 
-// {
-//     event.preventDefault();
-//     var xhr = new XMLHttpRequest()
+//  editing student data
+function update_student_data(event,click_id) 
+{
+    event.preventDefault();
+    var xhr = new XMLHttpRequest()
 
-//     xhr.open('GET','http://127.0.0.1:8000/api/student-list/')
-//     csrftoken = getCookie('csrftoken')
-//     xhr.setRequestHeader('X-CSRFToken', csrftoken)
-//     xhr.onload = function ()
-//     {
-//         console.log('inside on load of get')
-//         if (this.status===200)
-//         {
-//             console.log('inside if')
-//             let obj = JSON.parse(this.responseText)
-//             // clicked id of object id
-//             console.log(obj)
-//             for (x in obj)
-//             {
+    xhr.open('GET','http://127.0.0.1:8000/api/student-list/')
+    csrftoken = getCookie('csrftoken')
+    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+    xhr.onload = function ()
+    {
+        console.log('inside on load of get')
+        if (this.status===200)
+        {
+            console.log('inside if')
+            let obj = JSON.parse(this.responseText)
+            // clicked id of object id
+            console.log(obj)
+            for (x in obj)
+            {
                 
-//                 console.log('printing obj id ')
-//                 // console.log(obj[x].id)
-//                 if (obj[x].id == click_id)
-//                 {
+                console.log('printing obj id ')
+                // console.log(obj[x].id)
+                if (obj[x].id == click_id)
+                {
                    
                    
                   
-//                     document.getElementById('id').value = obj[x].id
-//                     document.getElementById('first_name').value = obj[x].first_name
-//                     document.getElementById('last_name').value = obj[x].last_name
-//                     document.getElementById('email').value = obj[x].email
+                    document.getElementById('id').value = obj[x].id
+                    document.getElementById('first_name').value = obj[x].first_name
+                    document.getElementById('last_name').value = obj[x].last_name
+                    document.getElementById('email').value = obj[x].email
                     
-//                 }
+                }
                 
-//             }
-//         }
-//     }
+            }
+        }
+    }
     
-//     xhr.send()
-//       document.getElementById("form_student").reset();
-//     console.log('after sednig request of GET')
-//     }
+    xhr.send()
+      document?.getElementById("form_student").reset();
+    console.log('after sednig request of GET')
+    }
