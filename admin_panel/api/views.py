@@ -4,8 +4,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Task,Student
-from .serializers import TaskSerializer,StudentSerializer
+from .models import Task,Student,Teacher
+from .serializers import TaskSerializer,StudentSerializer,TeacherSerializer
 from rest_framework.decorators import api_view
 
 
@@ -126,4 +126,66 @@ def delete_student(request,pk):
     student.delete()
     students=Student.objects.all()
     serializer=StudentSerializer(students, many=True)
+    return Response(serializer.data)
+
+
+
+@api_view(['GET'])
+def teacherapiOverview(request):
+    api_urls={
+        'List':'/teacher-list/',
+        'Detail View':'/teacher-detail/<str:pk>/',
+        'Create':'/teacher-create/',
+        'Update':'/teacher-update/<str:pk>/',
+        'Delete':'/teacher-delete/<str:pk>/',
+    }
+    return Response(api_urls)
+
+
+@api_view(['GET'])
+def teacher_list(request):
+    teacher=Teacher.objects.all()
+    serializer=TeacherSerializer(teacher, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def teacher_detail(request,pk):
+    teacher=Teacher.objects.get(id=pk)
+    serializer=TeacherSerializer(teacher, many=False)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def create_teacher(request):
+    serializer = TeacherSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+        print('get data from serializer: ',serializer.data)
+        print(serializer.data)
+    return Response('Teacher created')
+
+
+
+
+@api_view(['PUT'])
+def update_teacher(request,pk):
+    teacher = Teacher.objects.get(id=pk)
+    # update task with same id
+    serializer = TeacherSerializer(instance=teacher, data=request.data)
+   
+
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+
+
+@api_view(['DELETE','GET'])
+def delete_teacher(request,pk):
+    teacher = Teacher.objects.get(id=pk)
+    teachers=Teacher.objects.all()
+    
+    teacher.delete()
+    teachers=Teacher.objects.all()
+    serializer=TeacherSerializer(teachers, many=True)
     return Response(serializer.data)

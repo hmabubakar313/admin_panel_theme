@@ -293,7 +293,7 @@ id =0;
             console.log('Error')
         }
     }
-    document?.getElementById('form_student').reset()
+    document?.getElementById('form_student')?.reset()
     xhr.send()
 
 }())
@@ -516,5 +516,280 @@ function update_student_data(event,click_id)
     
     xhr.send()
       document?.getElementById("form_student").reset();
+    console.log('after sednig request of GET')
+    }
+
+
+
+
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// working for teacher api
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// ===========================================================
+
+
+// function that will work on when the submit button clicked 
+teacher_id =0;
+(function (event){
+    
+    var xhr = new XMLHttpRequest();
+    console.log('inside self invoking function of student')
+    xhr.open('GET','http://127.0.0.1:8000/api/teacher-list',true)
+    csrftoken = getCookie('csrftoken')
+    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+    xhr.onload = function ()
+    {
+        if (this.status===200)
+        {
+            
+            let obj = JSON.parse(this.responseText)
+            let body = document.getElementById('body')
+            str = ""
+            obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
+            for (key in obj)
+            {
+                str += `<tr>
+                <td id="first_name">${obj[key].first_name}</td> 
+                <td id="last_name">${obj[key].last_name}</td>  
+                <td id="email">${obj[key].email}</td>
+                <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_teacher(event,this.id)">Delete</button></td>
+                <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_teacher_data(event,this.id)">Edit</a></td>`
+                str += `<br>`
+            }
+            body.innerHTML = str
+        }
+        else
+        {
+            console.log('Error')
+        }
+    }
+    document?.getElementById('form_teacher').reset()
+    xhr.send()
+
+}())
+
+
+function handlesubmit(event) {
+    event.preventDefault();
+    var formdata = new FormData(event.target);
+    first_name = formdata.get('first_name');
+    last_name = formdata.get('last_name');
+    email =formdata.get('email');
+    console.log(first_name);
+    console.log(last_name);
+    console.log(email);
+    teacher_id = formdata.get('id')
+    /* console.log('click_id'+click_id) */
+    var request = new XMLHttpRequest();
+    
+    console.log('inside handle submit button =======')
+    
+    
+    if (teacher_id ==0)
+    {
+        console.log('inside if of post')
+        request.open("POST", 'http://127.0.0.1:8000/api/create-teacher/')
+    }
+    else if (teacher_id ==formdata.get('id'))
+    {
+        console.log('inside if of put')
+         request.open("PUT",'http://127.0.0.1:8000/api/update-teacher/'+teacher_id+'/') 
+    }
+
+    
+    csrftoken = getCookie('csrftoken')
+    request.setRequestHeader('X-CSRFToken', csrftoken)
+   
+    request.onload = function ()
+    {
+    console.log('insde onload of handle submit button =======')
+       if (this.status===200)
+       {
+            console.log('inside if of handle submit button =======')
+           popbtnteacher();
+           console.log(this.status)
+          
+       }
+    }
+ 
+    
+    console.log('sending data from handle submit button =======')
+    alert('form submitted successfully')
+    request.send(formdata)
+  
+    
+    document?.getElementById("form_teacher").reset();
+   
+    
+    
+}
+
+const teacher = document?.getElementById('form_teacher');
+teacher?.addEventListener('submit', handlesubmit);
+
+// poping data on tha page using onclick function 
+
+function popbtnteacher()
+
+    {
+      
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET','http://127.0.0.1:8000/api/teacher-list/',true)
+        
+        
+
+        xhr.onload = function ()
+        {
+          
+            console.log('inside on load of get')
+            if (this.status===200)
+            {
+            let obj = JSON.parse(this.responseText)
+           
+            
+            let body = document.getElementById('body')
+            
+            str = ""
+           
+            obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
+            console.log(("type : "+typeof(obj)))
+            console.log(obj)    
+            for (key in obj)
+            {
+                str += `<tr>
+                <td id="id">${obj[key].id}</td> 
+                <td id="first_name">${obj[key].first_name}</td>  
+                <td id="last_name">${obj[key].last_name}</td>
+                <td id="email">${obj[key].email}</td>
+                <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_teacher(event,this.id)">Delete</button></td>
+                <td><a href="#card" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_teacher_data(event,this.id)">Edit</a></td>`
+                str += `<br>`
+            }
+            body.innerHTML = str
+            
+            }
+            else
+            {
+                console.log('Error')
+            }
+          }
+        xhr.send()
+        
+    }
+
+//   delete data function
+
+function delete_data_teacher(event,click_id) 
+{
+    console.log('inside delete data function')
+    event.preventDefault();
+ 
+   
+    var xhr = new XMLHttpRequest()
+    var request = new XMLHttpRequest()
+    console.log('inside del button')
+    console.log(click_id)
+    xhr.open("DELETE",'http://127.0.0.1:8000/api/delete-teacher/'+click_id+'/',true)
+    console.log('after del request')
+
+    request.open('GET','http://127.0.0.1:8000/api/teacher-list/',true) 
+   
+    csrftoken = getCookie('csrftoken')
+    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+   
+    
+   
+    xhr.onload = function ()
+    {
+        
+      console.log('inside onload')
+    
+       if (this.status===200)
+       {
+        let obj = JSON.parse(this.responseText)
+        console.log('inside onload if')    
+        let body = document.getElementById('body')
+
+        
+        str = ""
+        
+        obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
+
+        
+        for (key in obj)
+        {
+            str += `<tr>
+            <td id="id">${obj[key].id}</td> 
+            <td id="first_name">${obj[key].first_name}</td>  
+            <td id="last_name">${obj[key].last_name}</td>
+            <td id="email">${obj[key].email}</td>
+            <td><button id="${obj[key].id}" class="btn  btn-danger" onclick =" delete_data_teacher(event,this.id)">Delete</button></td>
+            <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_teacher_data(event,this.id)">Edit</button></a></td>`
+            str += `<br>`
+           
+        }
+        body.innerHTML = str
+
+           console.log(this.status)
+         
+       }
+    }
+    xhr.send()
+    request.send()
+
+
+}
+
+
+const form_teacher = document?.getElementById('form_teacher');
+form_teacher?.addEventListener('submit', delete_data_teacher);
+
+
+//  editing student data
+function update_teacher_data(event,click_id) 
+{
+    event.preventDefault();
+    var xhr = new XMLHttpRequest()
+
+    xhr.open('GET','http://127.0.0.1:8000/api/teacher-list/')
+    csrftoken = getCookie('csrftoken')
+    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+    xhr.onload = function ()
+    {
+        console.log('inside on load of get')
+        if (this.status===200)
+        {
+            console.log('inside if')
+            let obj = JSON.parse(this.responseText)
+            // clicked id of object id
+            console.log(obj)
+            for (x in obj)
+            {
+                
+                console.log('printing obj id ')
+                // console.log(obj[x].id)
+                if (obj[x].id == click_id)
+                {
+                   
+                   
+                  
+                    document.getElementById('id').value = obj[x].id
+                    document.getElementById('first_name').value = obj[x].first_name
+                    document.getElementById('last_name').value = obj[x].last_name
+                    document.getElementById('email').value = obj[x].email
+                    
+                }
+                
+            }
+        }
+    }
+    
+    xhr.send()
+      document?.getElementById("form_teacher").reset();
     console.log('after sednig request of GET')
     }

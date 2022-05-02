@@ -18,5 +18,6 @@ urlpatterns = [
     path('table/',views.table,name='table'),
     path('insert/',views.insert,name='insert'),
     path('student/',views.student,name='student'),
+    path('teacher/',views.teacher,name='teacher'),
     
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

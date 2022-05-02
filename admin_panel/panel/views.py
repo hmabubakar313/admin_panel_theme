@@ -87,3 +87,7 @@ def insert(request):
 def student(request):
     return render(request, 'sash/html/form_student.html')
 
+
+def teacher(request):
+    return render(request, 'sash/html/form_teacher.html')
+

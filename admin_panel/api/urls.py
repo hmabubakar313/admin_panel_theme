@@ -35,4 +35,10 @@ urlpatterns = [
     path('create-student/',views.create_student,name='create-student'),
     path('update-student/<str:pk>/',views.update_student,name='update-student'),
     path('delete-student/<str:pk>/',views.delete_student,name='delete-student'),
+    path('teacherapiOverview',views.teacherapiOverview,name='teacherapiOverview'),
+    path('teacher-list/',views.teacher_list,name='teacher-list'),
+    path('teacher-detail/<str:pk>/',views.teacher_detail,name='teacher-detail'),
+    path('create-teacher/',views.create_teacher,name='create_teacher'),
+    path('update-teacher/<str:pk>/',views.update_teacher,name='update-teacher'),
+    path('delete-teacher/<str:pk>/',views.delete_teacher,name='delete-teacher'),
 ]
