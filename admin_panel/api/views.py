@@ -4,12 +4,12 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Task,Student,Teacher
-from .serializers import TaskSerializer,StudentSerializer,TeacherSerializer
+from .models import Task,Student,Teacher,School,Classroom
+from .serializers import TaskSerializer,StudentSerializer,TeacherSerializer,SchoolSerializer
 from rest_framework.decorators import api_view
 
 
-
+# task api view
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -66,7 +66,7 @@ def deletetask(request,pk):
     serializer=TaskSerializer(tasks, many=True)
     return Response(serializer.data)
 
-
+# student api
 
 @api_view(['GET'])
 def studentapiOverview(request):
@@ -129,7 +129,7 @@ def delete_student(request,pk):
     return Response(serializer.data)
 
 
-
+# teacher api
 @api_view(['GET'])
 def teacherapiOverview(request):
     api_urls={
@@ -188,4 +188,132 @@ def delete_teacher(request,pk):
     teacher.delete()
     teachers=Teacher.objects.all()
     serializer=TeacherSerializer(teachers, many=True)
+    return Response(serializer.data)
+
+
+
+# classroom api
+
+@api_view(['GET'])
+def classroomapiOverview(request):
+    api_urls={
+        'List':'/class-list/',
+        'Detail View':'/class-detail/<str:pk>/',
+        'Create':'/class-create/',
+        'Update':'/class-update/<str:pk>/',
+        'Delete':'/class-delete/<str:pk>/',
+    }
+    return Response(api_urls)
+
+
+@api_view(['GET'])
+def class_list(request):
+    classroom=Classroom.objects.all()
+    serializer=TeacherSerializer(classroom, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def class_detail(request,pk):
+    classroom=Classroom.objects.get(id=pk)
+    serializer=TeacherSerializer(classroom, many=False)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def create_classroom(request):
+    serializer = ClassroomSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+        print('get data from serializer: ',serializer.data)
+        print(serializer.data)
+    return Response('classroom created')
+
+
+
+
+@api_view(['PUT'])
+def update_classroom(request,pk):
+    classroom = Classroom.objects.get(id=pk)
+    # update task with same id
+    serializer = ClassroomSerializer(instance=classroom, data=request.data)
+   
+
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+
+
+@api_view(['DELETE','GET'])
+def delete_class(request,pk):
+    classroom = Classroom.objects.get(id=pk)
+    classrooms=Classroom.objects.all()
+    
+    classroom.delete()
+    classrooms=Classroom.objects.all()
+    serializer=ClassroomSerializer(classrooms, many=True)
+    return Response(serializer.data)
+
+
+# school api
+
+
+@api_view(['GET'])
+def schoolapiOverview(request):
+    api_urls={
+        'List':'/school-list/',
+        'Detail View':'/school-detail/<str:pk>/',
+        'Create':'/school-create/',
+        'Update':'/school-update/<str:pk>/',
+        'Delete':'/school-delete/<str:pk>/',
+    }
+    return Response(api_urls)
+
+
+@api_view(['GET'])
+def school_list(request):
+    school=School.objects.all()
+    serializer=SchoolSerializer(school, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def school_detail(request,pk):
+    school=School.objects.get(id=pk)
+    serializer=SchoolSerializer(school, many=False)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def create_school(request):
+    serializer = SchoolSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+        print('get data from serializer: ',serializer.data)
+        print(serializer.data)
+    return Response('School created')
+
+
+
+
+@api_view(['PUT'])
+def update_school(request,pk):
+    school = School.objects.get(id=pk)
+    # update task with same id
+    serializer = SchoolSerializer(instance=school, data=request.data)
+   
+
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+
+
+@api_view(['DELETE','GET'])
+def delete_school(request,pk):
+    school = School.objects.get(id=pk)
+    schools=School.objects.all()
+    
+    school.delete()
+    schools=School.objects.all()
+    serializer=SchoolSerializer(schools, many=True)
     return Response(serializer.data)

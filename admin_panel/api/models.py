@@ -27,5 +27,27 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.first_name
+
+class Classroom(models.Model):
+    name= models.CharField(max_length=200)
+    number_of_student = models.CharField(max_length=50)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return self.name
+
+class School(models.Model):
+    name= models.CharField(max_length=200)
+    number_of_student = models.IntegerField(null=True)
+    number_of_teacher = models.IntegerField(null=True)
+
+    def __str__(self):
+        return self.name
+
+
+
+
+
          
     

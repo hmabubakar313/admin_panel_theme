@@ -19,5 +19,6 @@ urlpatterns = [
     path('insert/',views.insert,name='insert'),
     path('student/',views.student,name='student'),
     path('teacher/',views.teacher,name='teacher'),
+    path('school/',views.school,name='school'),
     
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -41,4 +41,10 @@ urlpatterns = [
     path('create-teacher/',views.create_teacher,name='create_teacher'),
     path('update-teacher/<str:pk>/',views.update_teacher,name='update-teacher'),
     path('delete-teacher/<str:pk>/',views.delete_teacher,name='delete-teacher'),
+    path('schoolapiOverview',views.schoolapiOverview,name='schoolapiOverview'),
+    path('school-list/',views.school_list,name='school-list'),
+    path('school-detail/<str:pk>/',views.school_detail,name='school-detail'),
+    path('create-school/',views.create_school,name='create_school'),
+    path('update-school/<str:pk>/',views.update_school,name='update-school'),
+    path('delete-school/<str:pk>/',views.delete_school,name='delete-school')
 ]

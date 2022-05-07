@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'panel',
+    'livesync',
     'bootstrap4',
     'jquery',
     'fontawesome_5',

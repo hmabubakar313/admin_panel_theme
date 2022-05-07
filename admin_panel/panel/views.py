@@ -91,3 +91,6 @@ def student(request):
 def teacher(request):
     return render(request, 'sash/html/form_teacher.html')
 
+def school(request):
+    return render(request, 'sash/html/form_school.html')
+
