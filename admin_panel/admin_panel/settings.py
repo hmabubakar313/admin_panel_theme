@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'panel',
     'livesync',
     'bootstrap4',
+    'phone_field',
     'jquery',
     'fontawesome_5',
     'api',
