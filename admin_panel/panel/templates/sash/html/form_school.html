@@ -8,71 +8,72 @@
           </div>
           <div class="card-body">
               <form class="form-horizontal" id="form_school">
+                 {% csrf_token %} 
                   <div class=" row mb-4">
                       
                       <div class="col-md-6">
-                          <input type="text" class="form-control" value="" placeholder="School Name">
+                          <input type="text" class="form-control" value="" placeholder="School Name" id="school_name">
                       </div>
                       <div class="col-md-6">
-                        <input type="text" id="example-email" name="example-email" class="form-control" placeholder="School ID">
+                        <input type="text"  name="example-email" class="form-control" placeholder="School ID" id="school_id" >
                     </div>
                   </div>
                  
                   <div class=" row mb-4">
                       
                       <div class="col-md-6">
-                          <input type="text" class="form-control" value="" placeholder="School Address">
+                          <input type="text" class="form-control" value="" placeholder="School Address"  id="school_address">
                       </div>
                       <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="State">
+                        <input type="text" class="form-control" placeholder="State" id="state">
                     </div>
                   </div>
                  
                   <div class=" row mb-4">
                       
                       <div class="col-md-6">
-                          <input type="text" class="form-control" placeholder="Country" value="">
+                          <input type="text" class="form-control" placeholder="Country" value=""  id="country">
                       </div>
                       <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Postalcode">
+                        <input type="text" class="form-control" placeholder="Postalcode"  id="postal_code">
                     </div>
                   </div>
                 
                   <div class=" row mb-4 mb-4">
                      
                       <div class="col-md-6">
-                          <input class="form-control" placeholder="Ranking" type="number" name="number">
+                          <input class="form-control" placeholder="Ranking" type="number" name="number" id="ranking">
                       </div>
                       <div class="col-md-6">
-                        <input class="form-control" type="url" name="url" placeholder="Website URL">
+                        <input class="form-control" type="url" name="url" placeholder="Website URL"  id="url">
                     </div>
                   </div>
                   <div class=" row mb-4">
                      
                     <div class="col-md-6">
-                      <input class="form-control" type="text" name="" placeholder="Type">
+                      <input class="form-control" type="text" name="" placeholder="Type" id="school_type">
                       
                   </div>
                   <div class="col-md-6">
-                    <input class="form-control" type="text" name="" placeholder="Size">
+                    <input class="form-control" type="text" name="" placeholder="Size"  id="school_size">
                 </div>
                   </div>
                   
                   <div class=" row mb-4">
                    
                    
-                    <!-- <div class="col-md-6"> -->
-                      <!-- <input class="form-control" type="tel" name="tel" placeholder="Telephone"> -->
-<!--  -->
-                  <!-- </div> -->
-                  <!-- <div class="col-md-6"> -->
-                    <!-- <input class="form-control" type="file" name=""> -->
-                <!-- </div> -->
+                     <div class="col-md-6"> 
+                      <input class="form-control" id="phone-input" type="tel" value="" name="PhoneIn" aria-label="Please enter your phone number" placeholder="ex. 1(111)-111-1111">
+                       
+                   </div> 
+                   <div class="col-md-6"> 
+                     <input class="form-control" type="file" name=""> 
+                 </div> 
                 </div>
                  
                   <div class=" row mb-0">
                     <div class="col-md-6">
-                      <input class="form-control" type="email" name="" placeholder="email"> 
+                      <input class="form-control" type="email" name="" placeholder="email" id="email"> 
                   </div>
                   <div class="col-md-6">
                     <button  class="btn btn-primary" type="submit" id="" >submit</button>

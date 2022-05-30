@@ -41,21 +41,6 @@ if (window.location.pathname==='/table/')
         xhr.send()
     
     }())
-}
-
-
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
-       var c = ca[i];
-       while (c.charAt(0)==' ') c = c.substring(1);
-       if(c.indexOf(name) == 0)
-          return c.substring(name.length,c.length);
-    }
-    return "";
-}
-
 
 click_id =0;
 
@@ -255,6 +240,22 @@ function update_data(event,click_id)
     }
 
 
+}
+
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+       var c = ca[i];
+       while (c.charAt(0)==' ') c = c.substring(1);
+       if(c.indexOf(name) == 0)
+          return c.substring(name.length,c.length);
+    }
+    return "";
+}
+
+
 
 // // ===========================================================
 // // ===========================================================
@@ -307,7 +308,6 @@ if (window.location.pathname === '/student/')
     xhr.send()
 
 }())
-}
 id =0;
 function handlesubmit(event) {
     event.preventDefault();
@@ -532,6 +532,8 @@ function update_student_data(event,click_id)
 
 
 
+}
+
 // // ===========================================================
 // // ===========================================================
 // // ===========================================================
@@ -585,8 +587,6 @@ if (window.location.pathname === '/teacher/')
         
     
     }())
-    
-}
 
 function handlesubmit(event) {
     event.preventDefault();
@@ -812,6 +812,9 @@ function update_teacher_data(event,click_id)
  
 
 
+    
+}
+
 
 // ===========================================================
 // ===========================================================
@@ -823,3 +826,102 @@ function update_teacher_data(event,click_id)
 // ===========================================================
 // ===========================================================
 
+if (window.location.pathname==='/school/')
+{
+    (function (event){
+    
+        var xhr = new XMLHttpRequest();
+        console.log('inside school')
+        console.log('inside self invoking function of school')
+        xhr.open('GET','http://127.0.0.1:8000/api/school-list/',true)
+        csrftoken = getCookie('csrftoken')
+        console.log('csrftoken')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function ()
+        {
+            console.log('inside onload')
+            if (this.status===200)
+            {
+                console.log('inside onload if')
+                
+                let obj = JSON.parse(this.responseText)
+                let body = document.getElementById('body')
+                str = ""
+                obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
+                console.log(obj)
+                for (key in obj)
+                {
+                    str += `<tr>
+                    <td id="school_name">${obj[key].school_name}</td> 
+                    <td id="title">${obj[key].title}</td>  
+                    <td id="description">${obj[key].description}</td>
+                    <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
+                    <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)">Edit</a></td>`
+                    str += `<br>`
+                }
+                body.innerHTML = str
+            }
+            else
+            {
+                console.log('Error')
+            }
+        }
+        document.getElementById('form_school')?.reset()
+        xhr.send()
+    
+    }())
+school_id =0;
+
+function handlesubmit(event) {
+    event.preventDefault();
+    var formdata = new FormData(event.target);
+    
+    school_id = formdata.get('id');
+    console.log(typeof("clicked id is : "+school_id));
+    console.log('click_id : '+school_id);
+    var request = new XMLHttpRequest();
+    
+    console.log('inside handlesubmit')
+//    if (school_id==0)
+//    {
+       console.log('post')
+    request.open("POST", 'http://127.0.0.1:8000/api/create-school/',true)
+//    }
+   /* else if (school_id==formdata.get('id'))
+    {
+        request.open("PUT",'http://127.0.0.1:8000/api/update-school/'+school_id+'/',true)
+    } */
+
+    console.log('after request')
+    csrftoken = getCookie('csrftoken')
+    request.setRequestHeader('X-CSRFToken', csrftoken)
+   
+    request.onload = function ()
+    {
+    
+       if (this.status===200)
+       {
+        // popBtnHandler();
+        console.log('inside if')
+        console.log(this.status)
+       }
+    }
+ 
+    alert('form submitted successfully')
+    request.send(formdata)
+   
+    
+    document.getElementById("form_school").reset();
+    school_id =0;
+
+}
+
+const school = document.getElementById('form_school');
+school?.addEventListener('submit', handlesubmit)
+}
+
+function phoneMask() { 
+    var num = $(this).val().replace(/\D/g,''); 
+    $(this).val(num.substring(0,1) + '(' + num.substring(1,4) + ')' + num.substring(4,7) + '-' + num.substring(7,11)); 
+}
+$('[type="tel"]').keyup(phoneMask);
