@@ -15,7 +15,7 @@ class Student(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     email = models.CharField(max_length=200,null=True)
-    # task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    # student_id = models.ForeignKey(School, on_delete=models.CASCADE)
  
     def __str__(self):
         return self.first_name
@@ -58,11 +58,11 @@ class School(models.Model):
     phone_number = PhoneField(blank=True)
     file = models.ImageField(null=True,blank=True,upload_to="school_images/")   
     email = models.CharField(max_length=200)
-    """ student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    
+    """task = models.ForeignKey(Task, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
- """
+"""
     def __str__(self):
         return self.school_name
 
