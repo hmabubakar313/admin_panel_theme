@@ -590,7 +590,8 @@ if (window.location.pathname === '/teacher/')
 
 function handlesubmit(event) {
     event.preventDefault();
-    var formdata = new FormData(event.target);
+    // let myform = document.getElementById(form_stud)
+    let  formdata = new FormData(event.target);
     first_name = formdata.get('first_name');
     last_name = formdata.get('last_name');
     email =formdata.get('email');
@@ -848,7 +849,7 @@ if (window.location.pathname==='/school/')
                 let body = document.getElementById('body')
                 str = ""
                 obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
-                console.log(obj)
+                // console.log(obj)
                 for (key in obj)
                 {
                     str += `<tr>
@@ -866,60 +867,92 @@ if (window.location.pathname==='/school/')
                 console.log('Error')
             }
         }
-        document.getElementById('form_school')?.reset()
+        // document.getElementById('form_school')?.reset()
         xhr.send()
     
     }())
 school_id =0;
-
 function handlesubmit(event) {
-    event.preventDefault();
-    var formdata = new FormData(event.target);
-    
-    school_id = formdata.get('id');
-    console.log(typeof("clicked id is : "+school_id));
-    console.log('click_id : '+school_id);
-    var request = new XMLHttpRequest();
-    
-    console.log('inside handlesubmit')
-//    if (school_id==0)
-//    {
-       console.log('post')
-    request.open("POST", 'http://127.0.0.1:8000/api/create-school/',true)
-//    }
-   /* else if (school_id==formdata.get('id'))
-    {
-        request.open("PUT",'http://127.0.0.1:8000/api/update-school/'+school_id+'/',true)
-    } */
+        event.preventDefault();
 
-    console.log('after request')
-    csrftoken = getCookie('csrftoken')
-    request.setRequestHeader('X-CSRFToken', csrftoken)
-   
-    request.onload = function ()
-    {
+        let  formdata = new FormData(event.target);
+        console.log(typeof(formdata))
+        console.log('===school name===')
+        console.log(formdata.get('school_name'))
+        console.log('===school_id===')
+        console.log(formdata.get('school_id'))
+        console.log('===school address===')
+        console.log(formdata.get('school_address'))
+        console.log('===school state===')
+        console.log(formdata.get('state'))
+        console.log('===country===')
+        console.log(formdata.get('country'))
+        console.log('===postal code===')
+        console.log(formdata.get('postal_code'))
+        console.log('===ranking===')
+        console.log(formdata.get('ranking'))
+        console.log('===url===')
+        console.log(formdata.get('url'))
+        console.log('===school type===')
+        console.log(formdata.get('school_type'))
+        console.log('===school sieze===')
+        console.log(formdata.get('school_size'))
+        console.log('===phone number===')
+        console.log(formdata.get('phone_input'))
+        console.log('===file===')
+        console.log(formdata.get('file'))
+        console.log('===email===')
+        console.log(formdata.get('email'))
+       
+        school_id = formdata.get('id')
+        console.log('school_id : '+school_id) 
+        var request = new XMLHttpRequest();
+        
+        console.log('inside handle submit button =======')
+        
+        
+        request.open("POST", 'http://127.0.0.1:8000/api/create-school/')
+        /* if (teacher_id ==0)
+        {
+            console.log('inside if of post')
+        } */
+        /* else if (teacher_id ==formdata.get('id'))
+        {
+            console.log('inside if of put')
+             request.open("PUT",'http://127.0.0.1:8000/api/update-teacher/'+teacher_id+'/') 
+        } */
     
-       if (this.status===200)
-       {
-        // popBtnHandler();
-        console.log('inside if')
-        console.log(this.status)
-       }
+        
+        csrftoken = getCookie('csrftoken')
+        request.setRequestHeader('X-CSRFToken', csrftoken)
+       
+        request.onload = function ()
+        {
+        console.log('insde onload of handle submit button =======')
+           if (this.status===200)
+           {
+                console.log('inside if of handle submit button =======')
+            //    popbtnteacher();
+               console.log(this.status)
+              
+           }
+        }
+     
+        
+        console.log('sending data from handle submit button =======')
+        alert('form submitted successfully')
+        request.send(formdata)
+      
+        
+        // document?.getElementById("form_school").reset();
+       
+        school_id =0;
+        
     }
- 
-    alert('form submitted successfully')
-    request.send(formdata)
-   
+}
     
-    document.getElementById("form_school").reset();
-    school_id =0;
-
-}
-
-const school = document.getElementById('form_school');
-school?.addEventListener('submit', handlesubmit)
-}
-
+    const school = document?.getElementById('form_school');
+    school?.addEventListener('submit', handlesubmit);
 function phoneMask() { 
     var num = $(this).val().replace(/\D/g,''); 
     $(this).val(num.substring(0,1) + '(' + num.substring(1,4) + ')' + num.substring(4,7) + '-' + num.substring(7,11)); 

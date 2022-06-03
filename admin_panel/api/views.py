@@ -287,12 +287,12 @@ def create_school(request):
     serializer = SchoolSerializer(data=request.data)
 
     if serializer.is_valid():
+        print('================ inside serializer =============')
         serializer.save()
+        print('-------------------------------------------------------------')
         print('get data from serializer: ',serializer.data)
         print(serializer.data)
     return Response('School created')
-
-
 
 
 @api_view(['PUT'])

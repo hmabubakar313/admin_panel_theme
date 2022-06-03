@@ -1,4 +1,5 @@
 from django.db import models
+from localflavor.us.models import USStateField
 from phone_field import PhoneField
 
 # Create your models here.
@@ -48,11 +49,11 @@ class School(models.Model):
     school_name= models.CharField(max_length=200)
     school_id = models.CharField(max_length=200)
     school_address = models.CharField(max_length=200)
-    state = models.CharField(max_length=50)
+    state = models.CharField(max_length=200)
     country = models.CharField(max_length=50)
-    postal_code = models.IntegerField(null=True)
+    postal_code = models.CharField(("zip code"), max_length=5, default="43701")
     ranking = models.IntegerField(null=True)
-    url = models.CharField(max_length=200)
+    url =  models.URLField(max_length = 200)
     school_type = models.CharField(max_length=200)
     school_size = models.IntegerField(null=True)
     phone_number = PhoneField(blank=True)

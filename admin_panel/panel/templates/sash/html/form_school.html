@@ -1,61 +1,57 @@
 {%  extends './base.html' %}
 {% block content %}
-<div class="row">
-  <div class="col-md-12 col-lg-12">
-      <div class="card">
-          <div class="card-header">
-              <h4 class="card-title">School Details</h4>
-          </div>
+
           <div class="card-body">
-              <form class="form-horizontal" id="form_school">
+              <form  id="form_school">
                  {% csrf_token %} 
-                  <div class=" row mb-4">
-                      
+                  <div class="row mb-4">
+                    <input type="hidden" name="id" placeholder="id" id="id" class="form-control mb-4" name="id" >
                       <div class="col-md-6">
-                          <input type="text" class="form-control" value="" placeholder="School Name" id="school_name">
+                        
+                          <input type="text" class="form-control" value="" placeholder="School Name" name="school_name" id="school_name">
                       </div>
                       <div class="col-md-6">
-                        <input type="text"  name="example-email" class="form-control" placeholder="School ID" id="school_id" >
+                        <input type="text"  class="form-control" placeholder="School ID" id="school_id" name="school_id" >
                     </div>
                   </div>
                  
                   <div class=" row mb-4">
                       
                       <div class="col-md-6">
-                          <input type="text" class="form-control" value="" placeholder="School Address"  id="school_address">
+                          <input type="text" class="form-control" value="" placeholder="School Address"  id="school_address" name="school_address">
                       </div>
                       <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="State" id="state">
+                        <input type="text" class="form-control" placeholder="State" id="state" name="state">
                     </div>
                   </div>
                  
                   <div class=" row mb-4">
                       
                       <div class="col-md-6">
-                          <input type="text" class="form-control" placeholder="Country" value=""  id="country">
+                          <input type="text" class="form-control" placeholder="Country" value=""  id="country"  name="country">
                       </div>
                       <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Postalcode"  id="postal_code">
+                        <input type="text" class="form-control" placeholder="Postalcode"  id="postal_code" name="postal_code">
                     </div>
                   </div>
                 
                   <div class=" row mb-4 mb-4">
                      
                       <div class="col-md-6">
-                          <input class="form-control" placeholder="Ranking" type="number" name="number" id="ranking">
+                          <input class="form-control" placeholder="Ranking" type="number" id="ranking"  name="ranking">
                       </div>
                       <div class="col-md-6">
-                        <input class="form-control" type="url" name="url" placeholder="Website URL"  id="url">
+                        <input class="form-control" type="url" name="url" placeholder="Website URL"  id="url"   name="url">
                     </div>
                   </div>
                   <div class=" row mb-4">
                      
                     <div class="col-md-6">
-                      <input class="form-control" type="text" name="" placeholder="Type" id="school_type">
+                      <input class="form-control" type="text" placeholder="Type" id="school_type"  name="school_type">
                       
                   </div>
                   <div class="col-md-6">
-                    <input class="form-control" type="text" name="" placeholder="Size"  id="school_size">
+                    <input class="form-control" type="number"  placeholder="Size"  id="school_size"  name="school_size">
                 </div>
                   </div>
                   
@@ -63,26 +59,25 @@
                    
                    
                      <div class="col-md-6"> 
-                      <input class="form-control" id="phone-input" type="tel" value="" name="PhoneIn" aria-label="Please enter your phone number" placeholder="ex. 1(111)-111-1111">
+                      <input class="form-control" id="phone_input" name="phone_input" type="tel"  placeholder="ex. 1(111)-111-1111">
                        
                    </div> 
                    <div class="col-md-6"> 
-                     <input class="form-control" type="file" name=""> 
+                     <input class="form-control" type="file" name="file" id="file"> 
                  </div> 
                 </div>
                  
                   <div class=" row mb-0">
                     <div class="col-md-6">
-                      <input class="form-control" type="email" name="" placeholder="email" id="email"> 
-                  </div>
-                  <div class="col-md-6">
-                    <button  class="btn btn-primary" type="submit" id="" >submit</button>
+                      <input class="form-control" type="email" placeholder="email" id="email"  name="email"> 
+                    </div>
+                    <div class="col-md-6">
+                      <button  class="btn btn-primary" type="submit" id="" >submit</button>
+                    </div>
+                   
                 </div>
-                    
-                </div>
+
               </form>
           </div>
       </div>
-  </div>
-</div>
 {% endblock %}
