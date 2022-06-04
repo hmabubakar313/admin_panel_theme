@@ -393,6 +393,29 @@
                                         <div class="table-responsive">
                                             <table class="table border text-nowrap text-md-nowrap table-striped mb-0">
                                                 <thead>
+                                                    
+                                                    
+                                                    {% if request.get_full_path == "/school/" %}
+
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>School Name</th>
+                                                        <th>School ID</th>
+                                                        <th>School Address</th>
+                                                        <th>State</th>
+                                                        <th>Country</th>
+                                                        <th>Postal Code</th>
+                                                        <th>Ranking</th>
+                                                        <th>url</th>
+                                                        <th>School Type</th>
+                                                        <th>School Size </th>
+                                                        <th>Phone Number</th>
+                                                        <th>File</th>
+                                                        <th>School email</th>    
+                                                        <th>DELETE</th>
+                                                        <th>EDIT</th>
+                                                    </tr>
+                                                    {% else %}
                                                     <tr>
                                                         <th>ID</th>
                                                         <th>Title</th>
@@ -400,6 +423,7 @@
                                                         <th>DELETE</th>
                                                         <th>EDIT</th>
                                                     </tr>
+                                                    {% endif %}
                                                 </thead>
                                                 <tbody id="body">
                                                  

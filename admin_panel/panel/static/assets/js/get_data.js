@@ -23,6 +23,7 @@ if (window.location.pathname==='/table/')
                 for (key in obj)
                 {
                     str += `<tr>
+                    
                     <td id="id">${obj[key].id}</td> 
                     <td id="title">${obj[key].title}</td>  
                     <td id="description">${obj[key].description}</td>
@@ -849,13 +850,26 @@ if (window.location.pathname==='/school/')
                 let body = document.getElementById('body')
                 str = ""
                 obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
-                // console.log(obj)
                 for (key in obj)
+                // console.log(obj)
                 {
+                    console.log('-------------')
                     str += `<tr>
-                    <td id="school_name">${obj[key].school_name}</td> 
-                    <td id="title">${obj[key].title}</td>  
-                    <td id="description">${obj[key].description}</td>
+                    <td id="id">${obj[key].id}</td> 
+                    <td id="school_name">${obj[key].school_name}</td>  
+                    <td id="school_id">${obj[key].school_id}</td>
+                    <td id="school_address">${obj[key].school_address}</td>
+                    <td id="state">${obj[key].state}</td>
+                    <td id="country">${obj[key].country}</td>
+                    <td id="postal_code">${obj[key].postal_code}</td>
+                    <td id="ranking">${obj[key].ranking}</td>
+                    <td id="url">${obj[key].url}</td>
+                    <td id="ranking">${obj[key].ranking}</td>
+                    <td id="school_type">${obj[key].school_type}</td>
+                    <td id="school_size">${obj[key].school_size}</td>
+                    <td id="phone_input">${obj[key].phone_input}</td>
+                    <td id="file">${obj[key].file}</td>
+                    <td id="email">${obj[key].email}</td>
                     <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
                     <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)">Edit</a></td>`
                     str += `<br>`
@@ -871,12 +885,12 @@ if (window.location.pathname==='/school/')
         xhr.send()
     
     }())
-school_id =0;
+id =0;
 function handlesubmit(event) {
         event.preventDefault();
 
         let  formdata = new FormData(event.target);
-        console.log(typeof(formdata))
+        /* console.log(typeof(formdata))
         console.log('===school name===')
         console.log(formdata.get('school_name'))
         console.log('===school_id===')
@@ -902,7 +916,7 @@ function handlesubmit(event) {
         console.log('===file===')
         console.log(formdata.get('file'))
         console.log('===email===')
-        console.log(formdata.get('email'))
+        console.log(formdata.get('email')) */
        
         school_id = formdata.get('id')
         console.log('school_id : '+school_id) 
@@ -911,16 +925,16 @@ function handlesubmit(event) {
         console.log('inside handle submit button =======')
         
         
-        request.open("POST", 'http://127.0.0.1:8000/api/create-school/')
-        /* if (teacher_id ==0)
+        if (id ==0)
         {
             console.log('inside if of post')
-        } */
-        /* else if (teacher_id ==formdata.get('id'))
+            request.open("POST", 'http://127.0.0.1:8000/api/create-school/')
+        } 
+         else if (id ==formdata.get('id'))
         {
             console.log('inside if of put')
-             request.open("PUT",'http://127.0.0.1:8000/api/update-teacher/'+teacher_id+'/') 
-        } */
+             request.open("PUT",'http://127.0.0.1:8000/api/update-school/'+id+'/') 
+        } 
     
         
         csrftoken = getCookie('csrftoken')
