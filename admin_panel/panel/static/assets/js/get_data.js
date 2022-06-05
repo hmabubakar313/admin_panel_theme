@@ -853,7 +853,7 @@ if (window.location.pathname==='/school/')
                 for (key in obj)
                 // console.log(obj)
                 {
-                    console.log('-------------')
+                   
                     str += `<tr>
                     <td id="id">${obj[key].id}</td> 
                     <td id="school_name">${obj[key].school_name}</td>  
@@ -864,7 +864,6 @@ if (window.location.pathname==='/school/')
                     <td id="postal_code">${obj[key].postal_code}</td>
                     <td id="ranking">${obj[key].ranking}</td>
                     <td id="url">${obj[key].url}</td>
-                    <td id="ranking">${obj[key].ranking}</td>
                     <td id="school_type">${obj[key].school_type}</td>
                     <td id="school_size">${obj[key].school_size}</td>
                     <td id="phone_input">${obj[key].phone_input}</td>
@@ -958,7 +957,7 @@ function handlesubmit(event) {
         request.send(formdata)
       
         
-        // document?.getElementById("form_school").reset();
+        document?.getElementById("form_school").reset();
        
         school_id =0;
         
