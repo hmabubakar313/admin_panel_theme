@@ -94,3 +94,6 @@ def teacher(request):
 def school(request):
     return render(request, 'sash/html/form_school.html')
 
+
+
+

@@ -1,4 +1,49 @@
-if (window.location.pathname==='/table/')
+if (window.location.pathname==='/dashboard/')
+{
+    (function (event){
+    
+        var xhr = new XMLHttpRequest();
+        console.log('inside self invoking function of task')
+        xhr.open('GET','http://127.0.0.1:8000/api/task-list/',true)
+        csrftoken = getCookie('csrftoken')
+        console.log('csrftoken')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function ()
+        {
+            console.log('inside onload')
+            if (this.status===200)
+            {
+                console.log('inside onload if')
+                
+                let obj = JSON.parse(this.responseText)
+                let body = document.getElementById('body')
+                str = ""
+                obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
+                console.log(obj)
+                for (key in obj)
+                {
+                    str += `<tr>
+                    
+                    <td id="id">${obj[key].id}</td> 
+                    <td id="title">${obj[key].title}</td>  
+                    <td id="description">${obj[key].description}</td>
+                    <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
+                    <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)">Edit</a></td>`
+                    str += `<br>`
+                }
+                body.innerHTML = str
+            }
+            else
+            {
+                console.log('Error')
+            }
+        }
+        document.getElementById('form_task')?.reset()
+        xhr.send()
+    
+    }())
+}
+if (window.location.pathname==='/table/'   )
 {
     (function (event){
     
@@ -869,8 +914,8 @@ if (window.location.pathname==='/school/')
                     <td id="phone_input">${obj[key].phone_input}</td>
                     <td id="file">${obj[key].file}</td>
                     <td id="email">${obj[key].email}</td>
-                    <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
-                    <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)">Edit</a></td>`
+                    <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_school(event,this.id)">Delete</button></td>
+                    <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_school_data(event,this.id)">Edit</a></td>`
                     str += `<br>`
                 }
                 body.innerHTML = str
@@ -889,7 +934,7 @@ function handlesubmit(event) {
         event.preventDefault();
 
         let  formdata = new FormData(event.target);
-        /* console.log(typeof(formdata))
+         console.log(typeof(formdata))
         console.log('===school name===')
         console.log(formdata.get('school_name'))
         console.log('===school_id===')
@@ -915,10 +960,10 @@ function handlesubmit(event) {
         console.log('===file===')
         console.log(formdata.get('file'))
         console.log('===email===')
-        console.log(formdata.get('email')) */
-       
-        school_id = formdata.get('id')
-        console.log('school_id : '+school_id) 
+        console.log(formdata.get('email')) 
+        console.log('id : '+id)
+        // school_id = formdata.get('id')
+
         var request = new XMLHttpRequest();
         
         console.log('inside handle submit button =======')
@@ -945,7 +990,7 @@ function handlesubmit(event) {
            if (this.status===200)
            {
                 console.log('inside if of handle submit button =======')
-            //    popbtnteacher();
+               popbtnschool();
                console.log(this.status)
               
            }
@@ -957,17 +1002,214 @@ function handlesubmit(event) {
         request.send(formdata)
       
         
-        document?.getElementById("form_school").reset();
+        // document?.getElementById("form_school").reset();
        
         school_id =0;
         
     }
+
+function popbtnschool()
+
+{
+  
+    var xhr = new XMLHttpRequest()
+    xhr.open('GET','http://127.0.0.1:8000/api/school-list/',true)
+    
+    
+
+    xhr.onload = function ()
+    {
+      
+        console.log('inside on load of get')
+        if (this.status===200)
+        {
+        let obj = JSON.parse(this.responseText)
+       
+        
+        let body = document.getElementById('body')
+        
+        str = ""
+       
+        obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
+       
+        console.log(obj)    
+        for (key in obj)
+        {
+            str += `<tr>
+                <td id="id">${obj[key].id}</td> 
+                <td id="school_name">${obj[key].school_name}</td>  
+                <td id="school_id">${obj[key].school_id}</td>
+                <td id="school_address">${obj[key].school_address}</td>
+                <td id="state">${obj[key].state}</td>
+                <td id="country">${obj[key].country}</td>
+                <td id="postal_code">${obj[key].postal_code}</td>
+                <td id="ranking">${obj[key].ranking}</td>
+                <td id="url">${obj[key].url}</td>
+                <td id="school_type">${obj[key].school_type}</td>
+                <td id="school_size">${obj[key].school_size}</td>
+                <td id="phone_input">${obj[key].phone_input}</td>
+                <td id="file">${obj[key].file}</td>
+                <td id="email">${obj[key].email}</td>
+                <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_school(event,this.id)">Delete</button></td>
+                <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_school_data(event,this.id)">Edit</a></td>
+                `
+                str += `<br>`
+        }
+        body.innerHTML = str
+        
+        }
+        else
+        {
+            console.log('Error')
+        }
+      }
+    xhr.send()
+    
+}
+
+// delete school function
+function delete_data_school(event,click_id) 
+{
+    console.log('inside delete data function')
+    event.preventDefault();
+ 
+   
+    var xhr = new XMLHttpRequest()
+    var request = new XMLHttpRequest()
+    console.log('inside del button')
+   
+    xhr.open("DELETE",'http://127.0.0.1:8000/api/delete-school/'+click_id+'/',true)
+    console.log('after del request')
+
+    request.open('GET','http://127.0.0.1:8000/api/school-list/',true) 
+   
+    csrftoken = getCookie('csrftoken')
+    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+   
+    
+   
+    xhr.onload = function ()
+    {
+        
+      console.log('inside onload')
+    
+       if (this.status===200)
+       {
+        let obj = JSON.parse(this.responseText)
+        console.log('inside onload if')    
+        let body = document.getElementById('body')
+
+        
+        str = ""
+        
+        obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
+
+        
+        for (key in obj)
+        {
+            str += `<tr>
+            <td id="id">${obj[key].id}</td> 
+            <td id="school_name">${obj[key].school_name}</td>  
+            <td id="school_id">${obj[key].school_id}</td>
+            <td id="school_address">${obj[key].school_address}</td>
+            <td id="state">${obj[key].state}</td>
+            <td id="country">${obj[key].country}</td>
+            <td id="postal_code">${obj[key].postal_code}</td>
+            <td id="ranking">${obj[key].ranking}</td>
+            <td id="url">${obj[key].url}</td>
+            <td id="school_type">${obj[key].school_type}</td>
+            <td id="school_size">${obj[key].school_size}</td>
+            <td id="phone_input">${obj[key].phone_input}</td>
+            <td id="file">${obj[key].file}</td>
+            <td id="email">${obj[key].email}</td>
+            <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_school(event,this.id)">Delete</button></td>
+            <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_school_data(event,this.id)">Edit</a></td>
+            <td><a href="{% url 'table' %}"  class="btn btn-secondary" >Add Task</a></td>`
+            str += `<br>`
+           
+        }
+        body.innerHTML = str
+
+           console.log(this.status)
+         
+       }
+    }
+    xhr.send()
+    request.send()
+
+
+}
+
+
+const form_school = document?.getElementById('form_school');
+form_school?.addEventListener('submit', delete_data_school);
+
+// update school
+function update_school_data(event,click_id) 
+{
+    event.preventDefault();
+    var xhr = new XMLHttpRequest()
+
+    xhr.open('GET','http://127.0.0.1:8000/api/school-list/')
+    csrftoken = getCookie('csrftoken')
+    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+    xhr.onload = function ()
+    {
+        console.log('inside on load of get')
+        if (this.status===200)
+        {
+            console.log('inside if')
+            let obj = JSON.parse(this.responseText)
+            // clicked id of object id
+            console.log(obj)
+            for (x in obj)
+            {
+                
+                console.log('printing obj id ')
+                // console.log(obj[x].id)
+                if (obj[x].id == click_id)
+                {
+                   
+                   
+                  
+                    document.getElementById('id').value = obj[x].id
+                    document.getElementById('school_name').value = obj[x].school_name
+                    document.getElementById('school_id').value = obj[x].school_id
+                    document.getElementById('school_address').value = obj[x].school_address
+                    document.getElementById('school_address').value = obj[x].school_address
+                    document.getElementById('state').value = obj[x].state
+                    document.getElementById('country').value = obj[x].country
+                    document.getElementById('postal_code').value = obj[x].postal_code
+                    document.getElementById('ranking').value = obj[x].ranking
+                    document.getElementById('url').value = obj[x].url
+                    document.getElementById('school_type').value = obj[x].school_type
+                    document.getElementById('school_size').value = obj[x].school_size
+                    document.getElementById('phone_input').value = obj[x].phone_input
+                    document.getElementById('file').value = obj[x].file
+                    document.getElementById('email').value = obj[x].email
+                }
+                
+            }
+        }
+    }
+    
+    xhr.send()
+      document?.getElementById("form_teacher").reset();
+    console.log('after sednig request of GET')
+    }
+
+
+
 }
     
-    const school = document?.getElementById('form_school');
-    school?.addEventListener('submit', handlesubmit);
+const school = document?.getElementById('form_school');
+school?.addEventListener('submit', handlesubmit);
+
+
 function phoneMask() { 
     var num = $(this).val().replace(/\D/g,''); 
     $(this).val(num.substring(0,1) + '(' + num.substring(1,4) + ')' + num.substring(4,7) + '-' + num.substring(7,11)); 
 }
 $('[type="tel"]').keyup(phoneMask);
+
+
