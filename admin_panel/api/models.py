@@ -4,13 +4,7 @@ from phone_field import PhoneField
 
 # Create your models here.
 
-class Task(models.Model):
-    # task_id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=200,null=True)
-    description = models.CharField(max_length=200,null=True) 
 
-    def __str__(self):
-        return self.title
 class Student(models.Model):
     # student_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=200)
@@ -59,8 +53,8 @@ class School(models.Model):
     phone_number = PhoneField(blank=True)
     file = models.ImageField(null=True,blank=True,upload_to="school_images/")   
     email = models.CharField(max_length=200)
-    
-    """task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    # task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    """
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
 """
@@ -72,4 +66,10 @@ class School(models.Model):
 
 
          
-    
+class Task(models.Model):
+    title = models.CharField(max_length=200,null=True)
+    description = models.CharField(max_length=200,null=True)
+    school = models.ForeignKey(School,on_delete=models.CASCADE,null=True)
+
+    def __str__(self):
+        return self.title

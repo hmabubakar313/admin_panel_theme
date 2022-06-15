@@ -7,6 +7,8 @@
   {% csrf_token %}
   <div class="row">
     
+    
+    
     <input type="hidden" name="id" placeholder="id" id="id" class="form-control mb-4" name="id" >
 
     <div class="col-lg-4">
@@ -19,14 +21,23 @@
   </div>
   <div class="col-lg-3">
     
-    <input type="text"  id="school"  class="form-control mb-4" name="school" placeholder="school">
+    <select id="select" onclick="dropdown();" > 
+    
+    </select>
 </div>
   <div class="col-lg-2">
    
     <button  class="btn btn-primary" type="submit" id="fetchbtn" onclick = "popBtnHandler()";>submit</button>
+
   </div>
   
+
+   
+
 </div>
 </form>
+
 </div>
+
+
 {% endblock %}
