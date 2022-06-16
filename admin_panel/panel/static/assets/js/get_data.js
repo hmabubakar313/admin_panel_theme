@@ -1232,13 +1232,15 @@
             
             str = ""
         
-            obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
+            // obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
         
             console.log(obj)    
             for (key in obj)
             {
                 // console.log('for loop')
-                str += `<option value="school_name" id="school_name">${obj[key].school_name}
+                // console.log('${obj[key].school_name}')
+                str += `<option value="${obj[key].id}" id="school_name">
+                ${obj[key].school_name}
                 <option>`
             
 
@@ -1258,6 +1260,7 @@
             console.log(event.target.value); // 👉️ get selected VALUE
         
             // 👇️ get selected VALUE even outside event handler
+            console.log('event listner')
             console.log(select.options[select.selectedIndex].value);
         
             // 👇️ get selected TEXT in or outside event handler
