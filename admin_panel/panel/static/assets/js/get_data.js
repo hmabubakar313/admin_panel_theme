@@ -1,5 +1,5 @@
 if (window.location.pathname === '/dashboard/') {
-    
+
     (function (event) {
 
         var xhr = new XMLHttpRequest();
@@ -40,13 +40,12 @@ if (window.location.pathname === '/dashboard/') {
     }())
 }
 if (window.location.pathname === '/table/') {
-    (function (event) {
+(function (event) {
 
         var xhr = new XMLHttpRequest();
         console.log('inside self invoking function of task')
         xhr.open('GET', 'http://127.0.0.1:8000/api/task-list/', true)
         csrftoken = getCookie('csrftoken')
-        console.log('csrftoken')
         xhr.setRequestHeader('X-CSRFToken', csrftoken)
         xhr.onload = function () {
             console.log('inside onload')
@@ -79,69 +78,65 @@ if (window.location.pathname === '/table/') {
 
     }())
 
-    // // ==================
-//=================== 
-// ==================
-// dropdown function
+    // =================== 
+    // ==================
+    // dropdown function
 
-function dropdown() {
-    var xhr = new XMLHttpRequest()
-    xhr.open('GET', 'http://127.0.0.1:8000/api/school-list/', true)
+    function dropdown() {
+        var xhr = new XMLHttpRequest();
+        console.log('inside self invoking function of task')
+        xhr.open('GET', 'http://127.0.0.1:8000/api/school-list/', true)
+        csrftoken = getCookie('csrftoken')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function () {
+            console.log('inside onload')
+            if (this.status === 200) {
+                console.log('inside onload if of and asasadas')
 
-    // console.log('schpppppppp/ppppppppppplsss')
-
-    xhr.onload = function () {
-
-        console.log('inside on load of get')
-        if (this.status === 200) {
-            let obj = JSON.parse(this.responseText)
-
-
-            let select = document.getElementById('select')
-
-            str = ""
-
-            // obj= obj?.sort((a,b) => (a.id>b.id ? -1 :1))
-
-            console.log(obj)
-            for (key in obj) {
-                // console.log('for loop')
-                // console.log('${obj[key].school_name}')
-                str += `<option name="school_id" value="${obj[key].id}" id="school_id">
-                ${obj[key].school_name}
-                <option>`
-
-
-
+                let obj = JSON.parse(this.responseText)
+                console.log('after obj')
+                let select = document.getElementById('select')
+                str = ""
+                // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+                // console.log(obj)                
+                for (key in obj) 
+                {
+                    
+                    str += `<option name="school_id" 
+                    value="${obj[key].id}"  id="school_id">
+                    ${obj[key].school_name}
+                    <option>`
+                }
+                select.innerHTML = str
             }
-            select.innerHTML = str
-
+            else {
+                console.log('Error')
+            }
         }
-        else {
-            console.log('Error')
-        }
-    }
-    console.log('-----')
-
-    select.addEventListener('change', function handleChange(event) {
-        console.log(event.target.value); // 👉️ get selected VALUE
-
-        // 👇️ get selected VALUE even outside event handler
-        // console.log('event listner')
-        const value = select.options[select.selectedIndex].value;
-        console.log(value);
         
-        // 👇️ get selected TEXT in or outside event handler
-        // console.log(select.options[select.selectedIndex].text);
-    });
-    xhr.send()
+        
+       
+      
+        select.addEventListener('change', function handleChange(event) {
+             console.log(event.target.value); // 👉️ get selected VALUE
+             console.log('inside event listner')
+            // 👇️ get selected VALUE even outside event handler
+            // console.log('event listner')
+            const value = select.options[select.selectedIndex].value;
+            
+            console.log('printing value')
+            console.log(value);
+ 
+            // 👇️ get selected TEXT in or outside event handler
+            // console.log(select.options[select.selectedIndex].text);
+        });
+        xhr.send()
+    }
+    
 
-
-}
-
-// ----------------------------------------
-// ----------------------------------------
-// ----------------------------------------
+    // ----------------------------------------
+    // ----------------------------------------
+    // ----------------------------------------
     click_id = 0;
 
     function handlesubmit(event) {
@@ -152,8 +147,11 @@ function dropdown() {
         click_id = formdata.get('id');
         console.log(typeof ("clicked id is :" + click_id));
         console.log('click_id' + click_id);
+        select = formdata.get('select')
+        console.log('select is : '+select)
         var request = new XMLHttpRequest();
-        console.log(formdata.get('select'))
+        
+        // console.log(formdata.get('select'))
         // console.log('school_id : ' + school)
 
         console.log('inside handlesubmit')
@@ -189,6 +187,10 @@ function dropdown() {
 
     const a = document.getElementById('form_task');
     a?.addEventListener('submit', handlesubmit)
+
+
+    // ===== 
+    // popbtn
     function popBtnHandler() {
 
         const xhr = new XMLHttpRequest()
@@ -995,7 +997,7 @@ if (window.location.pathname === '/school/') {
 
         var xhr = new XMLHttpRequest()
         xhr.open('GET', 'http://127.0.0.1:8000/api/school-list/', true)
-       
+
 
 
 
@@ -1043,8 +1045,8 @@ if (window.location.pathname === '/school/') {
         }
         xhr.send()
 
-        
-        
+
+
 
 
     }
