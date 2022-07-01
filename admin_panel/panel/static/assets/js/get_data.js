@@ -82,6 +82,7 @@ if (window.location.pathname === '/table/') {
     // ==================
     // dropdown function
 
+    
     function dropdown() {
         var xhr = new XMLHttpRequest();
         console.log('inside self invoking function of task')
@@ -132,6 +133,7 @@ if (window.location.pathname === '/table/') {
         });
         xhr.send()
     }
+    
     
 
     // ----------------------------------------
