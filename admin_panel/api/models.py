@@ -54,10 +54,7 @@ class School(models.Model):
     file = models.ImageField(null=True,blank=True,upload_to="school_images/")   
     email = models.CharField(max_length=200)
     # task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    """
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
-"""
+
     def __str__(self):
         return self.school_name
 
@@ -72,4 +69,4 @@ class Task(models.Model):
     school = models.ForeignKey(School,on_delete=models.CASCADE,null=True)
 
     def __str__(self):
-        return self.title
+        return str(self.title)

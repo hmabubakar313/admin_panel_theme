@@ -63,6 +63,7 @@ if (window.location.pathname === '/table/') {
                         <td id="id">${obj[key].id}</td> 
                         <td id="title">${obj[key].title}</td>  
                         <td id="description">${obj[key].description}</td>
+                        <td>${obj[key].school}</td>
                         <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
                         <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)">Edit</a></td>`
                     str += `<br>`
@@ -119,18 +120,19 @@ if (window.location.pathname === '/table/') {
        
       
         select.addEventListener('change', function handleChange(event) {
-             console.log(event.target.value); // 👉️ get selected VALUE
-             console.log('inside event listner')
-            // 👇️ get selected VALUE even outside event handler
-            // console.log('event listner')
-            const value = select.options[select.selectedIndex].value;
-            
-            console.log('printing value')
-            console.log(value);
- 
-            // 👇️ get selected TEXT in or outside event handler
-            // console.log(select.options[select.selectedIndex].text);
-        });
+            console.log(event.target.value); // 👉️ get selected VALUE
+            console.log('inside event listner')
+           // 👇️ get selected VALUE even outside event handler
+           // console.log('event listner')
+           const value = select.options[select.selectedIndex].value;
+
+           console.log('printing value')
+           console.log(value);
+
+           // 👇️ get selected TEXT in or outside event handler
+           // console.log(select.options[select.selectedIndex].text);
+       });
+    
         xhr.send()
     }
     
