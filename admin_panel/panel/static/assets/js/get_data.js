@@ -347,15 +347,15 @@ function getCookie(cname) {
 
 
 
-// // ===========================================================
-// // ===========================================================
-// // ===========================================================
-// // ===========================================================
-// // working for student api
-// // ===========================================================
-// // ===========================================================
-// // ===========================================================
-// // ===========================================================
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// working for student api
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// ===========================================================
 
 
 // // function that will work on when the submit button clicked 
@@ -380,6 +380,7 @@ if (window.location.pathname === '/student/') {
                     <td id="first_name">${obj[key].first_name}</td> 
                     <td id="last_name">${obj[key].last_name}</td>  
                     <td id="email">${obj[key].email}</td>
+                    <td>${obj[key].school}</td>
                     <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_student(event,this.id)">Delete</button></td>
                     <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_student_data(event,this.id)">Edit</a></td>`
                     str += `<br>`
@@ -394,6 +395,67 @@ if (window.location.pathname === '/student/') {
         xhr.send()
 
     }())
+    // =================== 
+    // ==================
+    // dropdown function
+
+    
+    function dropdownstudent() {
+        var xhr = new XMLHttpRequest();
+        console.log('inside self invoking function of task')
+        xhr.open('GET', 'http://127.0.0.1:8000/api/school-list/', true)
+        csrftoken = getCookie('csrftoken')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function () {
+            console.log('inside onload')
+            if (this.status === 200) {
+                console.log('inside onload if of and asasadas')
+
+                let obj = JSON.parse(this.responseText)
+                console.log('after obj')
+                let select = document.getElementById('select')
+                str = ""
+                // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+                // console.log(obj)                
+                for (key in obj) 
+                {
+                    
+                    str += `<option name="school_id" 
+                    value="${obj[key].id}"  id="school_id_student">
+                    ${obj[key].school_name}
+                    <option>`
+                }
+                select.innerHTML = str
+            }
+            else {
+                console.log('Error')
+            }
+        }
+        
+        
+       
+      
+        select.addEventListener('change', function handleChangestudent(event) {
+            console.log(event.target.value); // 👉️ get selected VALUE
+            console.log('inside event listner')
+           // 👇️ get selected VALUE even outside event handler
+           // console.log('event listner')
+           const value = select.options[select.selectedIndex].value;
+
+           console.log('printing value')
+           console.log(value);
+
+           // 👇️ get selected TEXT in or outside event handler
+           // console.log(select.options[select.selectedIndex].text);
+       });
+    
+        xhr.send()
+    }
+    
+    
+
+
+    
     id = 0;
     function handlesubmit(event) {
         event.preventDefault();
@@ -405,7 +467,11 @@ if (window.location.pathname === '/student/') {
         console.log(last_name);
         console.log(email);
         id = formdata.get('id')
-        console.log('click_id' + click_id)
+        select = formdata.get('select')
+        console.log('select is : '+select) 
+        // school = formdata.get('school')
+        // console.log('school is : '+school)
+        // console.log('click_id' + click_id)
         var request = new XMLHttpRequest();
 
         console.log('inside handle submit button =======')
@@ -448,6 +514,7 @@ if (window.location.pathname === '/student/') {
 
     const b = document?.getElementById('form_student');
     b?.addEventListener('submit', handlesubmit);
+    
 
     // // poping data on tha page using onclick function 
 
@@ -470,7 +537,7 @@ if (window.location.pathname === '/student/') {
                 str = ""
 
                 obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
-                console.log(("type : " + typeof (obj)))
+                // console.log(("type : " + typeof (obj)))
                 console.log(obj)
                 for (key in obj) {
                     str += `<tr>
@@ -478,6 +545,7 @@ if (window.location.pathname === '/student/') {
                     <td id="first_name">${obj[key].first_name}</td>  
                     <td id="last_name">${obj[key].last_name}</td>
                     <td id="email">${obj[key].email}</td>
+                    <td>${obj[key].school}</td>
                     <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_student(event,this.id)">Delete</button></td>
                     <td><a href="#card" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_student_data(event,this.id)">Edit</a></td>`
                     str += `<br>`

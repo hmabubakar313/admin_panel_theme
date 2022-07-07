@@ -5,15 +5,7 @@ from phone_field import PhoneField
 # Create your models here.
 
 
-class Student(models.Model):
-    # student_id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
-    email = models.CharField(max_length=200,null=True)
-    # student_id = models.ForeignKey(School, on_delete=models.CASCADE)
- 
-    def __str__(self):
-        return self.first_name
+
 
 class Teacher(models.Model):
     # teacher_id = models.AutoField(primary_key=True)
@@ -70,3 +62,13 @@ class Task(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+class Student(models.Model):
+    # student_id = models.AutoField(primary_key=True)
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    email = models.CharField(max_length=200,null=True)
+    school = models.ForeignKey(School,on_delete=models.CASCADE,null=True)
+ 
+    def __str__(self):
+        return str(self.first_name)
