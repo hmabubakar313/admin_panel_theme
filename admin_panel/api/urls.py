@@ -46,5 +46,11 @@ urlpatterns = [
     path('school-detail/<str:pk>/',views.school_detail,name='school-detail'),
     path('create-school/',views.create_school,name='create_school'),
     path('update-school/<str:pk>/',views.update_school,name='update-school'),
-    path('delete-school/<str:pk>/',views.delete_school,name='delete-school')
+    path('delete-school/<str:pk>/',views.delete_school,name='delete-school'),
+    path('classroomapiOverview',views.classroomapiOverview,name='classroomapiOverview'),
+    path('classroom-list/',views.classroom_list,name='class-list'),
+    path('class-detail/<str:pk>/',views.classroom_detail,name='class-detail'),
+    path('create-class/',views.create_classroom,name='create-class'),
+    path('update-class/<str:pk>/',views.update_classroom,name='update-classroom'),
+    path('delete-class/<str:pk>/',views.delete_classroom,name='delete-classroom')
 ]

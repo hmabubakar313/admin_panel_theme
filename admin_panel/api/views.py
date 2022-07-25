@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Task,Student,Teacher,School,Classroom
-from .serializers import TaskSerializer,StudentSerializer,TeacherSerializer,SchoolSerializer
+from .serializers import TaskSerializer,StudentSerializer,TeacherSerializer,SchoolSerializer,ClassroomSerializer
 from rest_framework.decorators import api_view
 
 
@@ -207,15 +207,15 @@ def classroomapiOverview(request):
 
 
 @api_view(['GET'])
-def class_list(request):
+def classroom_list(request):
     classroom=Classroom.objects.all()
-    serializer=TeacherSerializer(classroom, many=True)
+    serializer=ClassroomSerializer(classroom, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
-def class_detail(request,pk):
+def classroom_detail(request,pk):
     classroom=Classroom.objects.get(id=pk)
-    serializer=TeacherSerializer(classroom, many=False)
+    serializer=ClassroomSerializer(classroom, many=False)
     return Response(serializer.data)
 
 @api_view(['POST'])
@@ -245,7 +245,7 @@ def update_classroom(request,pk):
 
 
 @api_view(['DELETE','GET'])
-def delete_class(request,pk):
+def delete_classroom(request,pk):
     classroom = Classroom.objects.get(id=pk)
     classrooms=Classroom.objects.all()
     

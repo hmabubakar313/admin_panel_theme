@@ -273,6 +273,7 @@ if (window.location.pathname === '/table/') {
                 <td id="id">${obj[key].id}</td> 
                 <td id="title">${obj[key].title}</td>  
                 <td id="description">${obj[key].description}</td>
+                <td>${obj[key].school}</td>
                 <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
                 <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
                     str += `<br>`
@@ -358,7 +359,7 @@ function getCookie(cname) {
 // ===========================================================
 
 
-// // function that will work on when the submit button clicked 
+// function that will work on when the submit button clicked 
 
 if (window.location.pathname === '/student/') {
     (function (event) {
@@ -377,6 +378,7 @@ if (window.location.pathname === '/student/') {
                 obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
                 for (key in obj) {
                     str += `<tr>
+                    <td id="id">${obj[key].id}</td> 
                     <td id="first_name">${obj[key].first_name}</td> 
                     <td id="last_name">${obj[key].last_name}</td>  
                     <td id="email">${obj[key].email}</td>
@@ -545,7 +547,7 @@ if (window.location.pathname === '/student/') {
                     <td id="first_name">${obj[key].first_name}</td>  
                     <td id="last_name">${obj[key].last_name}</td>
                     <td id="email">${obj[key].email}</td>
-                    <td>${obj[key].school}</td>
+                    
                     <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_student(event,this.id)">Delete</button></td>
                     <td><a href="#card" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_student_data(event,this.id)">Edit</a></td>`
                     str += `<br>`
@@ -561,7 +563,7 @@ if (window.location.pathname === '/student/') {
 
     }
 
-    // //   delete data function
+//   delete data function
 
     function delete_data_student(event, click_id) {
         console.log('inside delete data function')
@@ -669,18 +671,18 @@ if (window.location.pathname === '/student/') {
 
 }
 
-// // ===========================================================
-// // ===========================================================
-// // ===========================================================
-// // ===========================================================
-// // working for teacher api
-// // ===========================================================
-// // ===========================================================
-// // ===========================================================
-// // ===========================================================
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// working for teacher api
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// ===========================================================
 
 
-// // function that will work on when the submit button clicked 
+// function that will work on when the submit button clicked 
 teacher_id = 0;
 if (window.location.pathname === '/teacher/') {
     (function (event) {
@@ -699,9 +701,11 @@ if (window.location.pathname === '/teacher/') {
                 obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
                 for (key in obj) {
                     str += `<tr>
+                        <td id="id">${obj[key].id}</td> 
                         <td id="first_name">${obj[key].first_name}</td> 
                         <td id="last_name">${obj[key].last_name}</td>  
                         <td id="email">${obj[key].email}</td>
+                        <td>${obj[key].school}</td>
                         <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_teacher(event,this.id)">Delete</button></td>
                         <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_teacher_data(event,this.id)">Edit</a></td>`
                     str += `<br>`
@@ -743,7 +747,7 @@ if (window.location.pathname === '/teacher/') {
                 {
                     
                     str += `<option name="school_id" 
-                    value="${obj[key].id}"  id="school_id_student">
+                    value="${obj[key].id}"  id="school_id_teacher">
                     ${obj[key].school_name}
                     <option>`
                 }
@@ -857,12 +861,13 @@ if (window.location.pathname === '/teacher/') {
                 console.log(obj)
                 for (key in obj) {
                     str += `<tr>
-                    <td id="id">${obj[key].id}</td> 
-                    <td id="first_name">${obj[key].first_name}</td>  
-                    <td id="last_name">${obj[key].last_name}</td>
-                    <td id="email">${obj[key].email}</td>
-                    <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_teacher(event,this.id)">Delete</button></td>
-                    <td><a href="#card" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_teacher_data(event,this.id)">Edit</a></td>`
+                        <td id="id">${obj[key].id}</td> 
+                        <td id="first_name">${obj[key].first_name}</td> 
+                        <td id="last_name">${obj[key].last_name}</td>  
+                        <td id="email">${obj[key].email}</td>
+                        <td>${obj[key].school}</td>
+                        <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_teacher(event,this.id)">Delete</button></td>
+                        <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_teacher_data(event,this.id)">Edit</a></td>`
                     str += `<br>`
                 }
                 body.innerHTML = str
@@ -914,12 +919,13 @@ if (window.location.pathname === '/teacher/') {
 
                 for (key in obj) {
                     str += `<tr>
-                <td id="id">${obj[key].id}</td> 
-                <td id="first_name">${obj[key].first_name}</td>  
-                <td id="last_name">${obj[key].last_name}</td>
-                <td id="email">${obj[key].email}</td>
-                <td><button id="${obj[key].id}" class="btn  btn-danger" onclick =" delete_data_teacher(event,this.id)">Delete</button></td>
-                <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_teacher_data(event,this.id)">Edit</button></a></td>`
+                        <td id="id">${obj[key].id}</td> 
+                        <td id="first_name">${obj[key].first_name}</td> 
+                        <td id="last_name">${obj[key].last_name}</td>  
+                        <td id="email">${obj[key].email}</td>
+                        <td>${obj[key].school}</td>
+                        <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_teacher(event,this.id)">Delete</button></td>
+                        <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_teacher_data(event,this.id)">Edit</a></td>`
                     str += `<br>`
 
                 }
@@ -980,11 +986,327 @@ if (window.location.pathname === '/teacher/') {
     }
 
 
+}
 
+
+
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// working for classroom api
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// ===========================================================
+
+if (window.location.pathname === '/classroom/') {
+    (function (event) {
+        console.log('inside classroom')
+        var xhr = new XMLHttpRequest();
+        // console.log('inside school')
+        console.log('inside self invoking function of classroom')
+        xhr.open('GET', 'http://127.0.0.1:8000/api/classroom-list/', true)
+        csrftoken = getCookie('csrftoken')
+        console.log('csrftoken')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function () {
+            console.log('inside onload')
+            if (this.status === 200) {
+                console.log('inside onload if')
+
+                let obj = JSON.parse(this.responseText)
+                console.log(obj)
+                let body = document.getElementById('body')
+                str = ""
+                obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+                
+                for (key in obj)
+                
+                {
+
+                    str += `<tr>
+                        <td id="id">${obj[key].id}</td> 
+                        <td id="name">${obj[key].name}</td>  
+                        <td id="number_of_student">${obj[key].number_of_student}</td>
+                        <td>${obj[key].school}</td>
+                        <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_class(event,this.id)">Delete</button></td>
+                        <td><a href="" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_class_data(event,this.id)">Edit</a></td>`
+                    str += `<br>`
+                }
+                body.innerHTML = str
+            }
+            else {
+                console.log('Error')
+            }
+        }
+        document.getElementById('form_class')?.reset()
+        xhr.send()
+
+    }())
+
+    function dropdownclassroom() {
+        var xhr = new XMLHttpRequest();
+        console.log('inside dropdown of classroom')
+        xhr.open('GET', 'http://127.0.0.1:8000/api/school-list/', true)
+        csrftoken = getCookie('csrftoken')
+        
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function () {
+            console.log('inside onload')
+            if (this.status === 200) {
+                console.log('inside onload if classroom')
+
+                let obj = JSON.parse(this.responseText)
+                
+                let select = document.getElementById('select')
+                str = ""
+                console.log('after obj : '+obj)
+                // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+                // console.log(obj)                
+                console.log('outside key of school dropdown for classroom')
+                for (key in obj) 
+                {
+                    str += `<option name="school_id" 
+                    value="${obj[key].id}"  id="school_id_claasrrom">
+                    ${obj[key].school_name}
+                    <option>`
+                }
+                select.innerHTML = str
+            }
+            else {
+                console.log('Error')
+            }
+        }
+        
+        
+       
+      
+        select.addEventListener('change', function handleChangeclassroom(event) {
+            console.log(event.target.value); // 👉️ get selected VALUE
+            console.log('inside event listner')
+           // 👇️ get selected VALUE even outside event handler
+           // console.log('event listner')
+           const value = select.options[select.selectedIndex].value;
+
+           console.log('printing value')
+           console.log(value);
+
+           // 👇️ get selected TEXT in or outside event handler
+           // console.log(select.options[select.selectedIndex].text);
+       });
+    
+        xhr.send()
+    }
+    
+    
+
+
+    class_id = 0;
+    function handlesubmit(event) {
+        event.preventDefault();
+
+        let formdata = new FormData(event.target);
+        
+        // school_id = formdata.get('id')
+        class_id = formdata.get('id')
+        select = formdata.get('select')
+        console.log('select is : '+select)
+        console.log('id is : '+id)
+        var request = new XMLHttpRequest();
+
+        console.log('inside handle submit button =======')
+
+
+        if (class_id == 0) {
+            console.log('inside if of post')
+            request.open("POST", 'http://127.0.0.1:8000/api/create-class/')
+        }
+        else if (class_id == formdata.get('id')) {
+            console.log('inside if of put')
+            request.open("PUT", 'http://127.0.0.1:8000/api/update-class/' + id + '/')
+        }
+
+
+        csrftoken = getCookie('csrftoken')
+        request.setRequestHeader('X-CSRFToken', csrftoken)
+
+        request.onload = function () {
+            console.log('insde onload of handle submit button =======')
+            if (this.status === 200) {
+                console.log('inside if of handle submit button =======')
+                // popbtnclass();
+                console.log(this.status)
+
+            }
+        }
+
+
+        console.log('sending data from handle submit button =======')
+        alert('form submitted successfully')
+        request.send(formdata)
+
+
+        // document?.getElementById("form_school").reset();
+
+        class_id = 0;
+
+    }
+
+    function popbtnclass() {
+
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET', 'http://127.0.0.1:8000/api/classroom-list/', true)
+
+
+
+
+        xhr.onload = function () {
+
+            console.log('inside on load of get')
+            if (this.status === 200) {
+                let obj = JSON.parse(this.responseText)
+
+                console.log('obj is : '+obj)
+                let body = document.getElementById('body')
+
+                str = ""
+
+                obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+
+                console.log(obj)
+                for (key in obj) {
+                    str += `<tr>
+                    <td id="id">${obj[key].id}</td> 
+                    <td id="name">${obj[key].name}</td>  
+                    <td id="number_of_student">${obj[key].number_of_student}</td>
+                    <td>${obj[key].school}</td>
+                    <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_class(event,this.id)">Delete</button></td>
+                    <td><a href="" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_class_data(event,this.id)">Edit</a></td>
+                    `
+                    str += `<br>`
+                }
+                body.innerHTML = str
+
+            }
+            else {
+                console.log('Error')
+            }
+        }
+        xhr.send()
+
+
+
+
+
+    }
+
+     // delete school function
+    function delete_data_class(event, click_id) {
+        console.log('inside delete data function')
+        event.preventDefault();
+
+
+        var xhr = new XMLHttpRequest()
+        var request = new XMLHttpRequest()
+        console.log('inside del button')
+
+        xhr.open("DELETE", 'http://127.0.0.1:8000/api/delete-class/' + click_id + '/', true)
+        console.log('after del request')
+
+        request.open('GET', 'http://127.0.0.1:8000/api/classroom-list/', true)
+
+        csrftoken = getCookie('csrftoken')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+
+
+
+        xhr.onload = function () {
+
+            console.log('inside onload')
+
+            if (this.status === 200) {
+                let obj = JSON.parse(this.responseText)
+                console.log('inside onload if')
+                let body = document.getElementById('body')
+
+
+                str = ""
+
+                obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+
+
+                for (key in obj) {
+                    str += `<tr>
+                <td id="id">${obj[key].id}</td> 
+                <td id="name">${obj[key].name}</td>  
+                <td id="number_of_student">${obj[key].number_of_student}</td>
+                <td>${obj[key].school}</td>
+                <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_class(event,this.id)">Delete</button></td>
+                <td><a href=" " id="${obj[key].id}" class="btn btn-secondary" onclick ="update_class_data(event,this.id)">Edit</a></td>`
+                    str += `<br>`
+
+                }
+                body.innerHTML = str
+
+                console.log(this.status)
+
+            }
+        }
+        xhr.send()
+        request.send()
+
+
+    }
+
+
+    const form_class = document?.getElementById('form_school');
+    form_class?.addEventListener('submit', delete_data_class);
+
+    // update school
+    function update_class_data(event, click_id) {
+        event.preventDefault();
+        var xhr = new XMLHttpRequest()
+
+        xhr.open('GET', 'http://127.0.0.1:8000/api/classroom-list/')
+        csrftoken = getCookie('csrftoken')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function () {
+            console.log('inside on load of get')
+            if (this.status === 200) {
+                console.log('inside if')
+                let obj = JSON.parse(this.responseText)
+                // clicked id of object id
+                console.log(obj)
+                for (x in obj) {
+
+                    console.log('printing obj id ')
+                    // console.log(obj[x].id)
+                    if (obj[x].id == click_id) {
+
+
+
+                        document.getElementById('id').value = obj[x].id
+                        document.getElementById('name').value = obj[x].name
+                        document.getElementById('number_of_student').value = obj[x].number_of_student
+                        }
+
+                }
+            }
+        }
+
+        xhr.send()
+        document?.getElementById("form_class").reset();
+        console.log('after sednig request of GET')
+    }
 
 
 
 }
+
+const classroom = document?.getElementById('form_class');
+classroom?.addEventListener('submit', handlesubmit);
+ 
 
 
 // ===========================================================
@@ -1312,6 +1634,10 @@ const school = document?.getElementById('form_school');
 school?.addEventListener('submit', handlesubmit);
 
 
+
+
+
+
 function phoneMask() {
     var num = $(this).val().replace(/\D/g, '');
     $(this).val(num.substring(0, 1) + '(' + num.substring(1, 4) + ')' + num.substring(4, 7) + '-' + num.substring(7, 11));
@@ -1321,11 +1647,3 @@ $('[type="tel"]').keyup(phoneMask);
 
 
 
-// fetch('http://127.0.0.1:8000/api/task-list/')
-//   .then((response) => {
-//     return response.json();
-//   })
-//   .then((myJson) => {
-//       console.log('heloadsa')
-//     console.log(myJson);
-//   });

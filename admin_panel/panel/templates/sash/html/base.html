@@ -337,6 +337,11 @@
                                         class="side-menu__icon fe fe-home"></i><span
                                         class="side-menu__label">School</span></a>
                             </li>
+                            <li class="slide">
+                                <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'classroom' %}"><i
+                                        class="side-menu__icon fe fe-home"></i><span
+                                        class="side-menu__label">Classroom</span></a>
+                            </li>
                         </ul>
                                 
                            
@@ -415,11 +420,40 @@
                                                         <th>DELETE</th>
                                                         <th>EDIT</th>
                                                     </tr>
-                                                    {% else %}
+                                                    {% elif  request.get_full_path == "/teacher/"  %}
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Firstname</th>
+                                                        <th>Lastname</th>
+                                                        <th>email</th>
+                                                        <th>School</th>
+                                                        <th>DELETE</th>
+                                                        <th>EDIT</th>
+                                                    </tr>
+                                                    {% elif  request.get_full_path == "/student/"  %}
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Firstname</th>
+                                                        <th>Lastname</th>
+                                                        <th>email</th>
+                                                        <th>School</th>
+                                                        <th>DELETE</th>
+                                                        <th>EDIT</th>
+                                                    </tr>
+                                                    {% elif  request.get_full_path == "/table/"  %}
                                                     <tr>
                                                         <th>ID</th>
                                                         <th>Title</th>
                                                         <th>Description</th>
+                                                        <th>School</th>
+                                                        <th>DELETE</th>
+                                                        <th>EDIT</th>
+                                                    </tr>
+                                                    {% elif  request.get_full_path == "/classroom/"  %}
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Name</th>
+                                                        <th>Number Of Students</th>
                                                         <th>School</th>
                                                         <th>DELETE</th>
                                                         <th>EDIT</th>
