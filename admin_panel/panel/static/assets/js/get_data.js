@@ -1000,6 +1000,8 @@ if (window.location.pathname === '/teacher/') {
 // ===========================================================
 // ===========================================================
 
+
+class_id = 0;
 if (window.location.pathname === '/classroom/') {
     (function (event) {
         console.log('inside classroom')
@@ -1044,7 +1046,7 @@ if (window.location.pathname === '/classroom/') {
         xhr.send()
 
     }())
-
+ 
     function dropdownclassroom() {
         var xhr = new XMLHttpRequest();
         console.log('inside dropdown of classroom')
@@ -1068,7 +1070,7 @@ if (window.location.pathname === '/classroom/') {
                 for (key in obj) 
                 {
                     str += `<option name="school_id" 
-                    value="${obj[key].id}"  id="school_id_claasrrom">
+                    value="${obj[key].id}"  id="school_id_classroom">
                     ${obj[key].school_name}
                     <option>`
                 }
@@ -1102,17 +1104,14 @@ if (window.location.pathname === '/classroom/') {
     
 
 
-    class_id = 0;
+
     function handlesubmit(event) {
         event.preventDefault();
 
         let formdata = new FormData(event.target);
         
-        // school_id = formdata.get('id')
-        class_id = formdata.get('id')
-        select = formdata.get('select')
+        
         console.log('select is : '+select)
-        console.log('id is : '+id)
         var request = new XMLHttpRequest();
 
         console.log('inside handle submit button =======')
@@ -1124,7 +1123,7 @@ if (window.location.pathname === '/classroom/') {
         }
         else if (class_id == formdata.get('id')) {
             console.log('inside if of put')
-            request.open("PUT", 'http://127.0.0.1:8000/api/update-class/' + id + '/')
+            request.open("PUT", 'http://127.0.0.1:8000/api/update-class/' + class_id + '/')
         }
 
 
@@ -1135,7 +1134,7 @@ if (window.location.pathname === '/classroom/') {
             console.log('insde onload of handle submit button =======')
             if (this.status === 200) {
                 console.log('inside if of handle submit button =======')
-                // popbtnclass();
+                popbtnclass();
                 console.log(this.status)
 
             }
@@ -1147,13 +1146,13 @@ if (window.location.pathname === '/classroom/') {
         request.send(formdata)
 
 
-        // document?.getElementById("form_school").reset();
+        document?.getElementById("form_class").reset();
 
         class_id = 0;
 
     }
 
-    function popbtnclass() {
+     function popbtnclass() {
 
         var xhr = new XMLHttpRequest()
         xhr.open('GET', 'http://127.0.0.1:8000/api/classroom-list/', true)
@@ -1200,9 +1199,9 @@ if (window.location.pathname === '/classroom/') {
 
 
     }
-
+ 
      // delete school function
-    function delete_data_class(event, click_id) {
+     function delete_data_class(event, click_id) {
         console.log('inside delete data function')
         event.preventDefault();
 
@@ -1260,10 +1259,11 @@ if (window.location.pathname === '/classroom/') {
     }
 
 
-    const form_class = document?.getElementById('form_school');
+    const form_class = document?.getElementById('form_class');
     form_class?.addEventListener('submit', delete_data_class);
-
-    // update school
+    
+    
+    // update class data
     function update_class_data(event, click_id) {
         event.preventDefault();
         var xhr = new XMLHttpRequest()
@@ -1300,7 +1300,7 @@ if (window.location.pathname === '/classroom/') {
         console.log('after sednig request of GET')
     }
 
-
+ 
 
 }
 
