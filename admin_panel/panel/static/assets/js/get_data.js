@@ -1110,19 +1110,22 @@ if (window.location.pathname === '/classroom/') {
 
         let formdata = new FormData(event.target);
         
-        
+        select = formdata.get('select')
         console.log('select is : '+select)
         var request = new XMLHttpRequest();
-
+        class_id = formdata.get('id')
+        class_name = formdata.get('name')
+        console.log('name is :'+class_name)
+        console.log('------------- class id is : --------- '+class_id)
         console.log('inside handle submit button =======')
 
 
         if (class_id == 0) {
-            console.log('inside if of post')
+            console.log('-- inside if of post --')
             request.open("POST", 'http://127.0.0.1:8000/api/create-class/')
         }
         else if (class_id == formdata.get('id')) {
-            console.log('inside if of put')
+            console.log('-- inside if of put of classroom --')
             request.open("PUT", 'http://127.0.0.1:8000/api/update-class/' + class_id + '/')
         }
 
@@ -1280,7 +1283,7 @@ if (window.location.pathname === '/classroom/') {
                 console.log(obj)
                 for (x in obj) {
 
-                    console.log('printing obj id ')
+                    console.log('printing obj id of class')
                     // console.log(obj[x].id)
                     if (obj[x].id == click_id) {
 
