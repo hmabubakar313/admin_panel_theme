@@ -1311,6 +1311,325 @@ const classroom = document?.getElementById('form_class');
 classroom?.addEventListener('submit', handlesubmit);
  
 
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// working for admin api
+// ===========================================================
+// ===========================================================
+// ===========================================================
+// ===========================================================
+
+
+admin_id = 0;
+if (window.location.pathname === '/staff/') {
+    (function (event) {
+        console.log('inside staff')
+        var xhr = new XMLHttpRequest();
+        // console.log('inside school')
+        console.log('inside self invoking function of classroom')
+        xhr.open('GET', 'http://127.0.0.1:8000/api/admin-list/', true)
+        csrftoken = getCookie('csrftoken')
+        console.log('csrftoken')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function () {
+            console.log('inside onload')
+            if (this.status === 200) {
+                console.log('inside onload if')
+
+                let obj = JSON.parse(this.responseText)
+                console.log(obj)
+                let body = document.getElementById('body')
+                str = ""
+                obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+                
+                for (key in obj)
+                
+                {
+
+                    str += `<tr>
+                        <td id="id">${obj[key].id}</td> 
+                        <td id="staff_name">${obj[key].staff_name}</td>  
+                        <td id="staff_degree">${obj[key].staff_degree}</td>
+                        <td id="staff_address">${obj[key].staff_address}</td>
+                        <td>${obj[key].school}</td>
+                        <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_staff(event,this.id)">Delete</button></td>
+                        <td><a href="" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_staff_data(event,this.id)">Edit</a></td>`
+                    str += `<br>`
+                }
+                body.innerHTML = str
+            }
+            else {
+                console.log('Error')
+            }
+        }
+        document.getElementById('form_staff')?.reset()
+        xhr.send()
+
+    }())
+ 
+    function dropdownstaff() {
+        var xhr = new XMLHttpRequest();
+        console.log('inside dropdown of staff')
+        xhr.open('GET', 'http://127.0.0.1:8000/api/school-list/', true)
+        csrftoken = getCookie('csrftoken')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function () {
+            console.log('inside onload')
+            if (this.status === 200) {
+                console.log('inside onload if staff')
+
+                let obj = JSON.parse(this.responseText)
+                
+                let select = document.getElementById('select')
+                str = ""
+                console.log('after obj : '+obj)
+                // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+                // console.log(obj)                
+                console.log('outside key of school dropdown for admin')
+                for (key in obj) 
+                {
+                    str += `<option name="school_id" 
+                    value="${obj[key].id}"  id="school_id_staff">
+                    ${obj[key].school_name}
+                    <option>`
+                }
+                select.innerHTML = str
+            }
+            else {
+                console.log('Error')
+            }
+        }
+        
+        
+       
+      
+        select.addEventListener('change', function handleChangestaff(event) {
+            console.log(event.target.value); // 👉️ get selected VALUE
+            console.log('inside event listner')
+           // 👇️ get selected VALUE even outside event handler
+           // console.log('event listner')
+           const value = select.options[select.selectedIndex].value;
+
+           console.log('printing value')
+           console.log(value);
+
+           // 👇️ get selected TEXT in or outside event handler
+           // console.log(select.options[select.selectedIndex].text);
+       });
+    
+        xhr.send()
+    }
+    
+    
+
+
+
+    function handlesubmit(event) {
+        event.preventDefault();
+
+        let formdata = new FormData(event.target);
+        s_name =  formdata.get('staff_name')
+        staff_degree = formdata.get('staff_degree')
+        console.log('staf name is : '+s_name)
+        console.log('staf degree is : '+staff_degree)
+        
+        select = formdata.get('select')
+        console.log('select is : '+select)
+        var request = new XMLHttpRequest();
+        admin_id = formdata.get('id')
+        
+        
+        console.log('------------- admin id is : --------- '+admin_id)
+        console.log('inside handle submit button =======')
+
+
+        if (admin_id == 0) {
+            console.log('-- inside if of post --')
+            request.open("POST", 'http://127.0.0.1:8000/api/create-admin/')
+        }
+        else if (admin_id  == formdata.get('id')) {
+            console.log('-- inside if of put of classroom --')
+            request.open("PUT", 'http://127.0.0.1:8000/api/update-admin/' + admin_id  + '/')
+        }
+
+
+        csrftoken = getCookie('csrftoken')
+        request.setRequestHeader('X-CSRFToken', csrftoken)
+
+        request.onload = function () {
+            console.log('insde onload of handle submit button =======')
+            if (this.status === 200) {
+                console.log('inside if of handle submit button =======')
+                popbtnstaff();
+                console.log(this.status)
+
+            }
+        }
+
+
+        console.log('sending data from handle submit button =======')
+        alert('form submitted successfully')
+        request.send(formdata)
+
+
+        document?.getElementById("form_staff").reset();
+
+        admin_id = 0;
+
+    }
+
+      function popbtnstaff() {
+
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET', 'http://127.0.0.1:8000/api/admin-list/', true)
+
+
+
+
+        xhr.onload = function () {
+
+            console.log('inside on load of get')
+            if (this.status === 200) {
+                let obj = JSON.parse(this.responseText)
+
+                console.log('obj is : '+obj)
+                let body = document.getElementById('body')
+
+                str = ""
+
+                obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+
+                console.log(obj)
+                for (key in obj) {
+                    str += `<tr>
+                    <td id="id">${obj[key].id}</td> 
+                    <td id="staff_name">${obj[key].staff_name}</td>  
+                    <td id="staff_degree">${obj[key].staff_degree}</td>
+                    <td id="staff_address">${obj[key].staff_address}</td>
+                    <td>${obj[key].school}</td>
+                    <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_staff(event,this.id)">Delete</button></td>
+                    <td><a href="" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_staff_data(event,this.id)">Edit</a></td>`
+                str += `<br>`
+                    
+                }
+                body.innerHTML = str
+
+            }
+            else {
+                console.log('Error')
+            }
+        }
+        xhr.send()
+
+
+    } 
+ 
+     // delete school function
+      function delete_data_staff(event, click_id) {
+        console.log('inside delete data function')
+        event.preventDefault();
+
+
+        var xhr = new XMLHttpRequest()
+        var request = new XMLHttpRequest()
+        console.log('inside del button')
+
+        xhr.open("DELETE", 'http://127.0.0.1:8000/api/delete-admin/' + click_id + '/', true)
+        console.log('after del request')
+
+        request.open('GET', 'http://127.0.0.1:8000/api/admin-list/', true)
+
+        csrftoken = getCookie('csrftoken')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+
+
+
+        xhr.onload = function () {
+
+            console.log('inside onload')
+
+            if (this.status === 200) {
+                let obj = JSON.parse(this.responseText)
+                console.log('inside onload if')
+                let body = document.getElementById('body')
+
+
+                str = ""
+
+                obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+
+
+                for (key in obj) {
+                    str += `<tr>
+                    <td id="id">${obj[key].id}</td> 
+                    <td id="staff_name">${obj[key].staff_name}</td>  
+                    <td id="staff_degree">${obj[key].staff_degree}</td>
+                    <td id="staff_address">${obj[key].staff_address}</td>
+                    <td>${obj[key].school}</td>
+                    <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_staff(event,this.id)">Delete</button></td>
+                    <td><a href="" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_staff_data(event,this.id)">Edit</a></td>`
+                    str += `<br>`
+
+                }
+                body.innerHTML = str
+
+                console.log(this.status)
+
+            }
+        }
+        xhr.send()
+        request.send()
+
+
+    }
+
+
+    const form_staff = document?.getElementById('form_staff');
+    form_staff?.addEventListener('submit', delete_data_staff);
+
+    
+    // update class data
+    function update_staff_data(event, click_id) {
+        event.preventDefault();
+        var xhr = new XMLHttpRequest()
+
+        xhr.open('GET', 'http://127.0.0.1:8000/api/admin-list/')
+        csrftoken = getCookie('csrftoken')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function () {
+            console.log('inside on load of get')
+            if (this.status === 200) {
+                console.log('inside if')
+                let obj = JSON.parse(this.responseText)
+                // clicked id of object id
+                console.log(obj)
+                for (x in obj) {
+
+                    console.log('printing obj id of staff')
+                    // console.log(obj[x].id)
+                    if (obj[x].id == click_id) {
+                        document.getElementById('id').value = obj[x].id
+                        document.getElementById('staff_name').value = obj[x].staff_name
+                        document.getElementById('staff_degree').value = obj[x].staff_degree
+                        document.getElementById('staff_address').value = obj[x].staff_address
+                        }
+
+                }
+            }
+        }
+
+        xhr.send()
+        document?.getElementById("form_staff").reset();
+        console.log('after sednig request of GET')
+    } 
+
+}
+
+const staff = document?.getElementById('form_staff');
+staff?.addEventListener('submit', handlesubmit);
+ 
 
 // ===========================================================
 // ===========================================================
@@ -1625,7 +1944,7 @@ if (window.location.pathname === '/school/') {
         }
 
         xhr.send()
-        document?.getElementById("form_teacher").reset();
+        document?.getElementById("form_school").reset();
         console.log('after sednig request of GET')
     }
 

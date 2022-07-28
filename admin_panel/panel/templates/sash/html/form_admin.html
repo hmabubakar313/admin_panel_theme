@@ -1,0 +1,36 @@
+{% extends './base.html' %}
+{% block content %}
+
+<div class="card-body">  
+<form  id="form_staff">
+    {% csrf_token %}
+    <div class="row">
+      <input type="hidden" name="id" placeholder="id" id="id" class="form-control mb-4" name="id">
+        
+      <div class="col-lg-3">
+     
+        <input type="text"  placeholder="staff_name" id="staff_name" class="form-control mb-4" name="staff_name">
+    </div>
+    <div class="col-lg-3">
+     
+      <input type="text" name="staff_degree" placeholder="staff_degree " id="staff_degree" class="form-control mb-4">
+  </div>
+  <div class="col-lg-3">
+     
+    <input type="text" name="staff_address" placeholder="staff_address " id="staff_address" class="form-control mb-4">
+</div>
+    <div class="col-lg-2">
+      <select onchange="handleChangestaff();" name="school" id="select"  class="form-control mb-4"  onclick="dropdownstaff();" > 
+  
+      </select>
+    </div>
+    <div class="col-lg-1">
+      <button  class="btn btn-primary"  type="submit"  >submit</button>
+  </div>
+     
+    
+    </div>
+   
+  </form>
+  </div>
+  {% endblock %}

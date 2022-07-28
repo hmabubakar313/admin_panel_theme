@@ -97,6 +97,9 @@ def school(request):
 
 def classroom(request):
     return render(request, 'sash/html/form_classroom.html')
+
+def staff(request):
+    return render(request, 'sash/html/form_admin.html')
 # def classroom(request):
 #     return render(request, )
 

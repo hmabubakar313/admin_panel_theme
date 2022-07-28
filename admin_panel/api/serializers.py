@@ -1,6 +1,6 @@
 from rest_framework import serializers
 # from rest_framework import Student
-from api.models import Task,Student,Teacher,School,Classroom
+from api.models import Task,Student,Teacher,School,Classroom,Admin_Dept
 
 
 
@@ -33,3 +33,8 @@ class ClassroomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Classroom
         fields = '__all__'
+
+class Admin_DeptSerializer(serializers.ModelSerializer):
+    class  Meta:
+        model = Admin_Dept
+        fields =  '__all__'

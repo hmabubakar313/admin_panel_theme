@@ -29,28 +29,39 @@ urlpatterns = [
     path('create-task/',views.createtask,name='create-task'),
     path('update-task/<str:pk>/',views.updatetask,name='update-task'),
     path('delete-task/<str:pk>/',views.deletetask,name='delete-task'),
+    # student urls
     path('studentapiOverview',views.studentapiOverview,name='studentapiOverview'),
     path('student-list/',views.student_list,name='student-list'),
     path('student-detail/<str:pk>/',views.student_detail,name='student-detail'),
     path('create-student/',views.create_student,name='create-student'),
     path('update-student/<str:pk>/',views.update_student,name='update-student'),
     path('delete-student/<str:pk>/',views.delete_student,name='delete-student'),
+    # teacher urls
     path('teacherapiOverview',views.teacherapiOverview,name='teacherapiOverview'),
     path('teacher-list/',views.teacher_list,name='teacher-list'),
     path('teacher-detail/<str:pk>/',views.teacher_detail,name='teacher-detail'),
     path('create-teacher/',views.create_teacher,name='create_teacher'),
     path('update-teacher/<str:pk>/',views.update_teacher,name='update-teacher'),
     path('delete-teacher/<str:pk>/',views.delete_teacher,name='delete-teacher'),
+    # school urls
     path('schoolapiOverview',views.schoolapiOverview,name='schoolapiOverview'),
     path('school-list/',views.school_list,name='school-list'),
     path('school-detail/<str:pk>/',views.school_detail,name='school-detail'),
     path('create-school/',views.create_school,name='create_school'),
     path('update-school/<str:pk>/',views.update_school,name='update-school'),
     path('delete-school/<str:pk>/',views.delete_school,name='delete-school'),
+    # classroom url
     path('classroomapiOverview',views.classroomapiOverview,name='classroomapiOverview'),
     path('classroom-list/',views.classroom_list,name='class-list'),
     path('class-detail/<str:pk>/',views.classroom_detail,name='class-detail'),
     path('create-class/',views.create_classroom,name='create-class'),
     path('update-class/<str:pk>/',views.update_classroom,name='update-classroom'),
-    path('delete-class/<str:pk>/',views.delete_classroom,name='delete-classroom')
+    path('delete-class/<str:pk>/',views.delete_classroom,name='delete-classroom'),
+    # admin url
+    path('adminapiOverview',views.adminapiOverview,name='adminapiOverview'),
+    path('admin-list/',views.admin_list,name='admin-list'),
+    path('admin-detail/<str:pk>/',views.admin_detail,name='admin-detail'),
+    path('create-admin/',views.create_admin,name='create-admin'),
+    path('update-admin/<str:pk>/',views.update_admin,name='update-admin'),
+    path('delete-admin/<str:pk>/',views.delete_admin,name='delete-admin')
 ]
