@@ -4,8 +4,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Task,Student,Teacher,School,Classroom
-from .serializers import TaskSerializer,StudentSerializer,TeacherSerializer,SchoolSerializer,ClassroomSerializer
+from .models import Task,Student,Teacher,School,Classroom,Admin_Dept
+from .serializers import TaskSerializer,StudentSerializer,TeacherSerializer,SchoolSerializer,ClassroomSerializer,Admin_DeptSerializer
 from rest_framework.decorators import api_view
 
 
@@ -317,3 +317,70 @@ def delete_school(request,pk):
     schools=School.objects.all()
     serializer=SchoolSerializer(schools, many=True)
     return Response(serializer.data)
+
+
+
+
+
+# admin dept api
+
+@api_view(['GET'])
+def adminapiOverview(request):
+    api_urls={
+        'List':'/admin-list/',
+        'Detail View':'/admin-detail/<str:pk>/',
+        'Create':'/admin-create/',
+        'Update':'/admin-update/<str:pk>/',
+        'Delete':'/admin-delete/<str:pk>/',
+    }
+    return Response(api_urls)
+
+
+@api_view(['GET'])
+def admin_list(request):
+    admin=Admin_Dept.objects.all()
+    serializer=Admin_DeptSerializer(admin, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def admin_detail(request,pk):
+    admin=Admin_Dept.objects.get(id=pk)
+    serializer=Admin_DeptSerializer(student, many=False)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def create_admin(request):
+    serializer = Admin_DeptSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+        print('get data from serializer: ',serializer.data)
+        print(serializer.data)
+    return Response('student created')
+
+
+
+
+@api_view(['PUT'])
+def update_admin(request,pk):
+    admin = Admin_Dept.objects.get(id=pk)
+    # update task with same id
+    serializer = Admin_DeptSerializer(instance=admin, data=request.data)
+   
+
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+
+
+@api_view(['DELETE','GET'])
+def delete_admin(request,pk):
+    admin = Admin_Dept.objects.get(id=pk)
+    admins=Admin_Dept.objects.all()
+    
+    admin.delete()
+    admins=Admin_Dept.objects.all()
+    serializer=Admin_DeptSerializer(admins, many=True)
+    return Response(serializer.data)
+
