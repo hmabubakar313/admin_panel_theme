@@ -24,6 +24,7 @@ if (window.location.pathname === '/dashboard/') {
                         <td id="id">${obj[key].id}</td> 
                         <td id="title">${obj[key].title}</td>  
                         <td id="description">${obj[key].description}</td>
+                        <td>${obj[key].school}</td>
                         <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
                         <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)">Edit</a></td>`
                     str += `<br>`
@@ -84,10 +85,10 @@ if (window.location.pathname === '/table/') {
     // dropdown function
 
     
-    function dropdown() {
+function dropdown() {
         var xhr = new XMLHttpRequest();
-        console.log('inside self invoking function of task')
         xhr.open('GET', 'http://127.0.0.1:8000/api/school-list/', true)
+        console.log('calling dropdown function')
         csrftoken = getCookie('csrftoken')
         xhr.setRequestHeader('X-CSRFToken', csrftoken)
         xhr.onload = function () {
@@ -99,15 +100,25 @@ if (window.location.pathname === '/table/') {
                 console.log('after obj')
                 let select = document.getElementById('select')
                 str = ""
+                str += `<option value="" selected disabled>Select School</option>`
                 // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
                 // console.log(obj)                
                 for (key in obj) 
                 {
+                
+                    // set if statement to check if the school is already in the local storage
+                    // if it is, then set the selected attribute to true
+                    // if it is not, then set the selected attribute to false
+                    var school_id    = localStorage.getItem('school_id')
+                    console.log('school_id : '+school_id)
                     
-                    str += `<option name="school_id" 
-                    value="${obj[key].id}"  id="school_id">
-                    ${obj[key].school_name}
-                    <option>`
+                    if (school_id == obj[key].id) {
+                        str += `<option value="${obj[key].id}" selected>${obj[key].school_name}</option>`
+                    }
+                    else {
+                        console.log('inside else of student of option')
+                        str += `<option value="${obj[key].id}">${obj[key].school_name}</option>`
+                    }
                 }
                 select.innerHTML = str
             }
@@ -116,28 +127,110 @@ if (window.location.pathname === '/table/') {
             }
         }
         
-        
-       
-      
-        select.addEventListener('change', function handleChange(event) {
-            console.log(event.target.value); // 👉️ get selected VALUE
-            console.log('inside event listner')
-           // 👇️ get selected VALUE even outside event handler
-           // console.log('event listner')
-           const value = select.options[select.selectedIndex].value;
-
-           console.log('printing value')
-           console.log(value);
-
-           // 👇️ get selected TEXT in or outside event handler
-           // console.log(select.options[select.selectedIndex].text);
-       });
-    
         xhr.send()
     }
-    
-    
+    dropdown();
+    // get school id and store it in loal storage
+function SetSchoolId(event){
+    // set school id in local storage
+    console.log('inside set school id')
+    console.log(event.value)
+    let school_id = event.value
+    localStorage.setItem('school_id',school_id)
+    console.log(school_id)
 
+}
+
+// setting student ID
+function SetStudentId(event){
+    // set school id in local storage
+    console.log('inside set student id')
+    console.log(event.value)
+    var student_id = event.value
+    localStorage.setItem('student_id',student_id)
+    console.log(student_id)
+
+}
+     // EventListned For Student
+//      var select = document.getElementById('select');
+// select.addEventListener('change', function handleChange(event) {
+//     console.log(event.target.value); // 👉️ get selected VALUE
+//     console.log('inside event listner')
+//    // 👇️ get selected VALUE even outside event handler
+//    // console.log('event listner')
+//    const value = select.options[select.selectedIndex].value;
+
+//    console.log('printing value')
+//    console.log(value);
+//    // 👇️ get selected TEXT in or outside event handler
+//    // console.log(select.options[select.selectedIndex].text);
+// });
+    
+  // EventListned For School 
+
+    // getting student data 
+    function dropdownstudent_list() {
+        var xhr = new XMLHttpRequest();
+        console.log('dropdown of studetn list')
+        xhr.open('GET', 'http://127.0.0.1:8000/api/student-list/', true)
+        csrftoken = getCookie('csrftoken')
+        console.log('dropdownstudent_lists')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function () {
+            console.log('inside onload')
+            if (this.status === 200) {
+                console.log('inside onload if of and asasadas')
+
+                let obj = JSON.parse(this.responseText)
+                console.log('after obj')
+                let select = document.getElementById('select_student')
+                str = ""
+                str += `<option value="" selected disabled>Select Student</option>`
+                // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+                // console.log(obj)                
+                for (key in obj) 
+                {
+                    console.log('inside loop')
+                    console.log('inside if student of option')
+                    var student_id = localStorage.getItem('student_id')
+                    console.log('student_id : '+student_id)
+                    // localstorage and selected student check statement to set the selected attribute to true
+                    if (student_id == obj[key].id) {
+                        str += `<option value="${obj[key].id}" selected>${obj[key].last_name}</option>`
+                    }
+                    else {
+                        console.log('inside else of student of option')
+                        str += `<option value="${obj[key].id}">${obj[key].last_name}</option>`
+                    }
+                   
+                }
+                select.innerHTML = str
+            }
+            else {
+                console.log('Error')
+            }
+        }
+
+        
+        xhr.send()
+    }
+    dropdownstudent_list();
+    // students  event listner 
+//  select.addEventListener('change', function handleChangestudent_list(event) {
+//     console.log(event.target.value); // 👉️ get selected VALUE
+//     console.log('inside event listner')
+//    // 👇️ get selected VALUE even outside event handler
+//    // console.log('event listner')
+//    const value = select.options[select.selectedIndex].value;
+
+//    console.log('printing value')
+//    console.log(value);
+
+//    // 👇️ get selected TEXT in or outside event handler
+//    // console.log(select.options[select.selectedIndex].text);
+// });
+  
+   
     // ----------------------------------------
     // ----------------------------------------
     // ----------------------------------------
@@ -146,13 +239,16 @@ if (window.location.pathname === '/table/') {
     function handlesubmit(event) {
         event.preventDefault();
         var formdata = new FormData(event.target);
-        console.log('formdata')
-        console.log(formdata)
+        var school_id    = localStorage.getItem('school_id')
+        formdata.set('school',school_id)
+        var student_id    = localStorage.getItem('student_id')
+        formdata.set('student',student_id)
+        console.log('formdata : '+formdata)
         click_id = formdata.get('id');
-        console.log(typeof ("clicked id is :" + click_id));
-        console.log('click_id' + click_id);
-        select = formdata.get('select')
-        console.log('select is : '+select)
+        // console.log(typeof ("clicked id is :" + click_id));
+        // console.log('click_id' + click_id);
+        // select = formdata.get('school')
+        // console.log('select is : '+select)
         var request = new XMLHttpRequest();
         
         // console.log(formdata.get('select'))
@@ -188,10 +284,12 @@ if (window.location.pathname === '/table/') {
         click_id = 0;
 
     }
-
+    
     const a = document.getElementById('form_task');
     a?.addEventListener('submit', handlesubmit)
 
+   
+ 
 
     // ===== 
     // popbtn
@@ -334,6 +432,7 @@ if (window.location.pathname === '/table/') {
 }
 
 
+
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
@@ -435,7 +534,12 @@ if (window.location.pathname === '/student/') {
         }
         
         
-       
+     
+    
+        xhr.send()
+    }
+    
+      
       
         select.addEventListener('change', function handleChangestudent(event) {
             console.log(event.target.value); // 👉️ get selected VALUE
@@ -450,11 +554,6 @@ if (window.location.pathname === '/student/') {
            // 👇️ get selected TEXT in or outside event handler
            // console.log(select.options[select.selectedIndex].text);
        });
-    
-        xhr.send()
-    }
-    
-    
 
 
     

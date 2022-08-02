@@ -19,9 +19,15 @@
     
       <input type="text"  id="description"  class="form-control mb-4" name="description" placeholder="description">
   </div>
+  {% comment %} <div class="col-lg-1"> {% endcomment %}
+    
+    {% comment %} <select  name="school" id="select"  class="form-control" >  {% endcomment %}
+{% comment %}  {% endcomment %}
+    {% comment %} </select> {% endcomment %}
+  {% comment %} </div> {% endcomment %}
   <div class="col-lg-3">
     
-    <select onchange="handleChange();" name="school" id="select"  class="form-control mb-4"  onclick="dropdown();" > 
+    <select  onchange="SetStudentId(this);" name="student" id="select_student"  class="form-control mb-4"> 
 
     </select>
   </div>
