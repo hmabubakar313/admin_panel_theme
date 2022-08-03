@@ -20,14 +20,16 @@ if (window.location.pathname === '/dashboard/') {
                 console.log(obj)
                 for (key in obj) {
                     str += `<tr>
-                        
-                        <td id="id">${obj[key].id}</td> 
-                        <td id="title">${obj[key].title}</td>  
-                        <td id="description">${obj[key].description}</td>
-                        <td>${obj[key].school}</td>
-                        <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
-                        <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)">Edit</a></td>`
-                    str += `<br>`
+                    <td id="id">${obj[key].id}</td> 
+                    <td id="title">${obj[key].title}</td>  
+                    <td id="description">${obj[key].description}</td>
+                    <td>${obj[key].school}</td>
+                    <td>${obj[key].student}</td>
+                    <td>${obj[key].class_name}</td>
+                    <td>${obj[key].teacher_name}</td>
+                    <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
+                    <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
+                        str += `<br>`
                 }
                 body.innerHTML = str
             }
@@ -60,13 +62,15 @@ if (window.location.pathname === '/table/') {
                 console.log(obj)
                 for (key in obj) {
                     str += `<tr>
-                        
-                        <td id="id">${obj[key].id}</td> 
-                        <td id="title">${obj[key].title}</td>  
-                        <td id="description">${obj[key].description}</td>
-                        <td>${obj[key].school}</td>
-                        <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
-                        <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)">Edit</a></td>`
+                <td id="id">${obj[key].id}</td> 
+                <td id="title">${obj[key].title}</td>  
+                <td id="description">${obj[key].description}</td>
+                <td>${obj[key].school}</td>
+                <td>${obj[key].student}</td>
+                <td>${obj[key].class_name}</td>
+                <td>${obj[key].teacher_name}</td>
+                <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
+                <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
                     str += `<br>`
                 }
                 body.innerHTML = str
@@ -142,15 +146,15 @@ function SetSchoolId(event){
 }
 
 // setting student ID
-function SetStudentId(event){
-    // set school id in local storage
-    console.log('inside set student id')
-    console.log(event.value)
-    var student_id = event.value
-    localStorage.setItem('student_id',student_id)
-    console.log(student_id)
+// function SetStudentId(event){
+//     // set school id in local storage
+//     console.log('inside set student id')
+//     console.log(event.value)
+//     var student_id = event.value
+//     localStorage.setItem('student_id',student_id)
+//     console.log(student_id)
 
-}
+// }
      // EventListned For Student
 //      var select = document.getElementById('select');
 // select.addEventListener('change', function handleChange(event) {
@@ -192,17 +196,7 @@ function SetStudentId(event){
                 {
                     console.log('inside loop')
                     console.log('inside if student of option')
-                    var student_id = localStorage.getItem('student_id')
-                    console.log('student_id : '+student_id)
-                    // localstorage and selected student check statement to set the selected attribute to true
-                    if (student_id == obj[key].id) {
-                        str += `<option value="${obj[key].id}" selected>${obj[key].last_name}</option>`
-                    }
-                    else {
-                        console.log('inside else of student of option')
-                        str += `<option value="${obj[key].id}">${obj[key].last_name}</option>`
-                    }
-                   
+                    str += `<option value="${obj[key].id}">${obj[key].last_name}</option>`
                 }
                 select.innerHTML = str
             }
@@ -215,20 +209,94 @@ function SetStudentId(event){
         xhr.send()
     }
     dropdownstudent_list();
+    // getting class data 
+     // getting student data 
+     function dropdownclass_list() {
+        var xhr = new XMLHttpRequest();
+        console.log('dropdown of class list')
+        xhr.open('GET', 'http://127.0.0.1:8000/api/classroom-list/', true)
+        csrftoken = getCookie('csrftoken')
+        console.log('dropdownstudent_lists')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function () {
+            console.log('inside onload')
+            if (this.status === 200) {
+                console.log('inside onload if of and class')
+
+                let obj = JSON.parse(this.responseText)
+                console.log('after obj')
+                let select = document.getElementById('select_class')
+                str = ""
+                str += `<option value="" selected disabled>Select Class</option>`
+                // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+                // console.log(obj)                
+                for (key in obj) 
+                {
+                    console.log('inside loop')
+                    console.log('inside if class of option')
+                    str += `<option value="${obj[key].id}">${obj[key].name}</option>`
+                }
+                select.innerHTML = str
+            }
+            else {
+                console.log('Error')
+            }
+        }
+
+        
+        xhr.send()
+    }
+    dropdownclass_list();
+    function dropdownteacher_list() {
+        var xhr = new XMLHttpRequest();
+        console.log('dropdown of class list')
+        xhr.open('GET', 'http://127.0.0.1:8000/api/teacher-list/', true)
+        csrftoken = getCookie('csrftoken')
+        console.log('dropdownstudent_lists')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function () {
+            console.log('inside onload')
+            if (this.status === 200) {
+                console.log('inside onload if of and teacher')
+
+                let obj = JSON.parse(this.responseText)
+                console.log('after obj')
+                let select = document.getElementById('select_teacher')
+                str = ""
+                str += `<option value="" selected disabled>Select Teacher</option>`
+                // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+                // console.log(obj)                
+                for (key in obj) 
+                {
+                    console.log('inside loop')
+                    console.log('inside if Teacher of option')
+                    str += `<option value="${obj[key].id}">${obj[key].last_name}</option>`
+                }
+                select.innerHTML = str
+            }
+            else {
+                console.log('Error')
+            }
+        }
+
+        
+        xhr.send()
+    }
+    dropdownteacher_list();
     // students  event listner 
-//  select.addEventListener('change', function handleChangestudent_list(event) {
-//     console.log(event.target.value); // 👉️ get selected VALUE
-//     console.log('inside event listner')
-//    // 👇️ get selected VALUE even outside event handler
-//    // console.log('event listner')
-//    const value = select.options[select.selectedIndex].value;
+ select.addEventListener('change', function handleChangestudent_list(event) {
+    console.log(event.target.value); // 👉️ get selected VALUE
+    console.log('inside event listner')
+   // 👇️ get selected VALUE even outside event handler
+   // console.log('event listner')
+   const value = select.options[select.selectedIndex].value;
 
-//    console.log('printing value')
-//    console.log(value);
+   console.log('printing value')
+   console.log(value);
 
-//    // 👇️ get selected TEXT in or outside event handler
-//    // console.log(select.options[select.selectedIndex].text);
-// });
+   // 👇️ get selected TEXT in or outside event handler
+   // console.log(select.options[select.selectedIndex].text);
+});
   
    
     // ----------------------------------------
@@ -241,8 +309,7 @@ function SetStudentId(event){
         var formdata = new FormData(event.target);
         var school_id    = localStorage.getItem('school_id')
         formdata.set('school',school_id)
-        var student_id    = localStorage.getItem('student_id')
-        formdata.set('student',student_id)
+        
         console.log('formdata : '+formdata)
         click_id = formdata.get('id');
         // console.log(typeof ("clicked id is :" + click_id));
@@ -250,7 +317,8 @@ function SetStudentId(event){
         // select = formdata.get('school')
         // console.log('select is : '+select)
         var request = new XMLHttpRequest();
-        
+        student = formdata.get('student')
+        console.log('student is : '+student)
         // console.log(formdata.get('select'))
         // console.log('school_id : ' + school)
 
@@ -317,9 +385,13 @@ function SetStudentId(event){
                     <td id="id">${obj[key].id}</td> 
                     <td id="title">${obj[key].title}</td>  
                     <td id="description">${obj[key].description}</td>
+                    <td>${obj[key].school}</td>
+                    <td>${obj[key].student}</td>
+                    <td>${obj[key].class_name}</td>
+                    <td>${obj[key].teacher_name}</td>
                     <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
-                    <td><button id="${obj[key].id}" class="btn btn-secondary" onclick ="update_data(event,this.id)">Edit</button></td>`
-                    str += `<br>`
+                    <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
+                        str += `<br>`
                 }
                 body.innerHTML = str
 
@@ -372,6 +444,9 @@ function SetStudentId(event){
                 <td id="title">${obj[key].title}</td>  
                 <td id="description">${obj[key].description}</td>
                 <td>${obj[key].school}</td>
+                <td>${obj[key].student}</td>
+                <td>${obj[key].class_name}</td>
+                <td>${obj[key].teacher_name}</td>
                 <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
                 <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
                     str += `<br>`
@@ -482,6 +557,7 @@ if (window.location.pathname === '/student/') {
                     <td id="last_name">${obj[key].last_name}</td>  
                     <td id="email">${obj[key].email}</td>
                     <td>${obj[key].school}</td>
+                    <td>${obj[key].class_name}</td>
                     <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_student(event,this.id)">Delete</button></td>
                     <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_student_data(event,this.id)">Edit</a></td>`
                     str += `<br>`
@@ -503,28 +579,35 @@ if (window.location.pathname === '/student/') {
     
     function dropdownstudent() {
         var xhr = new XMLHttpRequest();
-        console.log('inside self invoking function of task')
+        console.log('inside self invoking function of Student School')
         xhr.open('GET', 'http://127.0.0.1:8000/api/school-list/', true)
         csrftoken = getCookie('csrftoken')
         xhr.setRequestHeader('X-CSRFToken', csrftoken)
         xhr.onload = function () {
             console.log('inside onload')
             if (this.status === 200) {
-                console.log('inside onload if of and asasadas')
+                console.log('inside onload if of and student school')
 
                 let obj = JSON.parse(this.responseText)
                 console.log('after obj')
                 let select = document.getElementById('select')
                 str = ""
+                str += `<option value="" selected disabled>Select School</option>`
                 // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
                 // console.log(obj)                
                 for (key in obj) 
                 {
                     
-                    str += `<option name="school_id" 
-                    value="${obj[key].id}"  id="school_id_student">
-                    ${obj[key].school_name}
-                    <option>`
+                    var school_id    = localStorage.getItem('school_id')
+                    console.log('school_id : '+school_id)
+                    
+                    if (school_id == obj[key].id) {
+                        str += `<option value="${obj[key].id}" selected>${obj[key].school_name}</option>`
+                    }
+                    else {
+                        console.log('inside else of student of option')
+                        str += `<option value="${obj[key].id}">${obj[key].school_name}</option>`
+                    }
                 }
                 select.innerHTML = str
             }
@@ -540,8 +623,57 @@ if (window.location.pathname === '/student/') {
     }
     
       
+    dropdownstudent();
+    // classrom drodpdown function
+    function dropdownclass_list() {
+        var xhr = new XMLHttpRequest();
+        console.log('inside self invoking function of class')
+        xhr.open('GET', 'http://127.0.0.1:8000/api/classroom-list/', true)
+        csrftoken = getCookie('csrftoken')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function () {
+            console.log('inside onload')
+            if (this.status === 200) {
+                console.log('inside onload if of and class school')
+
+                let obj = JSON.parse(this.responseText)
+                console.log('after obj')
+                let select = document.getElementById('select_class')
+                str = ""
+                str += `<option value="" selected disabled>Select Class</option>`
+                // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+                // console.log(obj)                
+                for (key in obj) 
+                {
+                    
+                   str += `<option value="${obj[key].id}">${obj[key].name}</option>`
+                    
+                }
+                select.innerHTML = str
+            }
+            else {
+                console.log('Error')
+            }
+        }
+        
+        
+     
+    
+        xhr.send()
+    }
+    
       
-        select.addEventListener('change', function handleChangestudent(event) {
+    dropdownclass_list();
+function SetSchoolId(event){
+    // set school id in local storage
+    console.log('inside set school id')
+    console.log(event.value)
+    let school_id = event.value
+    localStorage.setItem('school_id',school_id)
+    console.log(school_id)
+
+}
+      /*   select.addEventListener('change', function handleChangestudent(event) {
             console.log(event.target.value); // 👉️ get selected VALUE
             console.log('inside event listner')
            // 👇️ get selected VALUE even outside event handler
@@ -554,7 +686,7 @@ if (window.location.pathname === '/student/') {
            // 👇️ get selected TEXT in or outside event handler
            // console.log(select.options[select.selectedIndex].text);
        });
-
+ */
 
     
     id = 0;
@@ -568,8 +700,9 @@ if (window.location.pathname === '/student/') {
         console.log(last_name);
         console.log(email);
         id = formdata.get('id')
-        select = formdata.get('select')
-        console.log('select is : '+select) 
+        var school_id    = localStorage.getItem('school_id')
+        formdata.set('school',school_id)
+         
         // school = formdata.get('school')
         // console.log('school is : '+school)
         // console.log('click_id' + click_id)
@@ -646,7 +779,8 @@ if (window.location.pathname === '/student/') {
                     <td id="first_name">${obj[key].first_name}</td>  
                     <td id="last_name">${obj[key].last_name}</td>
                     <td id="email">${obj[key].email}</td>
-                    
+                    <td>${obj[key].school}</td>
+                    <td>${obj[key].class_name}</td> 
                     <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_student(event,this.id)">Delete</button></td>
                     <td><a href="#card" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_student_data(event,this.id)">Edit</a></td>`
                     str += `<br>`
@@ -700,13 +834,15 @@ if (window.location.pathname === '/student/') {
 
                 for (key in obj) {
                     str += `<tr>
-                <td id="id">${obj[key].id}</td> 
-                <td id="first_name">${obj[key].first_name}</td>  
-                <td id="last_name">${obj[key].last_name}</td>
-                <td id="email">${obj[key].email}</td>
-                <td><button id="${obj[key].id}" class="btn  btn-danger" onclick =" delete_data_student(event,this.id)">Delete</button></td>
-                <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_student_data(event,this.id)">Edit</button></a></td>`
-                    str += `<br>`
+                    <td id="id">${obj[key].id}</td> 
+                    <td id="first_name">${obj[key].first_name}</td>  
+                    <td id="last_name">${obj[key].last_name}</td>
+                    <td id="email">${obj[key].email}</td>
+                    <td>${obj[key].school}</td>
+                    <td>${obj[key].class_name}</td> 
+                    <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_student(event,this.id)">Delete</button></td>
+                    <td><a href="#card" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_student_data(event,this.id)">Edit</a></td>`
+                    str += `<br>`   
 
                 }
                 body.innerHTML = str
@@ -787,7 +923,7 @@ if (window.location.pathname === '/teacher/') {
     (function (event) {
 
         var xhr = new XMLHttpRequest();
-        console.log('inside self invoking function of student')
+        console.log('inside self invoking function of teacher')
         xhr.open('GET', 'http://127.0.0.1:8000/api/teacher-list', true)
         csrftoken = getCookie('csrftoken')
         xhr.setRequestHeader('X-CSRFToken', csrftoken)
@@ -824,43 +960,66 @@ if (window.location.pathname === '/teacher/') {
     // ==================
     // dropdown function
 
-    
-    function dropdownteacher() {
-        var xhr = new XMLHttpRequest();
-        console.log('inside self invoking function of task')
-        xhr.open('GET', 'http://127.0.0.1:8000/api/school-list/', true)
-        csrftoken = getCookie('csrftoken')
-        xhr.setRequestHeader('X-CSRFToken', csrftoken)
-        xhr.onload = function () {
-            console.log('inside onload')
-            if (this.status === 200) {
-                console.log('inside onload if of and asasadas')
+       
+function dropdownteacher() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://127.0.0.1:8000/api/school-list/', true)
+    console.log('calling dropdown function')
+    csrftoken = getCookie('csrftoken')
+    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+    xhr.onload = function () {
+        console.log('inside onload')
+        if (this.status === 200) {
+            console.log('inside onload if of and asasadas')
 
-                let obj = JSON.parse(this.responseText)
-                console.log('after obj')
-                let select = document.getElementById('select')
-                str = ""
-                // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
-                // console.log(obj)                
-                for (key in obj) 
-                {
-                    
-                    str += `<option name="school_id" 
-                    value="${obj[key].id}"  id="school_id_teacher">
-                    ${obj[key].school_name}
-                    <option>`
+            let obj = JSON.parse(this.responseText)
+            console.log('after obj')
+            let select = document.getElementById('select')
+            str = ""
+            str += `<option value="" selected disabled>Select School</option>`
+            // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+            // console.log(obj)                
+            for (key in obj) 
+            {
+            
+                // set if statement to check if the school is already in the local storage
+                // if it is, then set the selected attribute to true
+                // if it is not, then set the selected attribute to false
+                var school_id    = localStorage.getItem('school_id')
+                console.log('school_id : '+school_id)
+                
+                if (school_id == obj[key].id) {
+                    str += `<option value="${obj[key].id}" selected>${obj[key].school_name}</option>`
                 }
-                select.innerHTML = str
+                else {
+                    console.log('inside else of student of option')
+                    str += `<option value="${obj[key].id}">${obj[key].school_name}</option>`
+                }
             }
-            else {
-                console.log('Error')
-            }
+            select.innerHTML = str
         }
-        
+        else {
+            console.log('Error')
+        }
+    }
+    
+    xhr.send()
+}
+dropdownteacher();
+function SetSchoolId(event){
+    // set school id in local storage
+    console.log('inside set school id')
+    console.log(event.value)
+    let school_id = event.value
+    localStorage.setItem('school_id',school_id)
+    console.log(school_id)
+
+}
+
         
        
       
-        select.addEventListener('change', function handleChangeteacher(event) {
+        /* select.addEventListener('change', function handleChangeteacher(event) {
             console.log(event.target.value); // 👉️ get selected VALUE
             console.log('inside event listner')
            // 👇️ get selected VALUE even outside event handler
@@ -876,7 +1035,7 @@ if (window.location.pathname === '/teacher/') {
     
         xhr.send()
     }
-
+ */
     function handlesubmit(event) {
         event.preventDefault();
         // let myform = document.getElementById(form_stud)
@@ -887,8 +1046,8 @@ if (window.location.pathname === '/teacher/') {
         console.log(first_name);
         console.log(last_name);
         console.log(email);
-        select = formdata.get('select')
-        console.log('select is : '+select)
+        var school_id    = localStorage.getItem('school_id')
+        formdata.set('school',school_id)
         
         // teacher_id = formdata.get('id')
         // console.log('click_id' + click_id)
@@ -1146,44 +1305,64 @@ if (window.location.pathname === '/classroom/') {
 
     }())
  
-    function dropdownclassroom() {
-        var xhr = new XMLHttpRequest();
-        console.log('inside dropdown of classroom')
-        xhr.open('GET', 'http://127.0.0.1:8000/api/school-list/', true)
-        csrftoken = getCookie('csrftoken')
-        
-        xhr.setRequestHeader('X-CSRFToken', csrftoken)
-        xhr.onload = function () {
-            console.log('inside onload')
-            if (this.status === 200) {
-                console.log('inside onload if classroom')
-
-                let obj = JSON.parse(this.responseText)
-                
-                let select = document.getElementById('select')
-                str = ""
-                console.log('after obj : '+obj)
-                // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
-                // console.log(obj)                
-                console.log('outside key of school dropdown for classroom')
-                for (key in obj) 
-                {
-                    str += `<option name="school_id" 
-                    value="${obj[key].id}"  id="school_id_classroom">
-                    ${obj[key].school_name}
-                    <option>`
-                }
-                select.innerHTML = str
-            }
-            else {
-                console.log('Error')
-            }
-        }
-        
-        
-       
       
-        select.addEventListener('change', function handleChangeclassroom(event) {
+function dropdownclassroom() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://127.0.0.1:8000/api/school-list/', true)
+    console.log('calling dropdown function')
+    csrftoken = getCookie('csrftoken')
+    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+    xhr.onload = function () {
+        console.log('inside onload')
+        if (this.status === 200) {
+            console.log('inside onload if of and asasadas')
+
+            let obj = JSON.parse(this.responseText)
+            console.log('after obj')
+            let select = document.getElementById('select')
+            str = ""
+            str += `<option value="" selected disabled>Select School</option>`
+            // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+            // console.log(obj)                
+            for (key in obj) 
+            {
+            
+                // set if statement to check if the school is already in the local storage
+                // if it is, then set the selected attribute to true
+                // if it is not, then set the selected attribute to false
+                var school_id    = localStorage.getItem('school_id')
+                console.log('school_id : '+school_id)
+                
+                if (school_id == obj[key].id) {
+                    str += `<option value="${obj[key].id}" selected>${obj[key].school_name}</option>`
+                }
+                else {
+                    console.log('inside else of student of option')
+                    str += `<option value="${obj[key].id}">${obj[key].school_name}</option>`
+                }
+            }
+            select.innerHTML = str
+        }
+        else {
+            console.log('Error')
+        }
+    }
+    
+    xhr.send()
+}
+dropdownclassroom();
+// get school id
+    // get school id and store it in loal storage
+function SetSchoolId(event){
+    // set school id in local storage
+    console.log('inside set school id')
+    console.log(event.value)
+    let school_id = event.value
+    localStorage.setItem('school_id',school_id)
+    console.log(school_id)
+
+}      
+       /*  select.addEventListener('change', function handleChangeclassroom(event) {
             console.log(event.target.value); // 👉️ get selected VALUE
             console.log('inside event listner')
            // 👇️ get selected VALUE even outside event handler
@@ -1199,7 +1378,7 @@ if (window.location.pathname === '/classroom/') {
     
         xhr.send()
     }
-    
+     */
     
 
 
@@ -1214,6 +1393,9 @@ if (window.location.pathname === '/classroom/') {
         var request = new XMLHttpRequest();
         class_id = formdata.get('id')
         class_name = formdata.get('name')
+        var school_id    = localStorage.getItem('school_id')
+        formdata.set('school',school_id)
+        
         console.log('name is :'+class_name)
         console.log('------------- class id is : --------- '+class_id)
         console.log('inside handle submit button =======')
@@ -1427,7 +1609,7 @@ if (window.location.pathname === '/staff/') {
         console.log('inside staff')
         var xhr = new XMLHttpRequest();
         // console.log('inside school')
-        console.log('inside self invoking function of classroom')
+        console.log('inside self invoking function of staff')
         xhr.open('GET', 'http://127.0.0.1:8000/api/admin-list/', true)
         csrftoken = getCookie('csrftoken')
         console.log('csrftoken')
@@ -1468,43 +1650,66 @@ if (window.location.pathname === '/staff/') {
 
     }())
  
-    function dropdownstaff() {
-        var xhr = new XMLHttpRequest();
-        console.log('inside dropdown of staff')
-        xhr.open('GET', 'http://127.0.0.1:8000/api/school-list/', true)
-        csrftoken = getCookie('csrftoken')
-        xhr.setRequestHeader('X-CSRFToken', csrftoken)
-        xhr.onload = function () {
-            console.log('inside onload')
-            if (this.status === 200) {
-                console.log('inside onload if staff')
-
-                let obj = JSON.parse(this.responseText)
-                
-                let select = document.getElementById('select')
-                str = ""
-                console.log('after obj : '+obj)
-                // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
-                // console.log(obj)                
-                console.log('outside key of school dropdown for admin')
-                for (key in obj) 
-                {
-                    str += `<option name="school_id" 
-                    value="${obj[key].id}"  id="school_id_staff">
-                    ${obj[key].school_name}
-                    <option>`
-                }
-                select.innerHTML = str
-            }
-            else {
-                console.log('Error')
-            }
-        }
-        
-        
-       
+    
       
-        select.addEventListener('change', function handleChangestaff(event) {
+function dropdownstaff() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://127.0.0.1:8000/api/school-list/', true)
+    console.log('calling dropdown function')
+    csrftoken = getCookie('csrftoken')
+    xhr.setRequestHeader('X-CSRFToken', csrftoken)
+    xhr.onload = function () {
+        console.log('inside onload')
+        if (this.status === 200) {
+            console.log('inside onload if of and staff')
+
+            let obj = JSON.parse(this.responseText)
+            console.log('after obj')
+            let select = document.getElementById('select')
+            str = ""
+            str += `<option value="" selected disabled>Select School</option>`
+            // obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+            // console.log(obj)                
+            for (key in obj) 
+            {
+            
+                // set if statement to check if the school is already in the local storage
+                // if it is, then set the selected attribute to true
+                // if it is not, then set the selected attribute to false
+                var school_id    = localStorage.getItem('school_id')
+                console.log('school_id : '+school_id)
+                
+                if (school_id == obj[key].id) {
+                    str += `<option value="${obj[key].id}" selected>${obj[key].school_name}</option>`
+                }
+                else {
+                    console.log('inside else of student of option')
+                    str += `<option value="${obj[key].id}">${obj[key].school_name}</option>`
+                }
+            }
+            select.innerHTML = str
+        }
+        else {
+            console.log('Error')
+        }
+    }
+    
+    xhr.send()
+}
+dropdownstaff();
+// get school id
+    // get school id and store it in loal storage
+function SetSchoolId(event){
+    // set school id in local storage
+    console.log('inside set school id')
+    console.log(event.value)
+    let school_id = event.value
+    localStorage.setItem('school_id',school_id)
+    console.log(school_id)
+
+} 
+      
+      /*   select.addEventListener('change', function handleChangestaff(event) {
             console.log(event.target.value); // 👉️ get selected VALUE
             console.log('inside event listner')
            // 👇️ get selected VALUE even outside event handler
@@ -1520,7 +1725,7 @@ if (window.location.pathname === '/staff/') {
     
         xhr.send()
     }
-    
+     */
     
 
 
@@ -1533,6 +1738,8 @@ if (window.location.pathname === '/staff/') {
         staff_degree = formdata.get('staff_degree')
         console.log('staf name is : '+s_name)
         console.log('staf degree is : '+staff_degree)
+        var school_id = localStorage.getItem('school_id')
+        formdata.set('school_id',school_id)
         
         select = formdata.get('select')
         console.log('select is : '+select)

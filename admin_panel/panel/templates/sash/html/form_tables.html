@@ -11,13 +11,19 @@
     
     <input type="hidden" name="id" placeholder="id" id="id" class="form-control mb-4" name="id" >
 
-    <div class="col-lg-4">
+    <div class="col-lg-2">
    
       <input type="text" name="title" placeholder="title" id="title" class="form-control mb-4" name="title" >
   </div>
-  <div class="col-lg-3">
+  <div class="col-lg-2">
     
       <input type="text"  id="description"  class="form-control mb-4" name="description" placeholder="description">
+  </div>
+  <div class="col-lg-2">
+    
+    <select   name="teacher_name"   class="form-control mb-4" id="select_teacher"> 
+
+    </select>
   </div>
   {% comment %} <div class="col-lg-1"> {% endcomment %}
     
@@ -25,9 +31,15 @@
 {% comment %}  {% endcomment %}
     {% comment %} </select> {% endcomment %}
   {% comment %} </div> {% endcomment %}
-  <div class="col-lg-3">
+  <div class="col-lg-2">
     
-    <select  onchange="SetStudentId(this);" name="student" id="select_student"  class="form-control mb-4"> 
+    <select placeholder="Student"   name="student" id="select_student"  class="form-control mb-4"> 
+
+    </select>
+  </div>
+  <div class="col-lg-2">
+    
+    <select   name="class_name"   class="form-control mb-4" id="select_class"> 
 
     </select>
   </div>

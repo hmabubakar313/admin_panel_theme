@@ -348,6 +348,11 @@
                                         class="side-menu__icon fe fe-home"></i><span
                                         class="side-menu__label">Classroom</span></a>
                             </li>
+                            <li class="slide">
+                                <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'staff' %}"><i
+                                        class="side-menu__icon fe fe-home"></i><span
+                                        class="side-menu__label">Staff</span></a>
+                            </li>
                         </ul>
                                 
                            
@@ -372,8 +377,24 @@
 
                         <!-- PAGE-HEADER -->
                         <div class="page-header">
-                            
+                            {% if request.get_full_path == "/dashboard/" %}
                             <h1 class="page-title">Task List</h1>
+                            {% elif request.get_full_path == "/table/" %}
+                            <h1 class="page-title">Task List</h1>
+                            {% elif request.get_full_path == "/school/" %}
+                            <h1 class="page-title">School List</h1>
+                            {% elif request.get_full_path == "/student/" %}
+                            <h1 class="page-title">Student List</h1>
+                            {% elif request.get_full_path == "/teacher/" %}
+                            <h1 class="page-title">Teacher List</h1>
+                            {% elif request.get_full_path == "/classroom/" %}
+                            <h1 class="page-title">Classroom List</h1>
+                            {% elif request.get_full_path == "/staff/" %}
+                            <h1 class="page-title">Staff List</h1>
+                            {% endif %}
+                            
+                            
+
                             <div>
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="javascript:void(0)">Tasks</a></li>
@@ -396,9 +417,7 @@
                         </div>
                            
                                 <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Assigned Tasks</h3>
-                                    </div>
+                                    
                                     <div class="card-body">
                                         <p>Use <code class="highlighter-rouge">.table-striped</code>to add zebra-striping to any table row within the <code class="highlighter-rouge">.tbody</code>.</p>
                                         <div class="table-responsive">
@@ -436,6 +455,16 @@
                                                         <th>DELETE</th>
                                                         <th>EDIT</th>
                                                     </tr>
+                                                    {% elif  request.get_full_path == "/staff/"  %}
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Staff Name</th>
+                                                        <th>Staff Degree</th>
+                                                        <th>Staff Address</th>
+                                                        <th>School</th>
+                                                        <th>DELETE</th>
+                                                        <th>EDIT</th>
+                                                    </tr>
                                                     {% elif  request.get_full_path == "/student/"  %}
                                                     <tr>
                                                         <th>ID</th>
@@ -443,6 +472,7 @@
                                                         <th>Lastname</th>
                                                         <th>email</th>
                                                         <th>School</th>
+                                                        <th>Class</th>
                                                         <th>DELETE</th>
                                                         <th>EDIT</th>
                                                     </tr>
@@ -452,6 +482,21 @@
                                                         <th>Title</th>
                                                         <th>Description</th>
                                                         <th>School</th>
+                                                        <th>Student</th>
+                                                        <th>Class</th>
+                                                        <th>Teacher</th>
+                                                        <th>DELETE</th>
+                                                        <th>EDIT</th>
+                                                    </tr>
+                                                    {% elif  request.get_full_path == "/dashboard/"  %}
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Title</th>
+                                                        <th>Description</th>
+                                                        <th>School</th>
+                                                        <th>Student</th>
+                                                        <th>Class</th>
+                                                        <th>Teacher</th>
                                                         <th>DELETE</th>
                                                         <th>EDIT</th>
                                                     </tr>

@@ -27,30 +27,24 @@ class School(models.Model):
     def __str__(self):
         return self.school_name
 
+class Classroom(models.Model):
+    name= models.CharField(max_length=200)
+    number_of_student = models.CharField(max_length=50)
+    school = models.ForeignKey(School,on_delete=models.CASCADE,null=True)
+
+    def __str__(self):
+        return str(self.name)
 
 class Student(models.Model):
     # student_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     email = models.CharField(max_length=200,null=True)
+    class_name = models.ForeignKey(Classroom,on_delete=models.CASCADE,null=True)
     school = models.ForeignKey(School,on_delete=models.CASCADE,null=True)
  
     def __str__(self):
         return str(self.first_name)
-
-
-         
-class Task(models.Model):
-    title = models.CharField(max_length=200,null=True)
-    description = models.CharField(max_length=200,null=True)
-    student = models.ForeignKey(Student,on_delete=models.CASCADE,null=True)
-    school = models.ForeignKey(School,on_delete=models.CASCADE,null=True)
-
-    def __str__(self):
-        return str(self.title)
-
-
-    
 
 
 class Teacher(models.Model):
@@ -62,19 +56,34 @@ class Teacher(models.Model):
     
     def __str__(self):
         return str(self.first_name)
-    
-
-class Classroom(models.Model):
-    name= models.CharField(max_length=200)
-    number_of_student = models.CharField(max_length=50)
-    school = models.ForeignKey(School,on_delete=models.CASCADE,null=True)
-
-    def __str__(self):
-        return str(self.name)
-
 
 class Admin_Dept(models.Model):
     staff_name = models.CharField(max_length=200)
     staff_degree = models.CharField(max_length=200)
     staff_address = models.CharField(max_length=200)
     school = models.ForeignKey(School,on_delete=models.CASCADE,null=True)
+         
+class Task(models.Model):
+    title = models.CharField(max_length=200,null=True)
+    description = models.CharField(max_length=200,null=True)
+    teacher_name = models.ForeignKey(Teacher, on_delete=models.CASCADE,null=True)
+    class_name = models.ForeignKey(Classroom,on_delete=models.CASCADE,null=True)
+    student = models.ForeignKey(Student,on_delete=models.CASCADE,null=True)
+    school = models.ForeignKey(School,on_delete=models.CASCADE,null=True)
+
+    def __str__(self):
+        return str(self.title)
+
+
+    
+
+
+    
+
+
+
+
+
+         
+
+
