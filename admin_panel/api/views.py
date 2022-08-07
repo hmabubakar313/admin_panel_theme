@@ -27,13 +27,19 @@ def apiOverview(request):
 def tasklist(request):
     tasks=Task.objects.all()
     serializer=TaskSerializer(tasks, many=True)
+    # get school name from school id using function from serializer
+    # Task['school_name']=TaskSerializer.sendSchoolName(Task,tasks)
     return Response(serializer.data)
 
 @api_view(['GET'])
 def taskdetail(request,pk):
     tasks=Task.objects.get(id=pk)
     serializer=TaskSerializer(tasks, many=False)
+    
+
+
     return Response(serializer.data)
+    # return Response(serializer.data)
 
 @api_view(['POST'])
 def createtask(request):
