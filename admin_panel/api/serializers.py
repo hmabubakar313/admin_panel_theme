@@ -10,11 +10,13 @@ class TaskSerializer(serializers.ModelSerializer):
         model = Task
         fields = '__all__'
     def to_representation(self,instance):
+        
         representation = super().to_representation(instance)
         representation['school'] = instance.school.school_name
         representation['student'] = instance.student.last_name
         representation['teacher_name'] = instance.teacher_name.last_name
         representation['class_name'] = instance.class_name.name
+        representation['user_name'] = instance.user.username
         return representation
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -44,9 +46,15 @@ class TeacherSerializer(serializers.ModelSerializer):
 
 
 class SchoolSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = School
         fields = '__all__'
+    # get username from user model
+    def to_representation(self,instance):
+        representation = super().to_representation(instance)
+        representation['user_name'] = instance.user.username
+        return representation
         
 
 class ClassroomSerializer(serializers.ModelSerializer):

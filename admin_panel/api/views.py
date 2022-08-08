@@ -215,6 +215,8 @@ def classroomapiOverview(request):
 @api_view(['GET'])
 def classroom_list(request):
     classroom=Classroom.objects.all()
+    class_school=Classroom.objects.all().values_list('school_id', flat=True)
+    print('class_school :' ,class_school)   
     serializer=ClassroomSerializer(classroom, many=True)
     return Response(serializer.data)
 
@@ -241,6 +243,7 @@ def create_classroom(request):
 def update_classroom(request,pk):
     classroom = Classroom.objects.get(id=pk)
     # update task with same id
+    
     serializer = ClassroomSerializer(instance=classroom, data=request.data)
    
 
