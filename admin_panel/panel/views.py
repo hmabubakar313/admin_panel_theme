@@ -104,3 +104,6 @@ def staff(request):
 #     return render(request, )
 
 
+def user(request):
+    return render(request, 'sash/html/login.html')
+

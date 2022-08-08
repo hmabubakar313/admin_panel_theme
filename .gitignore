@@ -15,6 +15,15 @@ bin-release/
 *.env
 *zope
 *.cpython
+*.pyc
+*.pyo
+*.pyw
+*.pyd
+*.exe
+*.mo
+*.py-tpl
+sashbootstrapadmin-50
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
+admin_panel/api/__pycache__/views.cpython-310.pyc

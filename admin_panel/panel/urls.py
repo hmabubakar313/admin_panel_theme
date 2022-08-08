@@ -22,5 +22,6 @@ urlpatterns = [
     path('school/',views.school,name='school'),
     path('classroom/',views.classroom,name='classroom'),
     path('staff/',views.staff,name='staff'),
+    path('user/',views.user,name='user'),
     
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

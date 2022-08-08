@@ -27,6 +27,7 @@ if (window.location.pathname === '/dashboard/') {
                     <td>${obj[key].student}</td>
                     <td>${obj[key].class_name}</td>
                     <td>${obj[key].teacher_name}</td>
+                    <td>${obj[key].user_name}</td>
                     <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
                     <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
                         str += `<br>`
@@ -62,15 +63,16 @@ if (window.location.pathname === '/table/') {
                 console.log(obj)
                 for (key in obj) {
                     str += `<tr>
-                <td id="id">${obj[key].id}</td> 
-                <td id="title">${obj[key].title}</td>  
-                <td id="description">${obj[key].description}</td>
-                <td>${obj[key].school}</td>
-                <td>${obj[key].student}</td>
-                <td>${obj[key].class_name}</td>
-                <td>${obj[key].teacher_name}</td>
-                <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
-                <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
+                    <td id="id">${obj[key].id}</td> 
+                    <td id="title">${obj[key].title}</td>  
+                    <td id="description">${obj[key].description}</td>
+                    <td>${obj[key].school}</td>
+                    <td>${obj[key].student}</td>
+                    <td>${obj[key].class_name}</td>
+                    <td>${obj[key].teacher_name}</td>
+                    <td>${obj[key].user_name}</td>
+                    <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
+                    <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
                     str += `<br>`
                 }
                 body.innerHTML = str
@@ -389,6 +391,7 @@ function SetSchoolId(event){
                     <td>${obj[key].student}</td>
                     <td>${obj[key].class_name}</td>
                     <td>${obj[key].teacher_name}</td>
+                    <td>${obj[key].user_name}</td>
                     <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
                     <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
                         str += `<br>`
@@ -440,15 +443,16 @@ function SetSchoolId(event){
 
                 for (key in obj) {
                     str += `<tr>
-                <td id="id">${obj[key].id}</td> 
-                <td id="title">${obj[key].title}</td>  
-                <td id="description">${obj[key].description}</td>
-                <td>${obj[key].school}</td>
-                <td>${obj[key].student}</td>
-                <td>${obj[key].class_name}</td>
-                <td>${obj[key].teacher_name}</td>
-                <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
-                <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
+                    <td id="id">${obj[key].id}</td> 
+                    <td id="title">${obj[key].title}</td>  
+                    <td id="description">${obj[key].description}</td>
+                    <td>${obj[key].school}</td>
+                    <td>${obj[key].student}</td>
+                    <td>${obj[key].class_name}</td>
+                    <td>${obj[key].teacher_name}</td>
+                    <td>${obj[key].user_name}</td>
+                    <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
+                    <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
                     str += `<br>`
 
                 }
