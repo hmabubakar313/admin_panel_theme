@@ -2279,3 +2279,48 @@ $('[type="tel"]').keyup(phoneMask);
 
 
 
+if (window.location.pathname === '/signup/') {
+
+    (function (event) {
+
+        var xhr = new XMLHttpRequest();
+        console.log('inside self invoking function of task')
+        xhr.open('GET', 'http://127.0.0.1:8000/api/register/', true)
+        csrftoken = getCookie('csrftoken')
+        console.log('csrftoken')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+        xhr.onload = function () {
+            console.log('inside onload')
+            if (this.status === 200) {
+                console.log('inside onload if')
+
+                let obj = JSON.parse(this.responseText)
+                let body = document.getElementById('body')
+                str = ""
+                obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
+                console.log(obj)
+                for (key in obj) {
+                    str += `<tr>
+                    <td id="id">${obj[key].id}</td> 
+                    <td id="title">${obj[key].title}</td>  
+                    <td id="description">${obj[key].description}</td>
+                    <td>${obj[key].school}</td>
+                    <td>${obj[key].student}</td>
+                    <td>${obj[key].class_name}</td>
+                    <td>${obj[key].teacher_name}</td>
+                    <td>${obj[key].user_name}</td>
+                    <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
+                    <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
+                        str += `<br>`
+                }
+                body.innerHTML = str
+            }
+            else {
+                console.log('Error')
+            }
+        }
+        document.getElementById('form_task')?.reset()
+        xhr.send()
+
+    }())
+}

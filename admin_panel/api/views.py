@@ -5,9 +5,31 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Task,Student,Teacher,School,Classroom,Admin_Dept
-from .serializers import TaskSerializer,StudentSerializer,TeacherSerializer,SchoolSerializer,ClassroomSerializer,Admin_DeptSerializer
+from .serializers import TaskSerializer,StudentSerializer,TeacherSerializer,SchoolSerializer,ClassroomSerializer,Admin_DeptSerializer,UserSerializer
 from rest_framework.decorators import api_view
+from django.contrib.auth.models import User
 
+from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .serializers import UserSerializer,RegisterSerializer
+from django.contrib.auth.models import User
+from rest_framework.authentication import TokenAuthentication
+from rest_framework import generics
+
+# Class based view to Get User Details using Token Authentication
+class UserDetailAPI(APIView):
+  authentication_classes = (TokenAuthentication,)
+  permission_classes = (AllowAny,)
+  def get(self,request,*args,**kwargs):
+    user = User.objects.get(id=request.user.id)
+    serializer = UserSerializer(user)
+    return Response(serializer.data)
+
+#Class based view to register user
+class RegisterUserAPIView(generics.CreateAPIView):
+  permission_classes = (AllowAny,)
+  serializer_class = RegisterSerializer
 
 # task api view
 
@@ -393,3 +415,64 @@ def delete_admin(request,pk):
     serializer=Admin_DeptSerializer(admins, many=True)
     return Response(serializer.data)
 
+# User API
+
+@api_view(['GET'])
+def userapiOverview(request):
+    api_urls={
+        'List':'/user-list/',
+        'Detail View':'/user-detail/<str:pk>/',
+        'Create':'/user-create/',
+        'Update':'/user-update/<str:pk>/',
+        'Delete':'/user-delete/<str:pk>/',
+    }
+    return Response(api_urls)
+
+
+@api_view(['GET'])
+def user_list(request):
+    user=User.objects.all()
+    serializer=UserSerializer(user, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def user_detail(request,pk):
+    user=User.objects.get(id=pk)
+    serializer=UserSerializer(user, many=False)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def create_user(request):
+    serializer = UserSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+        print('get data from serializer: ',serializer.data)
+        print(serializer.data)
+    return Response('user created')
+
+
+
+
+@api_view(['PUT'])
+def update_user(request,pk):
+    user = User.objects.get(id=pk)
+    # update task with same id
+    serializer = UserSerializer(instance=user, data=request.data)
+   
+
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+
+
+@api_view(['DELETE','GET'])
+def delete_user(request,pk):
+    user =User.objects.get(id=pk)
+    users=User.objects.all()
+    
+    user.delete()
+    users=User.objects.all()
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)

@@ -63,5 +63,16 @@ urlpatterns = [
     path('admin-detail/<str:pk>/',views.admin_detail,name='admin-detail'),
     path('create-admin/',views.create_admin,name='create-admin'),
     path('update-admin/<str:pk>/',views.update_admin,name='update-admin'),
-    path('delete-admin/<str:pk>/',views.delete_admin,name='delete-admin')
+    path('delete-admin/<str:pk>/',views.delete_admin,name='delete-admin'),
+    # user url
+    path('userapiOverview',views.userapiOverview,name='userapiOverview'),
+    path('user-list/',views.user_list,name='user-list'),
+    path('user-detail/<str:pk>/',views.user_detail,name='user-detail'),
+    path('create-user/',views.create_user,name='create-user'),
+    path('update-user/<str:pk>/',views.update_user,name='update-user'),
+    path('delete-user/<str:pk>/',views.delete_user,name='delete-user'),
+    # register url
+    path('register/',views.RegisterUserAPIView.as_view(),name='register'),
+
+
 ]

@@ -7,6 +7,8 @@ from django.contrib import admin
 from django.contrib.auth import authenticate
 from django import forms
 from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login as dj_login
+
 from django.contrib.auth.decorators import login_required
 
 
@@ -15,6 +17,34 @@ def home(request,*args,**kwargs):
     return render(request, 'sash/html/default.html')
 
 def index(request):
+    if request.method=='POST':
+        print('inside if of login_user')
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+        password2=request.POST.get('password2')
+        first_name=request.POST.get('first_name')
+        last_name=request.POST.get('last_name')
+        email=request.POST.get('email')
+        # print(f'username: {username}')
+        # print(f'password: {password}')
+        print(f'first_name: {first_name}')
+        print(f'last_name: {last_name}')
+        print(f'email: {email}')
+        # print(f'email: {email}')
+        print(f'username: {username}')
+        print(f'password: {password}')
+        user=authenticate(username=username,password=password)
+        dj_login(request, user)
+        print(f'user: {user}')
+        if user is not None:
+            print('inside if')
+            return render(request, 'sash/html/index.html')
+        else:       
+            print('inside else')
+            return HttpResponse('sash/html/login.html')
+    else:
+        print('inside else of login_user')
+        return render(request, 'sash/html/login.html')
     return render(request, 'sash/html/index.html')
 
 def signup(request):
@@ -28,12 +58,15 @@ def save(request):
         print('enter if statement')
         username = request.POST.get('username')
         email = request.POST.get('email')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
         password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
         password=make_password(password)
         print(f'username: {username}')
         print(f'password: {password}')
         print(f'email: {email}') 
-        f=User(username=username,password=password,email=email)
+        f=User(username=username,password=password,first_name=first_name,last_name=last_name,email=email)
         f.save()
         return render(request, 'sash/html/login.html')
     else:
@@ -45,25 +78,9 @@ def login(request):
     return render(request, 'sash/html/login.html')
 
 
-@login_required(login_url='/login/')
-def login_user(request):
-    if request.method=='POST':
-        print('inside if of login_user')
-        username=request.POST.get('username')
-        password=request.POST.get('password')
-        # print(f'email: {email}')
-        print(f'username: {username}')
-        print(f'password: {password}')
-        user=authenticate(username=username,password=password)
-        print(f'user: {user}')
-        if user is not None:
-            print('inside if')
-            return render(request, 'sash/html/index.html')
-        else:       
-            print('inside else')
-            return HttpResponse('login failed')
-    else:
-        return render(request, 'sash/html/login.html')
+# @login_required(login_url='/login/')
+# def login_user(request):
+   
 # @login_required(login_url='/login/')
 def form(request):
     return render(request, 'sash/html/form-elements.html')
