@@ -15,7 +15,11 @@ from django.contrib.auth.decorators import login_required
 
 def home(request,*args,**kwargs):
     return render(request, 'sash/html/default.html')
+    
+# redirect to login page if user is not logged in
 
+
+@login_required(login_url='/login/')
 def index(request):
     if request.method=='POST':
         print('inside if of login_user')
@@ -41,7 +45,7 @@ def index(request):
             return render(request, 'sash/html/index.html')
         else:       
             print('inside else')
-            return HttpResponse('sash/html/login.html')
+            return render(request,'sash/html/login.html')
     else:
         print('inside else of login_user')
         return render(request, 'sash/html/login.html')

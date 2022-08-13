@@ -2324,3 +2324,5 @@ if (window.location.pathname === '/signup/') {
 
     }())
 }
+// save current login user username in local storage
+

@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 # django user model
 
 
+
 class School(models.Model):
     # school_id = models.AutoField(primary_key=True)
     school_name= models.CharField(max_length=200)
@@ -25,7 +26,8 @@ class School(models.Model):
     phone_number = PhoneField(blank=True)
     file = models.ImageField(null=True,blank=True,upload_to="school_images/")   
     email = models.CharField(max_length=200)
-    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     
     def __str__(self):
         return self.school_name
