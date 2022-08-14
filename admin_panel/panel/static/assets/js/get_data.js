@@ -1969,6 +1969,7 @@ if (window.location.pathname === '/school/') {
                 let obj = JSON.parse(this.responseText)
                 let body = document.getElementById('body')
                 str = ""
+                console.log(obj) 
                 obj = obj?.sort((a, b) => (a.id > b.id ? -1 : 1))
                 for (key in obj)
                 // console.log(obj)
@@ -1977,7 +1978,6 @@ if (window.location.pathname === '/school/') {
                     str += `<tr>
                         <td id="id">${obj[key].id}</td> 
                         <td id="school_name">${obj[key].school_name}</td>  
-                        <td id="school_id">${obj[key].school_id}</td>
                         <td id="school_address">${obj[key].school_address}</td>
                         <td id="state">${obj[key].state}</td>
                         <td id="country">${obj[key].country}</td>
@@ -1989,6 +1989,7 @@ if (window.location.pathname === '/school/') {
                         <td id="phone_input">${obj[key].phone_input}</td>
                         <td id="file">${obj[key].file}</td>
                         <td id="email">${obj[key].email}</td>
+                        <td>${obj[key].user_name}</td>
                         <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data_school(event,this.id)">Delete</button></td>
                         <td><a href="#form" id="${obj[key].id}" class="btn btn-secondary" onclick ="update_school_data(event,this.id)">Edit</a></td>`
                     str += `<br>`

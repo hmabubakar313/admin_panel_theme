@@ -73,6 +73,7 @@ urlpatterns = [
     path('delete-user/<str:pk>/',views.delete_user,name='delete-user'),
     # register url
     path('register/',views.RegisterUserAPIView.as_view(),name='register'),
+    path('my-user/',views.my_user,name='my-user'),
 
 
 ]

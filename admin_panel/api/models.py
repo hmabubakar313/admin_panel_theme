@@ -12,9 +12,8 @@ from django.contrib.auth.models import User
 
 
 class School(models.Model):
-    # school_id = models.AutoField(primary_key=True)
+
     school_name= models.CharField(max_length=200)
-    school_id = models.CharField(max_length=200)
     school_address = models.CharField(max_length=200)
     state = models.CharField(max_length=200)
     country = models.CharField(max_length=50)
@@ -67,6 +66,9 @@ class Admin_Dept(models.Model):
     staff_degree = models.CharField(max_length=200)
     staff_address = models.CharField(max_length=200)
     school = models.ForeignKey(School,on_delete=models.CASCADE,null=True)
+
+    def __str__(self):
+        return str(self.staff_name)
          
 class Task(models.Model):
     title = models.CharField(max_length=200,null=True)

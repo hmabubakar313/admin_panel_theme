@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Task,Student,Teacher,School,Classroom,Admin_Dept
-from .serializers import TaskSerializer,StudentSerializer,TeacherSerializer,SchoolSerializer,ClassroomSerializer,Admin_DeptSerializer,UserSerializer
+from .serializers import TaskSerializer,StudentSerializer,TeacherSerializer,SchoolSerializer,ClassroomSerializer,Admin_DeptSerializer,UserSerializer,UserSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
 
@@ -48,6 +48,7 @@ def apiOverview(request):
 @api_view(['GET'])
 def tasklist(request):
     tasks=Task.objects.all()
+    # get task using username
     serializer=TaskSerializer(tasks, many=True)
     # get school name from school id using function from serializer
     # Task['school_name']=TaskSerializer.sendSchoolName(Task,tasks)
@@ -303,9 +304,21 @@ def schoolapiOverview(request):
 
 @api_view(['GET'])
 def school_list(request):
-    school=School.objects.all()
-    serializer=SchoolSerializer(school, many=True)
-    return Response(serializer.data)
+    # get username of current user 
+    if request.user.is_authenticated:
+        school = School.objects.filter(user=request.user)
+        serializer=SchoolSerializer(school, many=True)
+        return Response(serializer.data)
+    """ username=request.user.username
+    if (username==request.user.username):
+        school=School.objects.filter(user=request.user)
+        serializer=SchoolSerializer(school, many=True)
+        return Response(serializer.data) """
+  
+
+
+
+
 
 @api_view(['GET'])
 def school_detail(request,pk):
@@ -476,3 +489,34 @@ def delete_user(request,pk):
     users=User.objects.all()
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
+
+
+
+
+# ================================================
+#         get the data according to the current user
+# ================================================
+
+@api_view(['GET'])
+def my_user(request):
+    username=request.user.username
+    # get task according to current user
+    if (username==request.user.username):
+        school = School.objects.filter(user=request.user)
+        serializer=SchoolSerializer(school, many=True)
+        return Response(serializer.data)
+        # task = Task.objects.filter(user=request.user)
+        # student = Student.objects.filter(school__in=school)
+        # classroom = Classroom.objects.filter(school__in=school)
+        # student = Student.objects.filter(school=school)
+        # class_name = Classroom.objects.all()
+        # serializer = SchoolSerializer(school, many=True)
+        # serializer = TaskSerializer(task, many=True)
+        # serializer1 = StudentSerializer(student, many=True)
+        # serializer2 = ClassroomSerializer(classroom, many=True)
+        # serializer2 = ClassroomSerializer(class_name, many=True)
+        """ return Response({'task':serializer.data,'student':serializer1.data,'classroom':serializer2.data,'school':serializer.data}) """
+        # return Response(serializer1.data)
+        # return Response(serializer1.data)
+    
+ 
