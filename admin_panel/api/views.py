@@ -47,12 +47,11 @@ def apiOverview(request):
 
 @api_view(['GET'])
 def tasklist(request):
-    tasks=Task.objects.all()
-    # get task using username
-    serializer=TaskSerializer(tasks, many=True)
-    # get school name from school id using function from serializer
-    # Task['school_name']=TaskSerializer.sendSchoolName(Task,tasks)
-    return Response(serializer.data)
+    if request.user.is_authenticated:
+        school = School.objects.filter(user=request.user)
+        task = Task.objects.filter(school__in=school)
+        serializer = TaskSerializer(task, many=True)
+        return Response(serializer.data)
 
 @api_view(['GET'])
 def taskdetail(request,pk):
@@ -111,9 +110,11 @@ def studentapiOverview(request):
 
 @api_view(['GET'])
 def student_list(request):
-    student=Student.objects.all()
-    serializer=StudentSerializer(student, many=True)
-    return Response(serializer.data)
+    if request.user.is_authenticated:
+        school = School.objects.filter(user=request.user)
+        student = Student.objects.filter(school__in=school)
+        serializer = StudentSerializer(student, many=True)
+        return Response(serializer.data)
 
 @api_view(['GET'])
 def student_detail(request,pk):
@@ -150,12 +151,12 @@ def update_student(request,pk):
 @api_view(['DELETE','GET'])
 def delete_student(request,pk):
     student = Student.objects.get(id=pk)
-    students=Student.objects.all()
-    
     student.delete()
-    students=Student.objects.all()
-    serializer=StudentSerializer(students, many=True)
-    return Response(serializer.data)
+    if request.user.is_authenticated:
+        school = School.objects.filter(user=request.user)
+        student = Student.objects.filter(school__in=school)
+        serializer = StudentSerializer(student, many=True)
+        return Response(serializer.data)
 
 
 # teacher api
@@ -173,9 +174,11 @@ def teacherapiOverview(request):
 
 @api_view(['GET'])
 def teacher_list(request):
-    teacher=Teacher.objects.all()
-    serializer=TeacherSerializer(teacher, many=True)
-    return Response(serializer.data)
+    if request.user.is_authenticated:
+        school = School.objects.filter(user=request.user)
+        teacher = Teacher.objects.filter(school__in=school)
+        serializer = TeacherSerializer(teacher, many=True)
+        return Response(serializer.data)
 
 @api_view(['GET'])
 def teacher_detail(request,pk):
@@ -212,12 +215,12 @@ def update_teacher(request,pk):
 @api_view(['DELETE','GET'])
 def delete_teacher(request,pk):
     teacher = Teacher.objects.get(id=pk)
-    teachers=Teacher.objects.all()
-    
     teacher.delete()
-    teachers=Teacher.objects.all()
-    serializer=TeacherSerializer(teachers, many=True)
-    return Response(serializer.data)
+    if request.user.is_authenticated:
+        school = School.objects.filter(user=request.user)
+        teacher = Teacher.objects.filter(school__in=school)
+        serializer = TeacherSerializer(teacher, many=True)
+        return Response(serializer.data)
 
 
 
@@ -237,11 +240,11 @@ def classroomapiOverview(request):
 
 @api_view(['GET'])
 def classroom_list(request):
-    classroom=Classroom.objects.all()
-    class_school=Classroom.objects.all().values_list('school_id', flat=True)
-    print('class_school :' ,class_school)   
-    serializer=ClassroomSerializer(classroom, many=True)
-    return Response(serializer.data)
+    if request.user.is_authenticated:
+        school = School.objects.filter(user=request.user)
+        classroom = Classroom.objects.filter(school__in=school)
+        serializer = ClassroomSerializer(classroom, many=True)
+        return Response(serializer.data)
 
 @api_view(['GET'])
 def classroom_detail(request,pk):
@@ -279,12 +282,12 @@ def update_classroom(request,pk):
 @api_view(['DELETE','GET'])
 def delete_classroom(request,pk):
     classroom = Classroom.objects.get(id=pk)
-    classrooms=Classroom.objects.all()
-    
     classroom.delete()
-    classrooms=Classroom.objects.all()
-    serializer=ClassroomSerializer(classrooms, many=True)
-    return Response(serializer.data)
+    if request.user.is_authenticated:
+        school = School.objects.filter(user=request.user)
+        classroom = Classroom.objects.filter(school__in=school)
+        serializer = ClassroomSerializer(classroom, many=True)
+        return Response(serializer.data)
 
 
 # school api
@@ -382,9 +385,12 @@ def adminapiOverview(request):
 
 @api_view(['GET'])
 def admin_list(request):
-    admin=Admin_Dept.objects.all()
-    serializer=Admin_DeptSerializer(admin, many=True)
-    return Response(serializer.data)
+    if request.user.is_authenticated:
+        school = School.objects.filter(user=request.user)
+        admin = Admin_Dept.objects.filter(school__in=school)
+        serializer = Admin_DeptSerializer(admin, many=True)
+        return Response(serializer.data)
+
 
 @api_view(['GET'])
 def admin_detail(request,pk):
@@ -421,12 +427,12 @@ def update_admin(request,pk):
 @api_view(['DELETE','GET'])
 def delete_admin(request,pk):
     admin = Admin_Dept.objects.get(id=pk)
-    admins=Admin_Dept.objects.all()
-    
     admin.delete()
-    admins=Admin_Dept.objects.all()
-    serializer=Admin_DeptSerializer(admins, many=True)
-    return Response(serializer.data)
+    if request.user.is_authenticated:
+        school = School.objects.filter(user=request.user)
+        admin = Admin_Dept.objects.filter(school__in=school)
+        serializer = Admin_DeptSerializer(admin, many=True)
+        return Response(serializer.data)
 
 # User API
 

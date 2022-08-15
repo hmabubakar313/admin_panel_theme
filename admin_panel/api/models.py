@@ -12,7 +12,6 @@ from django.contrib.auth.models import User
 
 
 class School(models.Model):
-
     school_name= models.CharField(max_length=200)
     school_address = models.CharField(max_length=200)
     state = models.CharField(max_length=200)
@@ -77,7 +76,6 @@ class Task(models.Model):
     class_name = models.ForeignKey(Classroom,on_delete=models.CASCADE,null=True)
     student = models.ForeignKey(Student,on_delete=models.CASCADE,null=True)
     school = models.ForeignKey(School,on_delete=models.CASCADE,null=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
 
     def __str__(self):
         return str(self.title)

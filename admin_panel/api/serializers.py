@@ -20,7 +20,6 @@ class TaskSerializer(serializers.ModelSerializer):
         representation['student'] = instance.student.last_name
         representation['teacher_name'] = instance.teacher_name.last_name
         representation['class_name'] = instance.class_name.name
-        representation['user_name'] = instance.user.username
         return representation
 
 class StudentSerializer(serializers.ModelSerializer):
