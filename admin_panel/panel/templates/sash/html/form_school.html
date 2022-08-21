@@ -2,7 +2,7 @@
 {% block content %}
 
           <div class="card-body">
-              <form  id="form_school">
+              <form method="POST" id="form_school">
                  {% csrf_token %} 
                   <div class="row mb-4">
                     <input type="hidden" name="id" placeholder="id" id="id" class="form-control mb-4" name="id" >
@@ -10,9 +10,12 @@
                         
                           <input type="text" class="form-control" value="" placeholder="School Name" name="school_name" id="school_name">
                       </div>
-                      <div class="col-md-6">
-                        <input type="text"  class="form-control" placeholder="School ID" id="school_id" name="school_id" >
-                    </div>
+                      <div class="col-lg-6">
+    
+                        <select   name="username"   class="form-control mb-4" id="select_user"> 
+                    
+                        </select>
+                      </div>
                   </div>
                  
                   <div class=" row mb-4">
@@ -41,7 +44,7 @@
                           <input class="form-control" placeholder="Ranking" type="number" id="ranking"  name="ranking">
                       </div>
                       <div class="col-md-6">
-                        <input class="form-control" type="url" name="url" placeholder="Website URL"  id="url"   name="url">
+                        <input class="form-control" type="url" placeholder="Website URL"  id="url"   name="url">
                     </div>
                   </div>
                   <div class=" row mb-4">

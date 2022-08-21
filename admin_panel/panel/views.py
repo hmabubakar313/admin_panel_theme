@@ -19,7 +19,7 @@ def home(request,*args,**kwargs):
 # redirect to login page if user is not logged in
 
 
-@login_required(login_url='/login/')
+# @login_required(login_url='/login/')
 def index(request):
     if request.method=='POST':
         print('inside if of login_user')

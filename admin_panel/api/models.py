@@ -12,6 +12,8 @@ from django.contrib.auth.models import User
 
 
 class School(models.Model):
+    # school_id = models.IntegerField(null=True, blank=True)
+    
     school_name= models.CharField(max_length=200)
     school_address = models.CharField(max_length=200)
     state = models.CharField(max_length=200)

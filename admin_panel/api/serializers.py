@@ -19,6 +19,7 @@ class TaskSerializer(serializers.ModelSerializer):
         representation['school'] = instance.school.school_name
         representation['student'] = instance.student.last_name
         representation['teacher_name'] = instance.teacher_name.last_name
+        # get the class name
         representation['class_name'] = instance.class_name.name
         return representation
 
@@ -75,10 +76,19 @@ class Admin_DeptSerializer(serializers.ModelSerializer):
     class  Meta:
         model = Admin_Dept
         fields =  '__all__'
+    # from admin dept model get school name from school model using foreign key
     def to_representation(self,instance):
         representation = super().to_representation(instance)
+        # school_name is NONE  if no school is found
+
+        
         representation['school'] = instance.school.school_name
+        if representation['school'] == None:
+            print("no school found")
         return representation
+
+
+
 
 # User serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -137,3 +147,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'first_name', 'last_name')
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['username'] = instance.username
+        return representation

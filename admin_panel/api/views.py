@@ -16,6 +16,8 @@ from .serializers import UserSerializer,RegisterSerializer
 from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics
+import traceback
+
 
 # Class based view to Get User Details using Token Authentication
 class UserDetailAPI(APIView):
@@ -307,17 +309,19 @@ def schoolapiOverview(request):
 
 @api_view(['GET'])
 def school_list(request):
-    # get username of current user 
-    if request.user.is_authenticated:
-        school = School.objects.filter(user=request.user)
-        serializer=SchoolSerializer(school, many=True)
-        return Response(serializer.data)
-    """ username=request.user.username
+    username=request.user.username
+    print('username === : '+username)
     if (username==request.user.username):
-        school=School.objects.filter(user=request.user)
-        serializer=SchoolSerializer(school, many=True)
-        return Response(serializer.data) """
+        print('request.user.username ------------------- : '+request.user.username)
+        print('username === : '+username)
+        # get school according to current user logged in
+        school = School.objects.filter(user=request.user)
+
+        serializer = SchoolSerializer(school, many=True)
+        return Response(serializer.data)
   
+
+
 
 
 
@@ -329,17 +333,24 @@ def school_detail(request,pk):
     serializer=SchoolSerializer(school, many=False)
     return Response(serializer.data)
 
+
+
 @api_view(['POST'])
 def create_school(request):
     serializer = SchoolSerializer(data=request.data)
-
-    if serializer.is_valid():
-        print('================ inside serializer =============')
-        serializer.save()
-        print('-------------------------------------------------------------')
+    print('outside of if')
+    try:
+        if serializer.is_valid():
+            serializer.save()
+        
+        print('------------ inside if ------------')
         print('get data from serializer: ',serializer.data)
         print(serializer.data)
-    return Response('School created')
+        return Response('school created')
+    except Exception as e:
+        message = traceback.format_exc()
+        print('---------------inside except----------------')
+        print(message)
 
 
 @api_view(['PUT'])
@@ -406,8 +417,7 @@ def create_admin(request):
         serializer.save()
         print('get data from serializer: ',serializer.data)
         print(serializer.data)
-    return Response('student created')
-
+    return Response('admin created')
 
 
 
