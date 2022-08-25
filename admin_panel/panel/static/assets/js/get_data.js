@@ -27,7 +27,6 @@ if (window.location.pathname === '/dashboard/') {
                     <td>${obj[key].student}</td>
                     <td>${obj[key].teacher_name}</td>
                     <td>${obj[key].class_name}</td>s
-
                     <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
                     <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
                         str += `<br>`
@@ -68,12 +67,11 @@ if (window.location.pathname === '/table/') {
                     <td id="description">${obj[key].description}</td>
                     <td>${obj[key].school}</td>
                     <td>${obj[key].student}</td>
-                    <td>${obj[key].class_name}</td>
-                    
                     <td>${obj[key].teacher_name}</td>
+                    <td>${obj[key].class_name}</td>
                     <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
                     <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
-                    str += `<br>`
+                        str += `<br>`
                 }
                 body.innerHTML = str
             }
@@ -425,7 +423,6 @@ function SetSchoolId(event){
                     <td>${obj[key].student}</td>
                     <td>${obj[key].class_name}</td>
                     <td>${obj[key].teacher_name}</td>
-                    <td>${obj[key].user_name}</td>
                     <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
                     <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
                         str += `<br>`
@@ -482,12 +479,11 @@ function SetSchoolId(event){
                     <td id="description">${obj[key].description}</td>
                     <td>${obj[key].school}</td>
                     <td>${obj[key].student}</td>
-                    <td>${obj[key].class_name}</td>
                     <td>${obj[key].teacher_name}</td>
-                    <td>${obj[key].user_name}</td>
+                    <td>${obj[key].class_name}</td>
                     <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
                     <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
-                    str += `<br>`
+                        str += `<br>`
 
                 }
                 body.innerHTML = str

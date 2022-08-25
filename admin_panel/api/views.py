@@ -17,13 +17,19 @@ from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import generics
 import traceback
-
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 # Class based view to Get User Details using Token Authentication
 class UserDetailAPI(APIView):
-  authentication_classes = (TokenAuthentication,)
-  permission_classes = (AllowAny,)
-  def get(self,request,*args,**kwargs):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserSerializer
+  
+    
+
+    
+def get(self,request,*args,**kwargs):
     user = User.objects.get(id=request.user.id)
     serializer = UserSerializer(user)
     return Response(serializer.data)
@@ -46,7 +52,8 @@ def apiOverview(request):
     }
     return Response(api_urls)
 
-
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def tasklist(request):
     if request.user.is_authenticated:
@@ -55,6 +62,9 @@ def tasklist(request):
         serializer = TaskSerializer(task, many=True)
         return Response(serializer.data)
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def taskdetail(request,pk):
     tasks=Task.objects.get(id=pk)
@@ -65,6 +75,9 @@ def taskdetail(request,pk):
     return Response(serializer.data)
     # return Response(serializer.data)
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['POST'])
 def createtask(request):
     serializer = TaskSerializer(data=request.data)
@@ -75,6 +88,9 @@ def createtask(request):
         print(serializer.data)
     return Response('task created')
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['PUT'])
 def updatetask(request,pk):
     task = Task.objects.get(id=pk)
@@ -86,6 +102,9 @@ def updatetask(request,pk):
         serializer.save()
     return Response(serializer.data)
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['DELETE','GET'])
 def deletetask(request,pk):
     task = Task.objects.get(id=pk)
@@ -98,6 +117,7 @@ def deletetask(request,pk):
 
 # student api
 
+
 @api_view(['GET'])
 def studentapiOverview(request):
     api_urls={
@@ -108,6 +128,7 @@ def studentapiOverview(request):
         'Delete':'/student-delete/<str:pk>/',
     }
     return Response(api_urls)
+
 
 
 @api_view(['GET'])
@@ -460,16 +481,19 @@ def userapiOverview(request):
 
 @api_view(['GET'])
 def user_list(request):
-    user=User.objects.all()
-    serializer=UserSerializer(user, many=True)
-    return Response(serializer.data)
-
+   
+    if request.user.is_authenticated:
+         # get user for current user logged in
+        user = User.objects.filter(username=request.user.username)
+        serializer = UserSerializer(user, many=True)
+        return Response(serializer.data)
 @api_view(['GET'])
 def user_detail(request,pk):
     user=User.objects.get(id=pk)
     serializer=UserSerializer(user, many=False)
     return Response(serializer.data)
-
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['POST'])
 def create_user(request):
     serializer = UserSerializer(data=request.data)
