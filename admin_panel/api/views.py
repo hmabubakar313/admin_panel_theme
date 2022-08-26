@@ -117,7 +117,8 @@ def deletetask(request,pk):
 
 # student api
 
-
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def studentapiOverview(request):
     api_urls={
@@ -130,7 +131,8 @@ def studentapiOverview(request):
     return Response(api_urls)
 
 
-
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def student_list(request):
     if request.user.is_authenticated:
@@ -139,12 +141,19 @@ def student_list(request):
         serializer = StudentSerializer(student, many=True)
         return Response(serializer.data)
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def student_detail(request,pk):
     student=Student.objects.get(id=pk)
     serializer=StudentSerializer(student, many=False)
     return Response(serializer.data)
 
+
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['POST'])
 def create_student(request):
     serializer = StudentSerializer(data=request.data)
@@ -158,6 +167,9 @@ def create_student(request):
 
 
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['PUT'])
 def update_student(request,pk):
     student = Student.objects.get(id=pk)
@@ -171,6 +183,9 @@ def update_student(request,pk):
 
 
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['DELETE','GET'])
 def delete_student(request,pk):
     student = Student.objects.get(id=pk)
@@ -183,6 +198,9 @@ def delete_student(request,pk):
 
 
 # teacher api
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def teacherapiOverview(request):
     api_urls={
@@ -195,6 +213,9 @@ def teacherapiOverview(request):
     return Response(api_urls)
 
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def teacher_list(request):
     if request.user.is_authenticated:
@@ -203,12 +224,18 @@ def teacher_list(request):
         serializer = TeacherSerializer(teacher, many=True)
         return Response(serializer.data)
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def teacher_detail(request,pk):
     teacher=Teacher.objects.get(id=pk)
     serializer=TeacherSerializer(teacher, many=False)
     return Response(serializer.data)
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['POST'])
 def create_teacher(request):
     serializer = TeacherSerializer(data=request.data)
@@ -221,7 +248,8 @@ def create_teacher(request):
 
 
 
-
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['PUT'])
 def update_teacher(request,pk):
     teacher = Teacher.objects.get(id=pk)
@@ -235,6 +263,9 @@ def update_teacher(request,pk):
 
 
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['DELETE','GET'])
 def delete_teacher(request,pk):
     teacher = Teacher.objects.get(id=pk)
@@ -249,6 +280,9 @@ def delete_teacher(request,pk):
 
 # classroom api
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def classroomapiOverview(request):
     api_urls={
@@ -261,6 +295,9 @@ def classroomapiOverview(request):
     return Response(api_urls)
 
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def classroom_list(request):
     if request.user.is_authenticated:
@@ -269,12 +306,21 @@ def classroom_list(request):
         serializer = ClassroomSerializer(classroom, many=True)
         return Response(serializer.data)
 
+
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def classroom_detail(request,pk):
     classroom=Classroom.objects.get(id=pk)
     serializer=ClassroomSerializer(classroom, many=False)
     return Response(serializer.data)
 
+
+
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['POST'])
 def create_classroom(request):
     serializer = ClassroomSerializer(data=request.data)
@@ -288,6 +334,9 @@ def create_classroom(request):
 
 
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['PUT'])
 def update_classroom(request,pk):
     classroom = Classroom.objects.get(id=pk)
@@ -302,6 +351,9 @@ def update_classroom(request,pk):
 
 
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['DELETE','GET'])
 def delete_classroom(request,pk):
     classroom = Classroom.objects.get(id=pk)
@@ -316,6 +368,8 @@ def delete_classroom(request,pk):
 # school api
 
 
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def schoolapiOverview(request):
     api_urls={
@@ -328,6 +382,9 @@ def schoolapiOverview(request):
     return Response(api_urls)
 
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def school_list(request):
     username=request.user.username
@@ -347,7 +404,8 @@ def school_list(request):
 
 
 
-
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def school_detail(request,pk):
     school=School.objects.get(id=pk)
@@ -355,7 +413,8 @@ def school_detail(request,pk):
     return Response(serializer.data)
 
 
-
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['POST'])
 def create_school(request):
     serializer = SchoolSerializer(data=request.data)
@@ -374,6 +433,9 @@ def create_school(request):
         print(message)
 
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['PUT'])
 def update_school(request,pk):
     school = School.objects.get(id=pk)
@@ -386,7 +448,8 @@ def update_school(request,pk):
     return Response(serializer.data)
 
 
-
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['DELETE','GET'])
 def delete_school(request,pk):
     school = School.objects.get(id=pk)
@@ -402,7 +465,8 @@ def delete_school(request,pk):
 
 
 # admin dept api
-
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def adminapiOverview(request):
     api_urls={
@@ -415,6 +479,9 @@ def adminapiOverview(request):
     return Response(api_urls)
 
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def admin_list(request):
     if request.user.is_authenticated:
@@ -424,12 +491,18 @@ def admin_list(request):
         return Response(serializer.data)
 
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def admin_detail(request,pk):
     admin=Admin_Dept.objects.get(id=pk)
     serializer=Admin_DeptSerializer(student, many=False)
     return Response(serializer.data)
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['POST'])
 def create_admin(request):
     serializer = Admin_DeptSerializer(data=request.data)
@@ -442,6 +515,9 @@ def create_admin(request):
 
 
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['PUT'])
 def update_admin(request,pk):
     admin = Admin_Dept.objects.get(id=pk)
@@ -455,6 +531,9 @@ def update_admin(request,pk):
 
 
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['DELETE','GET'])
 def delete_admin(request,pk):
     admin = Admin_Dept.objects.get(id=pk)
@@ -467,6 +546,9 @@ def delete_admin(request,pk):
 
 # User API
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def userapiOverview(request):
     api_urls={
@@ -479,6 +561,9 @@ def userapiOverview(request):
     return Response(api_urls)
 
 
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def user_list(request):
    
@@ -487,11 +572,17 @@ def user_list(request):
         user = User.objects.filter(username=request.user.username)
         serializer = UserSerializer(user, many=True)
         return Response(serializer.data)
+
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['GET'])
 def user_detail(request,pk):
     user=User.objects.get(id=pk)
     serializer=UserSerializer(user, many=False)
     return Response(serializer.data)
+
+
+
 @permission_classes((IsAuthenticated, ))
 @authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['POST'])
@@ -506,7 +597,8 @@ def create_user(request):
 
 
 
-
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['PUT'])
 def update_user(request,pk):
     user = User.objects.get(id=pk)
@@ -519,7 +611,8 @@ def update_user(request,pk):
     return Response(serializer.data)
 
 
-
+@permission_classes((IsAuthenticated, ))
+@authentication_classes((JSONWebTokenAuthentication,))
 @api_view(['DELETE','GET'])
 def delete_user(request,pk):
     user =User.objects.get(id=pk)
