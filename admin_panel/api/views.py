@@ -39,6 +39,9 @@ class RegisterUserAPIView(generics.CreateAPIView):
   permission_classes = (AllowAny,)
   serializer_class = RegisterSerializer
 
+# save token in session storage
+
+
 # task api view
 
 @api_view(['GET'])

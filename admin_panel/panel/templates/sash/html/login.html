@@ -1,18 +1,30 @@
 {% load static %}
-<link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
+</head>
+<body>
+ 
 
 
-    <div class="login">
+    <div>
         <div class="form">
-          <form  action="/dashboard/" method="POST">
+          <form  action="/dashboard/" method="POST" id="login">
             {% csrf_token %}
             <span class="material-icons">lock</span>
             <input type="text" name="username" placeholder="Username" required>
-            <input type="password" placeholder="password" required  name="password"/>
-            <input type="text" name="first_name" placeholder="first_name" required>
-            <input type="text" name="last_name" placeholder="last_name" required>
-            <input type="password" placeholder="Confirm Password" required  name="password2"/>
-            <button>Login</button>
+            <input type="password" placeholder="Password" required  name="password"/>
+           
+            <button type="submit">Login</button>
           </form>  
         </div>
       </div>
+      <script src="{% static 'assets/js/get_data.js' %}"></script>
+  
+</body>
+</html>

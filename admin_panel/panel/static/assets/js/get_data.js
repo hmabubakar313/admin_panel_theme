@@ -41,7 +41,81 @@ if (window.location.pathname === '/dashboard/') {
         xhr.send()
 
     }())
+   
+
+   
+    
+
 }
+if (window.location.pathname === '/login/') 
+{
+    function handlesubmit(event) {
+        event.preventDefault();
+        var formdata = new FormData(event.target);
+        console.log('hello')
+        
+
+        /* var school_id    = localStorage.getItem('school_id')
+        formdata.set('school',school_id)
+         */
+        // console.log('formdata : '+formdata)
+        
+        // console.log(typeof ("clicked id is :" + click_id));
+        // console.log('click_id' + click_id);
+        // select = formdata.get('school')
+        // console.log('select is : '+select)
+        var request = new XMLHttpRequest();
+        
+        // console.log(formdata.get('select'))
+        // console.log('school_id : ' + school)
+
+        console.log('inside handlesubmit of token')
+       
+        request.open("POST", '/api/token/', true)
+       
+       
+        console.log('after request')
+        csrftoken = getCookie('csrftoken')
+        request.setRequestHeader('X-CSRFToken', csrftoken)
+
+        request.onload = function () {
+
+            if (this.status === 200) {
+                
+                console.log('inside if')
+                console.log(this.status)
+                // save access token in local storage from api 
+                var obj = JSON.parse(this.responseText)
+                console.log(obj)
+                localStorage.setItem('access_token', obj.access)
+                localStorage.setItem('refresh_token', obj.refresh)
+                console.log('access token is : ' + localStorage.getItem('access_token'))
+                console.log('refresh token is : ' + localStorage.getItem('refresh_token'))
+                window.location.href = '/dashboard/'
+                
+                
+            }
+        }
+
+        // alert('form submitted successfully')
+        request.send(formdata)
+
+
+       
+
+
+    }
+    
+    const a = document.getElementById('login');
+    a?.addEventListener('submit', handlesubmit)
+    console.log('login')
+}
+
+
+
+        
+        
+ 
 if (window.location.pathname === '/table/') {
 (function (event) {
 
@@ -632,7 +706,7 @@ if (window.location.pathname === '/student/') {
                 for (key in obj) 
                 {
                     
-                    var school_id    = localStorage.getItem('school_id')
+                    var school_id    = localStorage.setItem('school_id')
                     console.log('school_id : '+school_id)
                     
                     if (school_id == obj[key].id) {
@@ -2346,13 +2420,7 @@ school?.addEventListener('submit', handlesubmit);
 
 
 
-function phoneMask() {
-    var num = $(this).val().replace(/\D/g, '');
-    $(this).val(num.substring(0, 1) + '(' + num.substring(1, 4) + ')' + num.substring(4, 7) + '-' + num.substring(7, 11));
-}
-$('[type="tel"]').keyup(phoneMask);
-
-
+;
 
 
 if (window.location.pathname === '/signup/') {
@@ -2400,5 +2468,9 @@ if (window.location.pathname === '/signup/') {
 
     }())
 }
-// save current login user username in local storage
 
+// function phoneMask() {
+//     var num = $(this).val().replace(/\D/g, '');
+//     $(this).val(num.substring(0, 1) + '(' + num.substring(1, 4) + ')' + num.substring(4, 7) + '-' + num.substring(7, 11));
+// }
+// $('[type="tel"]').keyup(phoneMask)
