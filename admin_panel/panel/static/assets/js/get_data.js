@@ -26,12 +26,12 @@ if (window.location.pathname === '/dashboard/') {
                     <td>${obj[key].school}</td>
                     <td>${obj[key].student}</td>
                     <td>${obj[key].teacher_name}</td>
-                    <td>${obj[key].class_name}</td>s
+                    <td>${obj[key].class_name}</td>
                     <td><button id="${obj[key].id}" class="btn  btn-danger" onclick ="delete_data(event,this.id)">Delete</button></td>
                     <td><a href="#card"><button id="${obj[key].id}" class="btn  btn-secondary" onclick ="update_data(event,this.id)">Edit</button></a></td>`
                         str += `<br>`
                 }
-                body.innerHTML = str
+                body.innerHTML = str 
             }
             else {
                 console.log('Error')
@@ -41,10 +41,7 @@ if (window.location.pathname === '/dashboard/') {
         xhr.send()
 
     }())
-   
-
-   
-    
+ 
 
 }
 if (window.location.pathname === '/login/') 
@@ -91,9 +88,12 @@ if (window.location.pathname === '/login/')
                 localStorage.setItem('refresh_token', obj.refresh)
                 console.log('access token is : ' + localStorage.getItem('access_token'))
                 console.log('refresh token is : ' + localStorage.getItem('refresh_token'))
-                window.location.href = '/dashboard/'
+                window.location.href = '/http://127.0.0.1:8000/dashboard//'
+
                 
-                
+            }
+            else{
+                alert('Invalid Credentials')
             }
         }
 
@@ -705,9 +705,8 @@ if (window.location.pathname === '/student/') {
                 // console.log(obj)                
                 for (key in obj) 
                 {
+                    var school_id,access =  localStorage.getItem('access',school_id)
                     
-                    var school_id    = localStorage.setItem('school_id')
-                    console.log('school_id : '+school_id)
                     
                     if (school_id == obj[key].id) {
                         str += `<option value="${obj[key].id}" selected>${obj[key].school_name}</option>`
@@ -2473,4 +2472,4 @@ if (window.location.pathname === '/signup/') {
 //     var num = $(this).val().replace(/\D/g, '');
 //     $(this).val(num.substring(0, 1) + '(' + num.substring(1, 4) + ')' + num.substring(4, 7) + '-' + num.substring(7, 11));
 // }
-// $('[type="tel"]').keyup(phoneMask)
+// $('[type="tel"]').keyup(phoneMask);

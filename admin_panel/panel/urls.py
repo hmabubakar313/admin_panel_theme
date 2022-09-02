@@ -6,6 +6,14 @@ from .import views
 from django.conf.urls.static import static
 from . import views
 from django.conf import settings
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
+
+
+
 urlpatterns = [
     path('', views.home, name='home'),
     path('dashboard/',views.index,name='dashboard'),
@@ -23,6 +31,7 @@ urlpatterns = [
     path('classroom/',views.classroom,name='classroom'),
     path('staff/',views.staff,name='staff'),
     path('user/',views.user,name='user'),
+
    
     
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

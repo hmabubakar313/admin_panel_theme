@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate
 from django import forms
 from django.contrib.auth import logout
 from django.contrib.auth import authenticate, login as dj_login
+from django.shortcuts import redirect
 
 from django.contrib.auth.decorators import login_required
 
@@ -15,8 +16,9 @@ from django.contrib.auth.decorators import login_required
 
 def home(request,*args,**kwargs):
     return render(request, 'sash/html/default.html')
-    
-# redirect to login page if user is not logged in
+
+
+
 
 
 # @login_required(login_url='/login/')
@@ -25,22 +27,12 @@ def index(request):
         print('inside if of login_user')
         username=request.POST.get('username')
         password=request.POST.get('password')
-        password2=request.POST.get('password2')
-        first_name=request.POST.get('first_name')
-        last_name=request.POST.get('last_name')
-        email=request.POST.get('email')
-        # print(f'username: {username}')
-        # print(f'password: {password}')
-        print(f'first_name: {first_name}')
-        print(f'last_name: {last_name}')
-        print(f'email: {email}')
-        # print(f'email: {email}')
         print(f'username: {username}')
         print(f'password: {password}')
         user=authenticate(username=username,password=password)
         dj_login(request, user)
         print(f'user: {user}')
-        if user is not None:
+        if user is not None: 
             print('inside if')
             return render(request, 'sash/html/index.html')
         else:       
